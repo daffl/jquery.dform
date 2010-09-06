@@ -58,57 +58,6 @@
 		}
 	};
 	
-	(function _init()
-	{
-		$.fb.subscribe("elements", function(options) {
-			var scoper = $(this);
-			$.each(options, function(name, nested) {
-				var options = nested;
-				options["name"] = name;
-				$(scoper).formElement(options);
-			});
-			return $(this);
-		});
-		
-		$.fb.subscribe("value", function(options) {
-			$(this).val(options);
-		});
-		
-		$.fb.subscribe("options", function(options) {
-			if($(this).is("select"))
-			{
-				var scoper = $(this);
-				$.each(options, function(value, text) {
-					var option = $("<option>").attr("value", value).html(text);
-					$(scoper).append(option);
-				});
-			}
-		});
-		
-		$.fb.subscribe("default", function(options) {
-			if($(this).is("input") && $(this).attr("type") == "text")
-			{
-				$(this).data("default", options);
-				$(this).onClick(function() { 
-				});
-			}
-		});
-		
-		$.fb.subscribe("label", function(options) {
-			$(this).wrap($("<div>"));
-			var label = $("<label>").html(options);
-			$(this).parent().prepend(label);
-		});
-		
-		$.fb.subscribe("legend", function(options) {
-			if($(this).is("fieldset"))
-			{
-				var legend = $("<legend>").html(options);
-				return $(this).prepend(legend);
-			}
-		});
-	})();
-	
 	$.fn.extend(
 	{
 		buildForm : function(options)
@@ -149,5 +98,4 @@
 			return $(this);
 		}
 	});
-
 })(jQuery);
