@@ -1,14 +1,6 @@
 (function($)
 {
 	var _subscriptions = {};
-	
-	/**
-	 * Create a new element with given tag and default attributes and settings
-	 */
-	function _create(tag, defaults, options)
-	{
-		return $($(tag).attr($.extend(defaults, options)));
-	}
 
 	$.fb =
 	{
@@ -24,37 +16,9 @@
 		{
 			delete _subscriptions[name];
 		},
-		// Core elements
-		element :
+		hasSubscription : function(name)
 		{
-			/**
-			 * Default builder function if no other element has been found
-			 */
-			__default : function(options)
-			{
-				return _create("<input>", {}, options);
-			},
-			/**
-			 * Create a new form element with given options as attributes
-			 */
-			form : function(options)
-			{
-				return _create("<form>", { action : window.location, method : "post" }, options);
-			},
-
-			/**
-			 * Create a new select form element with given select items as key
-			 * value pairs.
-			 */
-			select : function(options)
-			{
-				return _create("<select>", {}, options);
-			},
-
-			fieldset : function(options)
-			{
-				return _create("<fieldset>", {}, options);
-			}
+			return _subscriptions[name] ? true : false;
 		}
 	};
 	
@@ -67,34 +31,31 @@
 		// Main form element builder function
 		formElement : function(options)
 		{
-			// Find element options and subscription options
-			var ops = {};
-			var subscriberOps = {};
+			// Initial element is the jQuery function element
+			var element = $(this);
+			// Run type builder function first
 			var type = options["type"];
-			$.each(options, function(key, value) {
-				if(!_subscriptions[key] && key != "type") // element not subscribed
-					ops[key] = value;
-				else if(key != "type") // put in subscription options
-					subscriberOps[key] = value;
-			});
-			
-			// Get builder function for element and append to this or use default builder
-			var builder = $.fb.element.__default;
-			if($.fb.element[type])
-				builder = $.fb.element[type];
-			else
-				ops["type"] = type;
-			
-			// Call builder function
-			var element = builder(ops);
-			$(this).append(element);
-			
-			// Run subscription functions
-			$.each(subscriberOps, function(name, options) {
-				$.each(_subscriptions[name], function(i, sfn){
-					sfn.call(element, options); // run subscriber function with options
+			var name = "[type=" +  options["type"] + "]";
+			delete options["type"];
+			if(_subscriptions[name])
+			{
+				$.each(_subscriptions[name], function(i, sfn) {
+					element = sfn.call(element, options);
 				});
-			});
+				
+				// Run subscription functions
+				$.each(options, function(name, options) {
+					if($.fb.hasSubscription(name))
+					{
+						$.each(_subscriptions[name], function(i, sfn) {
+							// run subscriber function with options
+							sfn.call(element, options, type);
+						});
+					}
+				});
+			}
+			else
+				throw "Element type '" + type + "' does not exist";
 			return $(this);
 		}
 	});

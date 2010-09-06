@@ -3,51 +3,51 @@
     <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>JQFormer Tests</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
     </script>
-    <script type="text/javascript" src="js/jquery.formbuilder.js">
-    </script>
+    <script type="text/javascript" src="js/jquery.dform.js"></script>
+    <script type="text/javascript" src="js/jquery.dform.subscriptions.js"></script>
 </head>
 <body>
     <script type="text/javascript">
         <!--
         $(document).ready(function(){
-            var options = {
-                "method": "post",
-                "action": "action.php",
-                "decorators": {
-                    "main": "<dl>",
-                    "label": "<dt>",
-                    "element": "<dd>"
-                },
-                "elements": {
-                    "test": {
-                        "type": "text",
-                        "class": "txtclass",
-                        "id": "testext",
-                        "label": "A label"
-                    },
-                    "testselect": {
-                        "type": "select",
-                        "select_values": {
-                            "value1": "Test value 1",
-                            "value2": "Test value 2"
-                        },
-                        "label": "Another label"
-                    },
-                    "cb": {
-                        "type": "checkbox",
-                        "id": "cb1"
-                    }
-                }
-            };
-            
-            $('#form').buildForm(options);
+            $("#myform").formElement({
+				"type" : "fieldset",
+				"class" : "test",
+				"id" : "xy",
+				"legend" : "Test",
+				"elements" : 
+				{
+					"username" :
+					{
+						"id" : "txtusername",
+						"label" : "Username",
+						"type" : "text",
+						"hint" : "Your username here"
+					},
+					"password" : { "label"  : "Password", "type" : "password" },
+					"testselect" :
+					{
+						"type" : "select",
+						"label" : "Select something",
+						"options" : 
+						{
+							"test3" : "Another value 3",
+							"test2" : "Another value",
+							"test": "Test value"
+						}
+					}
+				}
+			});
         });
         -->
     </script>	
     <h1>New Web Project Page</h1>
     <div id="form">
+    	<form id="myform">
+    		
+    	</form>
     </div>
 </body>
 </html>
