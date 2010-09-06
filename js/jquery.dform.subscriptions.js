@@ -41,7 +41,11 @@
 	$.fb.subscribe("[type=textarea]", function(options) {
 		return _create("<textarea>", {}, options, $(this));
 	});
-		
+	
+	$.fb.subscribe("[type=submit]", function(options) {
+		return _create("<input>", { "type" : "submit" }, options, $(this));
+	});
+	
 	$.fb.subscribe("elements", function(options) {
 		var scoper = $(this);
 		$.each(options, function(name, nested) {
@@ -97,6 +101,7 @@
 		// TODO maybe derive ID from name
 		if($(this).attr("id"))
 			$(label).attr("for", $(this).attr("id"));
+		label = $(label).wrap("<p>").parent();
 		$(label).insertBefore($(this));
 	});
 	
@@ -104,7 +109,7 @@
 		if(type == "fieldset")
 		{
 			var legend = $("<legend>").html(options);
-			return $(this).prepend(legend);
+			$(this).prepend(legend);
 		}
 	});
 })(jQuery);
