@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>JQuery :: dForm</title>
+	<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+	
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+   	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
+	
+    <script type="text/javascript" src="js/jquery.dform.js"></script>
+	<script type="text/javascript" src="js/jquery.dform.subscriptions.js"></script>
+
+	<!-- Syntax Highlighter -->
+	<script type="text/javascript" src="resources/highlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="resources/highlighter/scripts/shBrushJScript.js"></script>
+	<link type="text/css" rel="stylesheet" href="resources/highlighter/styles/shCoreDefault.css"/>
+</head>
+<body>
+    <script type="text/javascript">
+        <!--
+        $(document).ready(function() {
+			$("form.dform").each(function() {
+				var id = $(this).attr("id");
+				var dataselector = "#" + id + "-src pre";
+				var data = $.parseJSON($(dataselector).html());
+				$(this).buildForm(data); 
+			});
+			
+			SyntaxHighlighter.all();
+			$(".tabs").tabs(); // Make jQuery UI tabs on this page
+        });
+        -->
+    </script>
+<div id="align" class="corner ui-widget">	
+    <h1 class="ui-corner-all ui-widget-header padsmall">jQuery.dForm</h1>
+	<p>The jQuery.dForm plugin allows you to create your HTML forms programmatically from
+	JavaScript objects (and JSON).</p>
+	<p>The plugin is pretty straightforward to use:
+		<pre class="brush: js">
+			var data =
+			{
+				"action" : "index.html",
+				"method" : "get",
+				"elements" : 
+				[
+					{
+						"name" : "textfield",
+						"label" : "Label for textfield",
+						"type" : "text",
+						"value" : "Hello world"
+					},
+					{
+						"type" : "submit",
+						"value" : "Submit"
+					}
+				]			
+			};
+			$("#formid").buildForm(data);
+		</pre>
+	</p>
+	<h2>Why would you need that?</h2>
+	<p>Creating HTML forms is a very tedious task where you end up writing the same
+	source over and over again. Many web frameworks will help you with creating your
+	forms on the server side, but as soon as the client (e.g. client-side validation)
+	comes into play it can become quite a mess with client and server concerns all
+	mixed up together. Additionally you often just end up redefining your business
+	objects as HTML forms which can be easily auto generated.</p>
+	<p>This plugin moves the generation of forms entirely on the client side where the
+	server just has to provide a JavaScript object (usually as JSON) that contains
+	all the information to create the form.</p>
+	<p>Through a neat subscription mechanism you can easily customize and extend the form creation
+	process and add your own controls.</p>
+	
+	<h2 class="ui-corner-all ui-widget-header padsmall">Demos</h2>
+	<h3>Login form</h3>
+	<p>A simple login form. The hint in the username textfield will dissapear when
+	you focus it.</p>
+
+    <div class="exampleform tabs">
+    	<ul>
+			<li><a href="#loginform-div">Form</a></li>
+			<li><a href="#loginform-src">JSON</a></li>
+		</ul>
+		<div id="loginform-div">
+    		<form id="loginform" class="dform"></form>
+		</div>
+		<div id="loginform-src">
+			<pre class="brush: js">
+			{
+				"action" : "index.html",
+				"method" : "get",
+				"elements" : 
+				[
+					{
+						"type" : "html",
+						"html" : "<p>You must login</p>"
+					},
+					{
+						"name" : "username",
+						"id" : "txt-username",
+						"label" : "Username",
+						"type" : "text",
+						"hint" : "E.g. user@example.com"
+					},
+					{
+						"name" : "password",
+						"label"  : "Password",
+						"type" : "password"
+					},
+					{
+						"type" : "submit",
+						"value" : "Login"
+					}
+				]
+			}
+			</pre>
+    	</div>
+	</div>
+	
+	<h3>Registration form</h3>
+	<p>A more complex form</p>
+	
+    <div class="exampleform tabs">
+    	<ul>
+			<li><a href="#registrationform-div">Form</a></li>
+			<li><a href="#registrationform-src">JSON</a></li>
+		</ul>
+		<div id="registrationform-div">
+    		<form id="registrationform" class="dform"></form>
+		</div>
+		<div id="registrationform-src">    	
+			<pre class="brush: js">
+			{
+				"action" : "index.html",
+				"method" : "post",
+				"elements" :
+				[
+					{
+						"type" : "fieldset",
+						"legend" : "User information",
+						"elements" : [
+							{
+								"name" : "email",
+								"label" : "Email address",
+								"type" : "text",
+								"hint" : "E.g. user@example.com"
+							},
+							{
+								"name" : "password",
+								"label"  : "Password",
+								"type" : "password"
+							},
+							{
+								"name" : "password-repeat",
+								"label"  : "Repeat password",
+								"type" : "password"
+							},
+						]
+					},
+					{
+						"type" : "fieldset",
+						"legend" : "Address information",
+						"elements" : [
+							{
+								"name" : "name",
+								"label" : "Your name",
+								"type" : "text",
+								"hint" : "E.g. John Doe"
+							},
+							{
+								"name" : "address",
+								"label" : "Address",
+								"type" : "text"
+							},
+							{
+								"name" : "zip",
+								"label" : "ZIP code",
+								"type" : "text",
+								"size" : 5
+							},
+							{
+								"name" : "city",
+								"label" : "City",
+								"type" : "text"
+							},
+							{
+								"type" : "select",
+								"name" : "country",
+								"label" : "Choose country",
+								"options" :
+								{
+									"can" : "Canada",
+									"ger" : "Germany",
+									"us" : "USA",
+									"fr" : "France"
+								}
+							}
+						]
+					},
+					{
+						"type" : "submit",
+						"value" : "Signup"
+					}
+				]
+			}
+			</pre>
+		</div>
+    </div>
+</div>
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>
+</body>
+</html>
