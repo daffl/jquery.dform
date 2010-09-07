@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+
+body { background-color: #A0A0A0; 	font-family: sans-serif;
+	font-size: 11pt; }
+
+.corner {
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+#align
+{
+	margin: 0px auto;
+	width: 800px;
+	background-color: #FFFFFF;
+	padding: 15px;
+}
+
+textarea.dform
+{
+	width: 400px;
+	height: 300px;
+	border: 2px solid #505050;
+	padding: 15px;
+	background-color: #A0A0A0;
+	font-size: 80%;
+}
+
+form.dform { width: 300px; }
+
+label
+{
+	display : block;
+	margin: 10px 0;
+}
+
+input[type=text], input[type=password] { margin-left: 10px; }
+.exampleform { background-color: #DFDFDF; clear: all; }
