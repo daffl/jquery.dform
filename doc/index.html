@@ -10,6 +10,7 @@
 	
     <script type="text/javascript" src="../js/jquery.dform.js"></script>
 	<script type="text/javascript" src="../js/jquery.dform.subscriptions.js"></script>
+	<script type="text/javascript" src="../js/jquery.dform.ui.js"></script>
 
 	<!-- Syntax Highlighter -->
 	<script type="text/javascript" src="resources/highlighter/scripts/shCore.js"></script>
@@ -46,7 +47,7 @@
 	</div>
 	<h2>The plugin</h2>
 	<p>The jQuery.dForm plugin allows you to create your HTML forms programmatically from
-	JavaScript objects (and JSON).</p>
+	JavaScript objects (and therefore JSON, too).</p>
 	<p>It is pretty straightforward to use:
 		<pre class="brush: js" id="firstsample">
 			var formdata =
@@ -63,7 +64,7 @@
 					},
 					{
 						"type" : "submit",
-						"value" : "Submit"
+						"value" : "Say hello"
 					}
 				]			
 			};
@@ -76,20 +77,19 @@
 		</div>
 	</p>
 	<h2>What it is for</h2>
-	<p>There are many server side web frameworks that support HTML forms, but
-	you often end up mixing client (e.g. instant validation) and server form processing
-	concerns together where you end up redefining your applications business objects
-	as HTML forms, with JavaScript enhancements though forms could be easily generated.</p>
+	<p>There are many server side web frameworks that support HTML form generation, but
+	you often end up mixing client (e.g. JavaScript validation) and server side processing
+	concerns together.</p>
 	<p>This plugin moves the generation of forms entirely on the client side so that the
 	server just has to provide a JavaScript object (usually as JSON) that contains
 	all the information needed to create this form. It is easily extensible for custom
 	form elements and properties.</p>
 	<p>You should try this plugin if you want to</p>
 	<ul>
-		<li>manage all your form related jQuery plugins in a unified way</li>
-		<li>centralize form generation</li>
+		<li>manage all your form related jQuery plugins in a unified way
+		<br />(many supported out of the box)</li>
 		<li>scaffold forms from business objects of your server side framework</li>
-		<li>provide an easy way to include jQuery UI elements and JavaScript validation</li>
+		<li>have an easy way to include jQuery UI elements and JavaScript validation</li>
 		<li>write JavaScript code instead of HTML markup</li>
 	</ul>
 	
@@ -144,13 +144,17 @@
 	<h3>Registration form</h3>
 	<p>A more complex form</p>
 	
+	<style type="text/css">
+		#registrationform fieldset { width: 45%; float: left; height: 400px; margin-right: 5px; }
+		#registrationform input[type=submit] { margin: 10px 0; }
+	</style>
     <div class="exampleform tabs">
     	<ul>
 			<li><a href="#registrationform-div">Form</a></li>
 			<li><a href="#registrationform-src">JSON</a></li>
 		</ul>
 		<div id="registrationform-div">
-    		<form id="registrationform" class="dform"></form>
+    		<form id="registrationform" class="dform" style="width: 95%;"></form>
 		</div>
 		<div id="registrationform-src">    	
 			<pre class="brush: js">
@@ -230,9 +234,72 @@
 			</pre>
 		</div>
     </div>
+	
+	<h2>jQuery UI</h2>
+	<p>Support for the great jQuery UI Framework</p>
+    <div class="exampleform tabs">
+		<ul>
+			<li><a href="#uiform-div">Form</a></li>
+			<li><a href="#uiform-src">JSON</a></li>
+		</ul>
+		<div id="uiform-div">
+			<form id="uiform" class="dform"></form>
+		</div>
+		<div id="uiform-src">
+			<pre class="brush: js">
+			{
+				"action" : "index.html",
+				"method" : "get",
+				"elements" : 
+				[
+					{
+						"name" : "date",
+						"label" : "Pick a date",
+						"type" : "text",
+						"datepicker" : {  "showOn" : "button" }
+					},
+					{
+						"type" : "slider",
+						"values" : [ 10, 80 ],
+						"range" : true,
+						"label" : "Slider"
+					},
+					{
+						"label" : "A themed button",
+						"type" : "submit",
+						"value" : "Login"
+					},
+					{
+						"label" : "Some progress",
+						"type" : "progressbar",
+						"value" : 40
+					},
+					{
+						"type" : "tabs",
+						"label" : "UI Tabs",
+						"tabs" :
+						{
+							"tab-1" :
+							{
+								"title" : "Tab no 1",
+								"elements" :
+								[
+								]
+							},
+							"tab-2" :
+							{
+								"title" : "Tab no 1",
+								"elements" :
+								[
+								]
+							}
+						}
+					}
+				]
+			}
+			</pre>
+		</div>
+	</div>
 </div>
-<script type="text/javascript">
-     SyntaxHighlighter.all()
-</script>
 </body>
 </html>
