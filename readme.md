@@ -38,6 +38,7 @@ all the information needed to create this form. It is easily extensible for cust
 form elements and properties.
 
 You should try this plugin if you want to
+
 * manage all your form related jQuery plugins in a unified way
 * centralize form generation
 * scaffold forms from business objects of your server side framework
