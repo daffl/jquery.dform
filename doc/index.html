@@ -29,16 +29,27 @@
 			
 			SyntaxHighlighter.all();
 			$(".tabs").tabs(); // Make jQuery UI tabs on this page
+			eval($("#firstsample").html());
         });
         -->
     </script>
-<div id="align" class="corner ui-widget">	
-    <h1 class="ui-corner-all ui-widget-header padsmall">jQuery.dForm</h1>
+<div id="align" class="corner ui-widget">
+	<div id="logo" class="centered"><img src="resources/logo.png" ald="jQuery::dForm" /></div>
+	<div id="menu" class="centered full ui-widget-content ui-corner-all">
+		<div class="padsmall">
+			<a href="index.html">About</a> |
+			<a href="index.html">Examples</a> |
+			<a href="index.html">jQuery UI</a> |
+			<a href="index.html">Try it</a> |
+			<a href="">Wiki</a>
+		</div>
+	</div>
+	<h2>The plugin</h2>
 	<p>The jQuery.dForm plugin allows you to create your HTML forms programmatically from
 	JavaScript objects (and JSON).</p>
-	<p>The plugin is pretty straightforward to use:
-		<pre class="brush: js">
-			var data =
+	<p>It is pretty straightforward to use:
+		<pre class="brush: js" id="firstsample">
+			var formdata =
 			{
 				"action" : "index.html",
 				"method" : "get",
@@ -56,23 +67,35 @@
 					}
 				]			
 			};
-			$("#formid").buildForm(data);
+			$("#myform").buildForm(formdata);
 		</pre>
 	</p>
-	<h2>Why would you need that?</h2>
-	<p>Creating HTML forms is a very tedious task where you end up writing the same
-	source over and over again. Many web frameworks will help you with creating your
-	forms on the server side, but as soon as the client (e.g. client-side validation)
-	comes into play it can become quite a mess with client and server concerns all
-	mixed up together. Additionally you often just end up redefining your business
-	objects as HTML forms which can be easily auto generated.</p>
-	<p>This plugin moves the generation of forms entirely on the client side where the
+	<p>Which will generate this simple form:
+		<div class="full ui-widget-content ui-corner-all">
+			<form id="myform" class="padsmall"></form>
+		</div>
+	</p>
+	<h2>What it is for</h2>
+	<p>There are many server side web frameworks that support HTML forms, but
+	you often end up mixing client (e.g. instant validation) and server form processing
+	concerns together where you end up redefining your applications business objects
+	as HTML forms, with JavaScript enhancements though forms could be easily generated.</p>
+	<p>This plugin moves the generation of forms entirely on the client side so that the
 	server just has to provide a JavaScript object (usually as JSON) that contains
-	all the information to create the form.</p>
-	<p>Through a neat subscription mechanism you can easily customize and extend the form creation
-	process and add your own controls.</p>
+	all the information needed to create this form. It is easily extensible for custom
+	form elements and properties.</p>
+	<p>You should try this plugin if you want to</p>
+	<ul>
+		<li>manage all your form related jQuery plugins in a unified way</li>
+		<li>centralize form generation</li>
+		<li>scaffold forms from business objects of your server side framework</li>
+		<li>provide an easy way to include jQuery UI elements and JavaScript validation</li>
+		<li>write JavaScript code instead of HTML markup</li>
+	</ul>
 	
-	<h2 class="ui-corner-all ui-widget-header padsmall">Demos</h2>
+	<h2>About</h2>
+	<p>Follow me on Twitter @daffl</p>
+	
 	<h3>Login form</h3>
 	<p>A simple login form. The hint in the username textfield will dissapear when
 	you focus it.</p>
