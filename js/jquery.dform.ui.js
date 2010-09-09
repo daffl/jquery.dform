@@ -18,82 +18,92 @@
  */
 (function($)
 {
-	$.dform.subscribe("type", function(options, type)
+	$.dform.subscribe(
 	{
-		// TODO add jQuery UI classes
-			if (type == "button" || type == "submit")
-				$(this).button();
-			if (type == "text" || type == "textarea" || type == "password"
-					|| type == "fieldset")
-				$(this).addClass("ui-widget-content ui-corner-all");
-		});
-
-	$.dform.subscribe("dialog", function(options, type)
-	{
-		if (type == "form" || type == "fieldset")
-			$(this).dialog(options);
-	});
-
-	$.dform.subscribe("datepicker", function(options, type)
-	{
-		if (type == "text")
-			$(this).datepicker(options);
-	});
-
-	$.dform.subscribe("[type=progressbar]", function(options)
-	{
-		// TODO html attributes
-			return $("<div>").progressbar(options);
-		});
-
-	$.dform.subscribe("[type=autocomplete]", function(options)
-	{
-		// TODO
-		});
-
-	$.dform.subscribe("[type=slider]", function(options)
-	{
-		// TODO div html attributes
-			return $("<div>").slider(options);
-		});
-
-	$.dform.subscribe("[type=button]", function(options)
-	{
-		// TODO jquery ui button
-		});
-
-	$.dform.subscribe("[type=tabs]", function(options)
-	{
-		// TODO div html attributes
-			return $("<div>");
-		});
-	
-	$.dform.subscribe("tabs", function(options, type)
-	{
-		if (type == "tabs")
+		"[type=progressbar]" : function(options)
 		{
-			$(this).append("<ul>");
-			var scoper = $(this);
-			$.each(options, function(tabname, options)
+			// TODO html attributes
+			return $("<div>").progressbar(options);
+		},
+		"[type=slider]" : function(options)
+		{
+			// TODO div html attributes
+			return $("<div>").slider(options);
+		},
+		"[type=button]" : function(options)
+		{
+			// TODO jquery ui button
+		},
+		"[type=tabs]" : function(options)
+		{
+			// TODO div html attributes
+			return $("<div>");
+		},
+		"[type=accordion]" : function(options)
+		{
+			// TODO div html attributes
+			return $("<div>");
+		}
+	});
+
+	$.dform.subscribe(
+	{
+		"type" : function(options, type)
+		{
+			if ($(this).parents("form").hasClass("ui-widget"))
 			{
-				// TODO make some tabs
+				if (type == "button" || type == "submit")
+					$(this).button();
+				if ($.inArray(type, [ "text", "textarea", "password",
+						"fieldset" ]) != -1)
+					$(this).addClass("ui-widget-content ui-corner-all");
+			}
+		},
+		"dialog" : function(options, type)
+		{
+			if (type == "form" || type == "fieldset")
+				$(this).dialog(options);
+		},
+		"resizable" : function(options, type)
+		{
+			$(this).resizable(options);
+			$(this).resizable("enable");
+		},
+		"datepicker" : function(options, type)
+		{
+			if (type == "text")
+				$(this).datepicker(options);
+		},
+		"autocomplete" : function(options, type)
+		{
+			if (type == "text")
+			{
+				$(this).autocomplete(options);
+			}
+		},
+		"tabs" : function(options, type)
+		{
+			if (type == "tabs")
+			{
+				$(this).append("<ul>");
+				var scoper = $(this);
+				$.each(options, function(tabname, ops)
+				{
+					// TODO make some tabs
+					ops.type == type;
 					var tablink = $("<a>").attr(
 					{
 						"href" : "#" + tabname
-					}).html(options.title);
+					}).html(ops.title);
 					var li = $("<li>").append(tablink);
-					var tabdiv = $("<div>").attr("id", tabname).html(
-							"tab " + tabname);
+					var tabdiv = $("<div>").attr("id", tabname);
 					$(scoper).children("ul").first().append(li);
 					$(scoper).append(tabdiv);
+					
+					$(tabdiv).runAll(ops);
 				});
+			}
+			$(this).tabs();
 		}
-		$(this).tabs();
 	});
-	
-	$.dform.subscribe("[type=accordion]", function(options)
-	{
-		// TODO div html attributes
-		return $("<div>");
-		});
 })(jQuery);

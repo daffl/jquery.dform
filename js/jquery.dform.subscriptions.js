@@ -190,43 +190,49 @@
 
 		"label" : function(options, type)
 		{
-			// TODO maybe derive ID from name
-			var labelops =
-			{
-				"type" : "label"
-			};
-			if (typeof (options) == "string")
-				labelops["html"] = options;
-			else
-				$.extend(labelops, options);
-
-			if ($(this).attr("name") != "" && $(this).attr("id") == ""
-					&& ($(this).is("input") || $(this).is("textarea")))
-			{
-				var id = "dform-" + type + "-" + $(this).attr("name");
-				$(this).attr("id", id);
-			}
-			if ($(this).attr("id"))
-				labelops["for"] = $(this).attr("id");
-			var label = $.dform.createElement(labelops);
-			if (type == "checkbox" || type == "radio")
-				$(this).parent().append($(label));
-			else
-				$(label).insertBefore($(this));
-			$(label).runAll(labelops);
-		},
-
-		"legend" : function(options, type)
-		{
 			if (type == "fieldset")
 			{
+				// Labels for fieldsets are legend
 				var legend = $("<legend>").html(options);
 				$(this).prepend(legend);
 			}
+			else
+			{
+				// TODO maybe derive ID from name
+				var labelops =
+				{
+					"type" : "label"
+				};
+				if (typeof (options) == "string")
+					labelops["html"] = options;
+				else
+					$.extend(labelops, options);
+	
+				if ($(this).attr("name") != "" && $(this).attr("id") == ""
+						&& ($(this).is("input") || $(this).is("textarea")))
+				{
+					var id = "dform-" + type + "-" + $(this).attr("name");
+					$(this).attr("id", id);
+				}
+				if ($(this).attr("id"))
+					labelops["for"] = $(this).attr("id");
+				var label = $.dform.createElement(labelops);
+				if (type == "checkbox" || type == "radio")
+					$(this).parent().append($(label));
+				else
+					$(label).insertBefore($(this));
+				$(label).runAll(labelops);
+			}
+		},
+		"type" : function(options, type)
+		{
+			if (type == "submit")
+				$(this).wrap("<p>");
 		}
 	});
 
 	/*
+	 * TODO implement radiolist and checkboxlist
 	 * $.dform.subscribe("[type=radiolist]", function(options) { // TODO list of
 	 * radiobuttons });
 	 * 
@@ -236,10 +242,4 @@
 	 * $.extend(cbops, entry, options); delete cbops["entries"];
 	 * $(scoper).formElement(cbops); }); return $(this); });
 	 */
-
-	$.dform.subscribe("type", function(options, type)
-	{
-		if (type == "submit")
-			$(this).wrap("<p>");
-	});
 })(jQuery);
