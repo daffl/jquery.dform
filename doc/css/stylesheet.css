@@ -56,3 +56,4 @@ a, .ui-widget-content a
 	color: #0078ae;
 }
 a:hover, a.active { color: #6eac2c; }
+h1, h2, h3 { color: #505050; }

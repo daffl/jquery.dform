@@ -38,13 +38,14 @@
 	<div id="logo" class="centered"><img src="resources/logo.png" ald="jQuery::dForm" /></div>
 	<div id="menu" class="centered full ui-widget-content ui-corner-all">
 		<div class="padsmall">
-			<a href="index.html">About</a> |
-			<a href="index.html">Examples</a> |
-			<a href="index.html">jQuery UI</a> |
-			<a href="index.html">Try it</a> |
-			<a href="">Wiki</a>
+			<a href="#plugin">The plugin</a> |
+			<a href="#examples">Examples</a> |
+			<a href="#about">About</a> |
+			<a target="_blank" href="http://github.com/daffl/jquery.dform/downloads">Download</a> |
+			<a target="_blank" href="http://github.com/daffl/jquery.dform/wiki">Wiki</a>
 		</div>
 	</div>
+	<a name="plugin"></a>
 	<h2>The plugin</h2>
 	<p>The jQuery.dForm plugin allows you to create your HTML forms programmatically from
 	JavaScript objects (and therefore JSON, too).</p>
@@ -87,15 +88,14 @@
 	<p>You should try this plugin if you want to</p>
 	<ul>
 		<li>manage all your form related jQuery plugins in a unified way
-		<br />(many supported out of the box)</li>
+		<br />(some supported out of the box)</li>
 		<li>scaffold forms from business objects of your server side framework</li>
 		<li>have an easy way to include jQuery UI elements and JavaScript validation</li>
-		<li>write JavaScript code instead of HTML markup</li>
+		<li>write JavaScript instead of HTML markup since your page doesn't run without JS anyway</li>
 	</ul>
 	
-	<h2>About</h2>
-	<p>Follow me on Twitter @daffl</p>
-	
+	<a name="examples"></a>
+	<h2>Examples</h2>
 	<h3>Login form</h3>
 	<p>A simple login form. The hint in the username textfield will dissapear when
 	you focus it.</p>
@@ -165,7 +165,7 @@
 				[
 					{
 						"type" : "fieldset",
-						"legend" : "User information",
+						"label" : "User information",
 						"elements" : [
 							{
 								"name" : "email",
@@ -187,7 +187,7 @@
 					},
 					{
 						"type" : "fieldset",
-						"legend" : "Address information",
+						"label" : "Address information",
 						"elements" : [
 							{
 								"name" : "name",
@@ -235,15 +235,21 @@
 		</div>
     </div>
 	
-	<h2>jQuery UI</h2>
-	<p>Support for the great jQuery UI Framework</p>
+	<style type="text/css">
+		#uiform .ui-tabs { position: absolute; left: 400px; top: 70px; }
+		#uiform .ui-tabs div.ui-widget-content { width: 300px; height: 70px; }
+	</style>
+	<h3>jQuery UI</h3>
+	<p>The plugin comes with support for the great jQuery UI framework and its controls.
+	If the form has the ui-widget class jQuery UI button and input styles
+	will be applied to any matching type.</p>
     <div class="exampleform tabs">
 		<ul>
 			<li><a href="#uiform-div">Form</a></li>
 			<li><a href="#uiform-src">JSON</a></li>
 		</ul>
 		<div id="uiform-div">
-			<form id="uiform" class="dform"></form>
+			<form id="uiform" class="dform ui-widget"></form>
 		</div>
 		<div id="uiform-src">
 			<pre class="brush: js">
@@ -253,8 +259,23 @@
 				"elements" : 
 				[
 					{
+						"name" : "textfield",
+						"label" : "Autocomplete",
+						"type" : "text",
+						"hint" : "Type 'A' or 'S'",
+						"autocomplete" :
+						{
+							"source" :  [ "Apple", "Acer", "Sony", "Summer" ]
+						}
+					},
+					{
+						"label" : "A themed submit button",
+						"type" : "submit",
+						"value" : "Login"
+					},
+					{
 						"name" : "date",
-						"label" : "Pick a date",
+						"label" : "Datepicker",
 						"type" : "text",
 						"datepicker" : {  "showOn" : "button" }
 					},
@@ -265,18 +286,17 @@
 						"label" : "Slider"
 					},
 					{
-						"label" : "A themed button",
-						"type" : "submit",
-						"value" : "Login"
-					},
-					{
 						"label" : "Some progress",
 						"type" : "progressbar",
 						"value" : 40
 					},
 					{
 						"type" : "tabs",
-						"label" : "UI Tabs",
+						"resizable" :
+						{
+							"minHeight" : 150,
+							"minWidth" : 300 
+						},
 						"tabs" :
 						{
 							"tab-1" :
@@ -284,6 +304,11 @@
 								"title" : "Tab no 1",
 								"elements" :
 								[
+									{
+										"name" : "textfield",
+										"label" : "Just a textfield in jQuery UI tabs",
+										"type" : "text"
+									}
 								]
 							},
 							"tab-2" :
@@ -291,6 +316,14 @@
 								"title" : "Tab no 1",
 								"elements" :
 								[
+									{
+										"type" : "html",
+										"html" : "Some html in tab 2"
+									},
+									{
+										"type" : "submit",
+										"value" : "Submit"
+									}
 								]
 							}
 						}
@@ -300,6 +333,13 @@
 			</pre>
 		</div>
 	</div>
+	
+	<a name="about"></a>
+	<h2>About</h2>
+	<p>Download the <a target="_blank" href="http://github.com/daffl/jquery.dform/downloads">jQuery.dForm package</a></p>
+	<p>Visit the project page on <a target="_blank" href="http://github.com/daffl/jquery.dform">GitHub</a></p>
+	<p>Read more about extending and customizing the plugin in the <a target="_blank" href="http://github.com/daffl/jquery.dform/wiki">Wiki</a></p>
+	<p>Follow <a target="_blank" href="http://twitter.com/daffl">@daffl</a> on Twitter</p>
 </div>
 </body>
 </html>
