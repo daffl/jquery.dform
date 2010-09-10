@@ -7,6 +7,7 @@
 	
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
    	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 	
     <script type="text/javascript" src="../js/jquery.dform.js"></script>
 	<script type="text/javascript" src="../js/jquery.dform.subscriptions.js"></script>
@@ -27,7 +28,7 @@
 				var data = $.parseJSON($(dataselector).html());
 				$(this).buildForm(data); 
 			});
-			
+						
 			SyntaxHighlighter.all();
 			$(".tabs").tabs(); // Make jQuery UI tabs on this page
 			eval($("#firstsample").html());
@@ -97,8 +98,8 @@
 	<a name="examples"></a>
 	<h2>Examples</h2>
 	<h3>Login form</h3>
-	<p>A simple login form. The hint in the username textfield will dissapear when
-	you focus it.</p>
+	<p>A simple login form. The hint in the username field will dissapear when
+	you focus it or submit the form.</p>
 
     <div class="exampleform tabs">
     	<ul>
@@ -142,11 +143,14 @@
 	</div>
 	
 	<h3>Registration form</h3>
-	<p>A more complex form</p>
+	<p>A more complex form with form field validation using the well established 
+	jQuery validation plugin (submit to see validation messages)</p>
 	
 	<style type="text/css">
-		#registrationform fieldset { width: 45%; float: left; height: 400px; margin-right: 5px; }
+		#registrationform fieldset { width: 45%; float: left; height: 420px; margin-right: 5px; }
 		#registrationform input[type=submit] { margin: 10px 0; }
+		#registrationform label.error { font-size: 80%; color: #e14f1c; margin-left: 10px; }
+		#registrationform input.error { border: 1px solid #e14f1c; }
 	</style>
     <div class="exampleform tabs">
     	<ul>
@@ -171,18 +175,41 @@
 								"name" : "email",
 								"label" : "Email address",
 								"type" : "text",
-								"hint" : "E.g. user@example.com"
+								"hint" : "E.g. user@example.com",
+								"validate" : 
+								{
+									"email" : true
+								}
 							},
 							{
 								"name" : "password",
 								"label"  : "Password",
-								"type" : "password"
+								"type" : "password",
+								"id" : "registration-password",
+								"validate" :
+								{
+									"required" : true,
+									"minlength" : 5,
+									"messages" :
+									{
+										"required" : "Please enter a password",
+										"minlength" : "At least {0} characters long"
+									}
+								}
 							},
 							{
 								"name" : "password-repeat",
 								"label"  : "Repeat password",
-								"type" : "password"
-							},
+								"type" : "password",
+								"validate" :
+								{
+									"equalTo" : "#registration-password",
+									"messages" :
+									{
+										"equalTo" : "Please repeat your password"
+									}
+								}
+							}
 						]
 					},
 					{
@@ -198,29 +225,37 @@
 							{
 								"name" : "address",
 								"label" : "Address",
-								"type" : "text"
+								"type" : "text",
+								"validate" :  { "required" : true }
 							},
 							{
 								"name" : "zip",
 								"label" : "ZIP code",
 								"type" : "text",
-								"size" : 5
+								"size" : 5,
+								"validate" :  { "required" : true }
 							},
 							{
 								"name" : "city",
 								"label" : "City",
-								"type" : "text"
+								"type" : "text",
+								"validate" :  { "required" : true }
 							},
 							{
 								"type" : "select",
-								"name" : "country",
-								"label" : "Choose country",
+								"name" : "continent",
+								"label" : "Choose a continent",
 								"options" :
 								{
-									"can" : "Canada",
-									"ger" : "Germany",
-									"us" : "USA",
-									"fr" : "France"
+									"america" : "America",
+									"europe" :
+									{
+										"selected" : "true",
+										"id" : "europe-option",
+										"value" : "Europe"
+									},
+									"asia" : "Asia",
+									"australia" : "Australia"
 								}
 							}
 						]
@@ -236,19 +271,27 @@
     </div>
 	
 	<style type="text/css">
-		#uiform .ui-tabs { position: absolute; left: 400px; top: 70px; }
-		#uiform .ui-tabs div.ui-widget-content { width: 300px; height: 70px; }
+		#uiform label.error { font-size: 80%; color: #e14f1c; margin-left: 10px; }
 	</style>
+	<script type="text/javascript"><!--
+		$(document).ready(function() {
+			$("#dialogbutton").click(function() {
+				$("#uiform").dialog("open");
+			});
+		});
+	--></script>
 	<h3>jQuery UI</h3>
 	<p>The plugin comes with support for the great jQuery UI framework and its controls.
-	If the form has the ui-widget class jQuery UI button and input styles
-	will be applied to any matching type.</p>
+	If the form has the <strong>.ui-widget</strong> class matching jQuery UI styles will be applied
+	to all buttons and input elements as well as the validation messages.</p>
+	<p>Example for standard form enhanced with jQuery UI css, showing in a jQuery UI modal dialog</p>
     <div class="exampleform tabs">
 		<ul>
 			<li><a href="#uiform-div">Form</a></li>
 			<li><a href="#uiform-src">JSON</a></li>
 		</ul>
 		<div id="uiform-div">
+			<button id="dialogbutton">Show form</button>
 			<form id="uiform" class="dform ui-widget"></form>
 		</div>
 		<div id="uiform-src">
@@ -256,8 +299,89 @@
 			{
 				"action" : "index.html",
 				"method" : "get",
+				"title" : "A dialog form",
+				"dialog" :
+				{
+					"modal" : true,
+					"autoOpen" : false
+				},
+				"elements" : [
+					{
+						"name" : "email",
+						"label" : "Email address",
+						"type" : "text",
+						"validate" : 
+						{
+							"required" : true,
+							"email" : true
+						}
+					},
+					{
+						"name" : "password",
+						"label"  : "Password",
+						"type" : "password",
+						"id" : "dialog-registration-password",
+						"validate" :
+						{
+							"required" : true,
+							"minlength" : 5,
+							"messages" :
+							{
+								"required" : "Please enter a password",
+								"minlength" : "At least {0} characters long"
+							}
+						}
+					},
+					{
+						"name" : "password-repeat",
+						"label"  : "Repeat password",
+						"type" : "password",
+						"validate" :
+						{
+							"equalTo" : "#dialog-registration-password",
+							"messages" :
+							{
+								"equalTo" : "Please repeat your password"
+							}
+						}
+					},
+					{
+						"type" : "submit",
+						"value" : "Signup"
+					}
+				]
+			}
+			</pre>
+		</div>
+	</div>
+	
+	<p>Examples for supported jQuery UI widgets</p>
+	<style type="text/css">
+		#uiwidgets .ui-tabs { position: absolute; left: 400px; top: 70px; }
+		#uiwidgets .ui-tabs div.ui-widget-content { width: 300px; height: 70px; }
+	</style>
+    <div class="exampleform tabs">
+		<ul>
+			<li><a href="#uiwidgets-div">Form</a></li>
+			<li><a href="#uiwidgets-src">JSON</a></li>
+		</ul>
+		<div id="uiwidgets-div">
+			<form id="uiwidgets" class="dform ui-widget"></form>
+		</div>
+		<div id="uiwidgets-src">
+			<pre class="brush: js">
+			{
+				"action" : "index.html",
+				"method" : "get",
 				"elements" : 
 				[
+					{
+						"type" : "slider",
+						"values" : [ 10, 80 ],
+						"range" : true,
+						"label" : "Slider",
+						"id" : "myslider"
+					},
 					{
 						"name" : "textfield",
 						"label" : "Autocomplete",
@@ -269,24 +393,13 @@
 						}
 					},
 					{
-						"label" : "A themed submit button",
-						"type" : "submit",
-						"value" : "Login"
-					},
-					{
 						"name" : "date",
 						"label" : "Datepicker",
 						"type" : "text",
 						"datepicker" : {  "showOn" : "button" }
 					},
 					{
-						"type" : "slider",
-						"values" : [ 10, 80 ],
-						"range" : true,
-						"label" : "Slider"
-					},
-					{
-						"label" : "Some progress",
+						"label" : "A progressbar",
 						"type" : "progressbar",
 						"value" : 40
 					},
@@ -306,7 +419,7 @@
 								[
 									{
 										"name" : "textfield",
-										"label" : "Just a textfield in jQuery UI tabs",
+										"label" : "Just a textfield",
 										"type" : "text"
 									}
 								]
@@ -333,7 +446,7 @@
 			</pre>
 		</div>
 	</div>
-	
+		
 	<a name="about"></a>
 	<h2>About</h2>
 	<p>Download the <a target="_blank" href="http://github.com/daffl/jquery.dform/downloads">jQuery.dForm package</a></p>
