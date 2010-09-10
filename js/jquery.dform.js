@@ -25,12 +25,60 @@
  */
 (function($)
 {
-	var _subscriptions =
-	{};
+	var _subscriptions = {};
 
+	/**
+	 * Returns the keyset from a given object
+	 */
+	$.keyset = function(object)
+	{
+		var keys = [];
+		$.each(object, function(key, value) {
+			keys.push(key);
+		});
+		return keys;
+	};
+	
+	/**
+	 * Returns an object that contains all value from the given
+	 * object that have a key which is also in the array keys
+	 */
+	$.withKeys = function(object, keys)
+	{
+		var result = {};
+		$.each(keys, function(index, value) {
+			if(object[value])
+				result[value] = object[value];
+		});
+		return result;
+	};
+	
+	/**
+	 * Returns an object that contains all value from the given
+	 * object that do not have a key which is also in the array keys
+	 */
+	$.withoutKeys = function(object, keys)
+	{
+		var result = {};
+		$.each(object, function(index, value) {
+			if($.inArray(index, keys) == -1)
+				result[index] = value;
+		});
+		return result;
+	};
+	
 	$.dform =
 	{
-		// Get all only options that have no subscription
+		/**
+		 * Returns the names of all subscriber functions registeres
+		 */
+		subscriberNames : function()
+		{
+			return $.keyset(_subscriptions);
+		},
+		/**
+		 * Get all only options that have no subscription
+		 */
 		getOptions : function(options)
 		{
 			var ops =
@@ -43,13 +91,15 @@
 				});
 			return ops;
 		},
-		// Subscribe builder functions
+		/**
+		 * Register a subscriber
+		 */
 		subscribe : function(data, fn)
 		{
 			if (typeof (data) == "string")
 			{
-				if (!_subscriptions[data])
-					_subscriptions[data] = new Array();
+				if (!$.isArray(_subscriptions[data]))
+					_subscriptions[data] = [];
 				_subscriptions[data].push(fn);
 			} else if (typeof (data) == "object")
 			{
@@ -75,22 +125,18 @@
 				$.each(_subscriptions[name], function(i, sfn)
 				{
 					// run subscriber function with options
-						sfn.call(element, options, type);
-					});
+					sfn.call(element, options, type);
+				});
 			}
 		},
 		// Run element created by type builder function
 		createElement : function(options)
 		{
 			var type = options["type"];
+			if (!type) throw "No element type given! Must always exist.";
 			var name = "[type=" + options["type"] + "]";
 			var element = null;
-			var ops =
-			{};
-			$.extend(ops, options);
-			delete ops["type"];
-			if (!type)
-				throw "No element type given! Must always exist.";
+			var ops = $.withoutKeys(options, ["type"]);
 			if (_subscriptions[name])
 			{
 				// Run all builder functions called [type=<typename>]
@@ -98,7 +144,8 @@
 				{
 					element = sfn.call(element, ops);
 				});
-			} else
+			}
+			else
 				throw "Element type '" + type + "' does not exist";
 			return $(element);
 		}
@@ -117,14 +164,16 @@
 		{
 			var type = options["type"];
 			var scoper = $(this);
+			// Run preprocessing subscribers
+			$(this).runSubscription("[pre]", options, type);
 			$.each(options, function(name, sopts)
 			{
 				// TODO each loop for list of dom elements
-					if (name != "type")
+					if (name != "[pre]" && name != "[post]")
 						$(scoper).runSubscription(name, sopts, type);
-				});
-			// Run post processing functions
-			$(this).runSubscription("type", options, type);
+			});
+			// Run post processing subscribers
+			$(this).runSubscription("[post]", options, type);
 			return $(this);
 		},
 		// Form element builder function

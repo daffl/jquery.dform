@@ -136,6 +136,14 @@
 		{
 			return _create("<span>",
 			{}, options);
+		},
+		/**
+		 * Returns a button element.
+		 * @param options object All parameters for this type
+		 */
+		"[type=button]" : function(options)
+		{
+			return _create("<button>", {}, options);
 		}
 	});
 
@@ -144,14 +152,13 @@
 	{
 		/**
 		 * Calls addClass on the current element
-		 * (instead of replacing the class attribute)
+		 * (instead of of the standard behaviour which is replacing the class attribute)
 		 * 
 		 * @param options string A list of whitespace separated classnames
 		 * @param type string The type of the <strong>this</strong> element
 		 */
 		"class" : function(options, type)
 		{
-			// Add class instead of overwriting class attribute
 			$(this).addClass(options);
 		},
 		/**
@@ -205,21 +212,15 @@
 		{
 			if (type == "select")
 			{
-				// TODO fix this this
 				var scoper = $(this);
 				$.each(options, function(value, content)
 				{
 					var option;
 					if (typeof (content) == "string")
-					{
 						option = $("<option>").attr("value", value).html(
 								content);
-					}
 					if (typeof (content) == "object")
-					{
-						option = $("<option>").attr("selected",
-								content["selected"]).html(content["value"]);
-					}
+						option = _create("<option>", {}, content).html(content["value"]);
 					$(scoper).append(option);
 				});
 			}
@@ -238,6 +239,7 @@
 			if (type == "text")
 			{
 				var key = "hint";
+				var scoper = this;
 				$(this).data(key, options);
 				$(this).val(options);
 				$(this).focus(function()
@@ -249,6 +251,12 @@
 				{
 					if ($(this).val() == "")
 						$(this).val($(this).data(key));
+				});
+				// Submit handler that clears the field before submit
+				$(this).parents("form").submit(function()
+				{
+					if($(scoper).val() == $(scoper).data(key))
+						$(scoper).val("");
 				});
 			}
 		},
@@ -270,7 +278,6 @@
 			}
 			else
 			{
-				// TODO maybe derive ID from name
 				var labelops =
 				{
 					"type" : "label"
@@ -297,6 +304,16 @@
 			}
 		},
 		/**
+		 * An empty subscriber for type so that it doesn't show up as
+		 * attributed in HTML elements. Since every element needs a type
+		 * parameter feel free to add other type subscribers to do
+		 * processing between [pre] and [post]
+		 * 
+		 * @param options string the name of the type.
+		 * @param type string The type of the <strong>this</strong> element
+		 */
+		"type" : function(options, type) {},
+		/**
 		 * The 'type' subscriber function is a post processing function,
 		 * that will run whenever all other subscribers are finished.
 		 * 
@@ -304,12 +321,42 @@
 		 * creating the current element.
 		 * @param type string The type of the <strong>this</strong> element
 		 */
-		"type" : function(options, type)
+		"[post]" : function(options, type)
 		{
 			if (type == "submit")
 				$(this).wrap("<p>");
 		}
 	});
+	
+	if($.isFunction($.fn.validate)) // Check if the validation plugin is available
+	{
+		$.dform.subscribe(
+		{
+			/**
+			 * Add a preprocessing subscriber that calls .validate() on the form,
+			 * so that we can add rules to the input elements.
+			 * 
+			 * @param options mixed All options that have been used for 
+			 * creating the current element.
+			 * @param type string The type of the <strong>this</strong> element
+			 */
+			"[pre]" : function(options, type)
+			{
+			if(type == "form")
+				$(this).validate();
+			},
+			/**
+			 * Adds support for the jQuery validation rulesets.
+			 * 
+			 * @param options object Options as specified in the rules parameter
+			 * @param type string The type of the <strong>this</strong> element
+			 */
+			"validate" : function(options, type)
+			{
+				$(this).rules("add", options);
+			}
+		});
+	}
 
 	// TODO implement radiolist and checkboxlist
 })(jQuery);
