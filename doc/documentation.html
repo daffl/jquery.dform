@@ -1,0 +1,213 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>JQuery :: dForm</title>
+	<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+   	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+		
+    <script type="text/javascript" src="../js/jquery.dform.js"></script>
+	<script type="text/javascript" src="../js/jquery.dform.subscriptions.js"></script>
+	<script type="text/javascript" src="../js/jquery.dform.ext.js"></script>
+
+	<!-- Syntax Highlighter -->
+	<script type="text/javascript" src="resources/highlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="resources/highlighter/scripts/shBrushJScript.js"></script>
+	<link type="text/css" rel="stylesheet" href="resources/highlighter/styles/shCoreDefault.css"/>
+</head>
+<body>
+    <script type="text/javascript">
+        <!--
+		$(document).ready(function() {
+			SyntaxHighlighter.all();
+			$(".tabs").tabs(); // Make jQuery UI tabs on this page
+			
+			$.dform.subscribe("[type=hellobutton]", function(options) {
+				// Get the HTML attributes without element subscriber options for the button
+				var htmlattributes = $.dform.htmlAttributes(options);
+				// Always return a DOM element
+				return $("<button>").attr(htmlattributes).html("Say hello");
+			});
+			
+			$.dform.subscribe("alert", function(options, type) {
+				if(type == "button" || type == "submit" || type == "hellobutton")
+				{
+					$(this).click(function() {
+						alert(options);
+					});
+				}
+			});
+			
+			// Use it like this
+			$("#mydiv").buildForm(
+			{
+				"type" : "hellobutton",
+				"alert" : "Hello world!"
+			});
+        });
+        -->
+    </script>
+<div id="align" class="corner ui-widget">
+	<div id="logo" class="centered"><img src="resources/logo.png" ald="jQuery::dForm" /></div>
+	<div id="menu" class="centered full ui-widget-content ui-corner-all">
+		<div class="padsmall">
+			<a href="index.html">The plugin</a> |
+			<a href="documentation.html" class="active">Documentation</a> |
+			<a target="_blank" href="http://github.com/daffl/jquery.dform/downloads">Download</a> |
+			<a target="_blank" href="http://github.com/daffl/jquery.dform/wiki">Wiki</a>
+		</div>
+	</div>
+	<a name="plugin"></a>
+	<h2>Basics</h2>
+	<p>
+		The central element of the dform plugin are so called subscriber functions. There are 
+		many predefined subscribers you can use as well as register your own. There are three
+		different types of subscribers: Type, element and special subscribers.<br />
+		Type subscribers generate a new element for a given type, element subscribers will be called
+		when the name they are registered with appears in the options given to the plugin and special
+		subscribers will be called on special events.
+	</p>
+	<p>Example:</p>
+	<pre class="brush: js">
+		$("#myform").buildForm({
+			"name" : "textfield",
+			"type" : "text",
+			"id" : "testid",
+			"value" : "Testvalue",
+			"class" : "text-class"
+			"label" : "Label for textfield",
+		});
+	</pre>
+	<p>
+		The above JavaScript snippet will do the following:<br />
+		<ol>
+			<li>Look for a type subscriber called <code>[type=text]</code>, which creates
+			an input field with the type text, like this:<br />
+			<pre class="brush: js"><input type="text" /></pre></li>
+			<li>Add all attributes to the input element that don't have a registered element subscriber
+			(which in this case are name, id and value) extending the element like so:<br />
+			<pre class="brush: js"><input type="text" value="Testvalue" id="testid" name="textfield" /></pre></li>
+			<li>Run the <i>class</i> element subscriber which is implemented like this:<br />
+			<pre class="brush: js">
+				$.dform.subscribe("class", function(options, type) {
+					$(this).addClass(options);
+				});
+			</pre>
+			So it basically just adds the class given as the value ("text-class") to the input element.
+			</li>
+			<li>Run the <i>label</i> element subscriber which adds a label to the current element</li>
+		</ol>
+	</p>
+	<h2>Pre defined types</h2>
+	<p>The following basic form element types are supported:</p>
+	<ul>
+		<li><code>text</code> Creates a text input</li>
+		<li><code>password</code> Creates a password input</li>
+		<li><code>select</code> Creates an empty dropdown list</li>
+		<li><code>fieldset</code> Creates an empty fieldset</li>
+		<li><code>textarea</code> Creates a textarea</li>
+		<li><code>submit</code> Creates a submit button</li>
+		<li><code>radio</code> Creates a radio button</li>
+		<li><code>checkbox</code> Creates a checkbox</li>
+		<li><code>label</code> Creates an empty label</li>
+		<li><code>html</code> Creates an empty span element to wrap html</li>
+		<li><code>button</code> Creates button element</li>
+	</ul>
+	<p>If you are using <a href="http://jqueryui.com/" target="_blank">jQuery UI</a> 
+	you can also use this types:</p>
+	<ul>
+		<li><code>progressbar</code> A progressbar. For supported options
+		see the <a href="http://jqueryui.com/demos/progressbar/" target="_blank">progressbar documentation</a></li>
+		<li><code>slider</code> The jQuery UI slider. For supported options
+		see the <a href="http://jqueryui.com/demos/slider/" target="_blank">slider documentation</a></li>
+		<li><code>tabs</code> Container for adding tabs</li>
+	</ul>
+	<h2>Pre defined element subscribers</h2>
+	<p>After the type subscriber ran, the created element will be added to the DOM.
+	Then the options will be traversed and, if there are any, all element subscribers
+	will be called, with the newly added elememnt as this. The following basic element
+	subscribers are already registered:</p>
+	<ul>
+		<li><code>class</code> Calls addClass on the current element
+		(instead of of the standard behaviour which is replacing the class attribute)</li>
+		<li><code>html</code> Sets html content of the current element</li>
+		<li><code>elements</code> Recursively appends subelements to the current form element.</li>
+		<li><code>value</code> Sets the value of the current element.</li>
+		<li><code>options</code> Adds options to select type elements.</li>
+		<li><code>hint</code> Adds a default default value to text elements, that disappears
+		when the element gets focussed and reappears if the element looses
+		focus and nothing has been entered.</li>
+		<li><code>label</code> Adds a label element before (or behind, if the
+		current element is a radiobutton or a checkbox) the current element or a legend
+		if the current element is a fieldset.</li>
+	</ul>
+	<p>With jQuery UI, you will have additionally the following element subscribers:</p>
+	<ul>
+		<li><code>dialog</code> Creates a dialog on form or fieldset elements. For supported options
+		see the <a href="http://jqueryui.com/demos/dialog/" target="_blank">dialog documentation</a></li>
+		<li><code>resizable</code> Makes the current element resizable. For supported options
+		see the <a href="http://jqueryui.com/demos/resizable/" target="_blank">resizable documentation</a></li>
+		<li><code>datepicker</code> Turns a text element into a datepicker. For supported options
+		see the <a href="http://jqueryui.com/demos/autocomplete/" target="_blank">datepicker documentation</a></li>
+		<li><code>autocomplete</code> Adds an autocomplete feature to a text element. For supported options
+		see the <a href="http://jqueryui.com/demos/autocomplete/" target="_blank">autocomplete documentation</a></li>
+	</ul>
+	<p>If you are using the <a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/" target="_blank">
+	jQuery validation</a> plugin you can use the following subscriber for adding field validation:</p>
+	<ul>
+		<li><code>validate</code> Valdiates the current element
+		using the validation plugin. For options see
+		the <a href="http://docs.jquery.com/Plugins/Validation/rules#.22add.22rules" target="_blank">
+		jQuery validate documentation for adding validation rules</a>
+		</li>
+	</ul> 
+	<h2>Special subscribers</h2>
+	<p>Currently there are only two types of special subscribers supported</p>
+	<ul>
+		<li><code>[pre]</code> Function registered with this name will
+		be called before any processing occurs.</li>
+		<li><code>[post]</code> Functions registered with this name will
+		be called after all processing is finished.</li>
+	</ul>
+	<h2>Adding your own</h2>
+	<p>The main difference between type and element subscribers is, that element subscribers
+	get the element passed which is already added into the DOM. So you will have to decide
+	if you own subscriber will create a new element or enhance an existing one. In the following
+	hands on example we will create a custom hello world button and a subscriber that will alert
+	some text when the element was clicked:</p>
+	<script type="syntaxhighlighter" class="brush: js"><![CDATA[
+		$.dform.subscribe("[type=hellobutton]", function(options) {
+			// Get the HTML attributes without element subscriber options for the button
+			var htmlattributes = $.dform.htmlAttributes(options);
+			// Always return a DOM element
+			return $("<button>").attr(htmlattributes).html("Say hello");
+		});
+		
+		$.dform.subscribe("alert", function(options, type) {
+			if(type == "button" || type == "submit" || type == "hellobutton")
+			{
+				$(this).click(function() {
+					alert(options);
+				});
+			}
+		});
+		
+		// Use it like this
+		$("#mydiv").buildForm(
+		{
+			"type" : "hellobutton",
+			"alert" : "Hello world!"
+		});
+	]]></script>
+	<div class="ui-widget-content ui-corner-all">
+		<div class="padsmall">
+			<p>This is how it will look like:</p>		
+			<div id="mydiv"></div>
+		</div>
+	</div>
+	<div style="height: 50px;"></div>
+	</div>
+</body>
+</html>
