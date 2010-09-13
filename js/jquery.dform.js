@@ -34,7 +34,8 @@
 	var _subscriptions = {};
 
 	/**
-	 * Returns the keyset from a given object
+	 * Returns the keyset from a given object.
+	 * @param object The object to use
 	 */
 	$.keyset = function(object)
 	{
@@ -47,7 +48,9 @@
 
 	/**
 	 * Returns an object that contains all values from the given
-	 * object that have a key which is also in the array keys
+	 * object that have a key which is also in the array keys.
+	 * @param object The object to traverse
+	 * @param keys The keys the new object should contain
 	 */
 	$.withKeys = function(object, keys)
 	{
@@ -61,7 +64,10 @@
 	
 	/**
 	 * Returns an object that contains all value from the given
-	 * object that do not have a key which is also in the array keys
+	 * object that do not have a key which is also in the array keys.
+	 * @param object The object to traverse
+	 * @param keys A list of keys that should not be contained in the
+	 * new object
 	 */
 	$.withoutKeys = function(object, keys)
 	{
@@ -75,6 +81,14 @@
 	
 	$.dform =
 	{
+		/**
+		 * Returns the HTML attributes based on a given object.
+		 * The returned object will contain any key value pair
+		 * where the key is not the name of a subscriber function
+		 * and the key is not in the string array excludes.
+		 * @param object The attribute object
+		 * @param excludes A list of keys that should also be excluded
+		 */
 		htmlAttributes : function(object, excludes)
 		{
 			// Ignore any subscriber name and the objects given in excludes
@@ -97,7 +111,11 @@
 			return $.keyset(_subscriptions);
 		},
 		/**
-		 * Register a subscriber
+		 * Register a subscriber function.
+		 * @param data Can either be the name of the subscriber
+		 * function or an object that contains name : subscriber function
+		 * pairs
+		 * @param fn The function to subscribe
 		 */
 		subscribe : function(data, fn)
 		{
@@ -114,27 +132,43 @@
 				});
 			}
 		},
-		// Clear all subscriptions for name
+		/**
+		 * Register a subscriber if a given condition is true.
+		 * Use it if you want to subscribe only, if e.g. a required plugin
+		 * is installed (pass $.isFunction($.fn.pluginName)).
+		 * @param condition The condition
+		 * @param data Can either be the name of the subscriber
+		 * function or an object that contains name : subscriber function
+		 * pairs
+		 * @param fn The function to subscribe
+		 */
+		subscribeIf : function(condition, data, fn)
+		{
+			if(condition)
+				$.dform.subscribe(data, fn);
+		},
+		/**
+		 * Delete all subscriptions for a given name.
+		 * @param name The name of the subscriber to delete 
+		 */
 		clearSubscription : function(name)
 		{
 			delete _subscriptions[name];
 		},
+		/**
+		 * Returns if a subscriber function with the given name
+		 * has been registered.
+		 * @param name The subscriber name
+		 */
 		hasSubscription : function(name)
 		{
 			return _subscriptions[name] ? true : false;
 		},
-		runSubscription : function(name, element, options, type)
-		{
-			if ($.dform.hasSubscription(name))
-			{
-				$.each(_subscriptions[name], function(i, sfn)
-				{
-					// run subscriber function with options
-					sfn.call(element, options, type);
-				});
-			}
-		},
-		// Run element created by type builder function
+		/**
+		 * Create a new element with a given type from
+		 * the registered [type=typename] function.
+		 * @param The options to use
+		 */
 		createElement : function(options)
 		{
 			var type = options["type"];
@@ -158,13 +192,31 @@
 
 	$.fn.extend(
 	{
-		// Run a subscribed function on an element
+		/**
+		 * Run all subscriptions with the given name and options
+		 * on an element
+		 * @param name The name of the subscriber functions
+		 * @param options Options for the function
+		 * @param The type of the current element (as in
+		 * the registered types)
+		 */
 		runSubscription : function(name, options, type)
 		{
-			$.dform.runSubscription(name, $(this), options, type);
+			var element = $(this);
+			if ($.dform.hasSubscription(name))
+			{
+				$.each(_subscriptions[name], function(i, sfn)
+				{
+					// run subscriber function with options
+					sfn.call(element, options, type);
+				});
+			}
 			return $(this);
 		},
-		// Run all subscription functions with given options
+		/**
+		 * Run all subscription functions with given options
+		 * @param options The options to use
+		 */
 		runAll : function(options)
 		{
 			var type = options["type"];
@@ -174,14 +226,16 @@
 			$.each(options, function(name, sopts)
 			{
 				// TODO each loop for list of dom elements
-				if (name != "[pre]" && name != "[post]")
-					$(scoper).runSubscription(name, sopts, type);
+				$(scoper).runSubscription(name, sopts, type);
 			});
 			// Run post processing subscribers
 			$(this).runSubscription("[post]", options, type);
 			return $(this);
 		},
-		// Form element builder function
+		/**
+		 * Creates a form element on a element with given options
+		 * @param options The options to use
+		 */
 		formElement : function(options)
 		{
 			// Create element (run builder function for type)
@@ -191,15 +245,19 @@
 			$(element).runAll(options);
 			return $(this);
 		},
-		// Build an entire form
+		/**
+		 * Build an entire form, if the current element is a form.
+		 * Otherwise the formElement function will be called on the
+		 * current element.
+		 * @param The options to use
+		 */
 		buildForm : function(options)
 		{
 			if ($(this).is("form"))
 			{
-				var ops = $.extend(
-				{}, options);
+				var ops = $.extend({}, options);
 				ops.type = "form";
-				$(this).attr($.dform.htmlAttributes(options));
+				$(this).attr($.dform.htmlAttributes(ops));
 				$(this).runAll(ops);
 			} else
 				$(this).formElement(options);

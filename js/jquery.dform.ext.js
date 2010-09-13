@@ -24,9 +24,9 @@
  */
 
 /**
- * Plugin extension subscribers, adding support for jQuery UI
- * and the Validation Plugin.
- * Initializes element type subscribers and subscriber functions
+ * Plugin extension subscribers, to support external jQuery plugins,
+ * adding support for jQuery UI and the Validation Plugin.
+ * Initializes element types and subscriber functions
  * provided by the jQuery UI framework.
  * Only subscribes if the elements (like tabs, slider, progressbar etc.)
  * are actually available (in case you are using a custom jQuery UI build).
@@ -35,49 +35,46 @@
  */
 (function($)
 {
-	if($.isFunction($.fn.validate)) // Check if the validation plugin is available
+	$.dform.subscribeIf($.isFunction($.fn.validate), // Subscribe if validation plugin is available
 	{
-		$.dform.subscribe(
+		/**
+		 * Add a preprocessing subscriber that calls .validate() on the form,
+		 * so that we can add rules to the input elements.
+		 * 
+		 * @param options mixed All options that have been used for 
+		 * creating the current element.
+		 * @param type string The type of the <strong>this</strong> element
+		 */
+		"[pre]" : function(options, type)
 		{
-			/**
-			 * Add a preprocessing subscriber that calls .validate() on the form,
-			 * so that we can add rules to the input elements.
-			 * 
-			 * @param options mixed All options that have been used for 
-			 * creating the current element.
-			 * @param type string The type of the <strong>this</strong> element
-			 */
-			"[pre]" : function(options, type)
+			if(type == "form")
 			{
-				if(type == "form")
-				{
-					var defaults = {};
-					if($(this).hasClass("ui-widget"))
-					defaults = {
-						highlight: function(input)
-						{
-							$(input).addClass("ui-state-highlight");
-						},
-						unhighlight: function(input)
-						{
-							$(input).removeClass("ui-state-highlight");
-						}
-					};
-					$(this).validate(defaults);
-				}
-			},
-			/**
-			 * Adds support for the jQuery validation rulesets.
-			 * 
-			 * @param options object Options as specified in the rules parameter
-			 * @param type string The type of the <strong>this</strong> element
-			 */
-			"validate" : function(options, type)
-			{
-				$(this).rules("add", options);
+				var defaults = {};
+				if($(this).hasClass("ui-widget"))
+				defaults = {
+					highlight: function(input)
+					{
+						$(input).addClass("ui-state-highlight");
+					},
+					unhighlight: function(input)
+					{
+						$(input).removeClass("ui-state-highlight");
+					}
+				};
+				$(this).validate(defaults);
 			}
-		});
-	}
+		},
+		/**
+		 * Adds support for the jQuery validation rulesets.
+		 * 
+		 * @param options object Options as specified in the rules parameter
+		 * @param type string The type of the <strong>this</strong> element
+		 */
+		"validate" : function(options, type)
+		{
+			$(this).rules("add", options);
+		}
+	});
 	
 	function _getOptions(type, options)
 	{
@@ -89,9 +86,7 @@
 		return result;
 	}
 	
-	if($.isFunction($.fn.progressbar))
-	{
-		$.dform.subscribe("[type=progressbar]", 
+	$.dform.subscribeIf($.isFunction($.fn.progressbar), "[type=progressbar]", 
 		/**
 		 * Returns a progressbar jQuery UI progressbar.
 		 * @param options object All parameters for this type
@@ -101,11 +96,8 @@
 			var ops = _getOptions("progressbar", options);
 			return $("<div>").attr(ops.attributes).progressbar(ops.options);
 		});
-	}
 	
-	if($.isFunction($.fn.slider))
-	{
-		$.dform.subscribe("[type=slider]", 
+	$.dform.subscribeIf($.isFunction($.fn.slider), "[type=slider]", 
 		/**
 		 * Returns a slider.
 		 * @param options object All parameters for this type
@@ -115,57 +107,51 @@
 			var ops = _getOptions("slider", options);
 			return $("<div>").attr(ops.attributes).slider(ops.options);
 		});
-	}
 	
-	if($.isFunction($.fn.tabs))
+	$.dform.subscribeIf($.isFunction($.fn.tabs),
 	{
-		$.dform.subscribe(
+		/**
+		 * Creates a container for jQuery UI tabs.
+		 * @param options object All parameters for this type
+		 */
+		"[type=tabs]" : function(options)
 		{
-			/**
-			 * Creates a container for jQuery UI tabs.
-			 * @param options object All parameters for this type
-			 */
-			"[type=tabs]" : function(options)
+			var ops = _getOptions("tabs", options);
+			return $("<div>").attr(ops.attributes);
+		},
+		/**
+		 * Adds tabs to a tab element.
+		 * 
+		 * @param options object An object containing a tab with its unique id as a key
+		 * and the tab options including an "elements" with all
+		 * subelements as a value.
+		 * @param type string The type of the <strong>this</strong> element
+		 */
+		"tabs" : function(options, type)
+		{
+			if (type == "tabs")
 			{
-				var ops = _getOptions("tabs", options);
-				return $("<div>").attr(ops.attributes);
-			},
-			/**
-			 * Adds tabs to a tab element.
-			 * 
-			 * @param options object An object containing a tab with its unique id as a key
-			 * and the tab options including an "elements" with all
-			 * subelements as a value.
-			 * @param type string The type of the <strong>this</strong> element
-			 */
-			"tabs" : function(options, type)
-			{
-				if (type == "tabs")
+				$(this).append("<ul>");
+				var scoper = $(this);
+				$.each(options, function(tabname, ops)
 				{
-					$(this).append("<ul>");
-					var scoper = $(this);
-					$.each(options, function(tabname, ops)
+					var tablink = $("<a>").attr(
 					{
-						var tablink = $("<a>").attr(
-						{
-							"href" : "#" + tabname
-						}).html(ops.title);
-						var li = $("<li>").append(tablink);
-						var tabdiv = $("<div>").attr("id", tabname);
-						$(scoper).children("ul").first().append(li);
-						$(scoper).append(tabdiv);
-						
-						$(tabdiv).runAll(ops);
-					});
-				}
-				$(this).tabs();
+						"href" : "#" + tabname
+					}).html(ops.title);
+					var li = $("<li>").append(tablink);
+					var tabdiv = $("<div>").attr("id", tabname);
+					$(scoper).children("ul").first().append(li);
+					$(scoper).append(tabdiv);
+					
+					$(tabdiv).runAll(ops);
+				});
 			}
-		});
-	}
+			$(this).tabs();
+		}
+	});
 	
-	if($.isFunction($.fn.accordion))
-	{
-		$.dform.subscribe("[type=accordion]",
+	$.dform.subscribeIf($.isFunction($.fn.accordion), "[type=accordion]",
 		/**
 		 * Creates a container for the jQuery UI accordion.
 		 * @param options object All parameters for this type
@@ -176,11 +162,8 @@
 			var ops = _getOptions("accordion", options);
 			return $("<div>").attr(ops.attributes);
 		});
-	}
 
-	if($.isFunction($.fn.dialog))
-	{
-		$.dform.subscribe("dialog",
+	$.dform.subscribeIf($.isFunction($.fn.dialog), "dialog",
 		/**
 		 * Creates a dialog on form or fieldset elements.
 		 * 
@@ -192,11 +175,8 @@
 			if (type == "form" || type == "fieldset")
 				$(this).dialog(options);
 		});
-	}
 	
-	if($.isFunction($.fn.resizable))
-	{
-		$.dform.subscribe("resizable",
+	$.dform.subscribeIf($.isFunction($.fn.resizable), "resizable",
 		/**
 		 * Makes the current element resizeable.
 		 * 
@@ -207,11 +187,8 @@
 		{
 			$(this).resizable(options);
 		});
-	}
 	
-	if($.isFunction($.fn.datepicker))
-	{
-		$.dform.subscribe("datepicker", 
+	$.dform.subscribeIf($.isFunction($.fn.datepicker), "datepicker", 
 		/**
 		 * Turns a text element into a datepicker
 		 * 
@@ -223,11 +200,8 @@
 			if (type == "text")
 				$(this).datepicker(options);
 		});
-	}
-	
-	if($.isFunction($.fn.autocomplete))
-	{
-		$.dform.subscribe("autocomplete", 
+		
+	$.dform.subscribeIf($.isFunction($.fn.autocomplete), "autocomplete", 
 		/**
 		 * Adds an autocomplete feature to a text element.
 		 * 
@@ -239,27 +213,26 @@
 			if (type == "text")
 				$(this).autocomplete(options);
 		});
-	}
 	
 	$.dform.subscribe("[post]",
-	/**
-	 * Post processing subscriber that adds jQuery UI styling classes to
-	 * "text", "textarea", "password" and "fieldset" elements as well
-	 * as calling .button() on submit buttons.
-	 * 
-	 * @param options mixed All options that have been used for 
-	 * creating the current element.
-	 * @param type string The type of the <strong>this</strong> element
-	 */
-	function(options, type)
-	{
-		if ($(this).parents("form").hasClass("ui-widget"))
+		/**
+		 * Post processing subscriber that adds jQuery UI styling classes to
+		 * "text", "textarea", "password" and "fieldset" elements as well
+		 * as calling .button() on submit buttons.
+		 * 
+		 * @param options mixed All options that have been used for 
+		 * creating the current element.
+		 * @param type string The type of the <strong>this</strong> element
+		 */
+		function(options, type)
 		{
-			if ( (type == "button" || type == "submit") && $.isFunction($.fn.button))
-				$(this).button();
-			if ($.inArray(type, [ "text", "textarea", "password",
-					"fieldset" ]) != -1)
-				$(this).addClass("ui-widget-content ui-corner-all");
-		}
-	});
+			if ($(this).parents("form").hasClass("ui-widget"))
+			{
+				if ((type == "button" || type == "submit") && $.isFunction($.fn.button))
+					$(this).button();
+				if ($.inArray(type, [ "text", "textarea", "password",
+						"fieldset" ]) != -1)
+					$(this).addClass("ui-widget-content ui-corner-all");
+			}
+		});
 })(jQuery);

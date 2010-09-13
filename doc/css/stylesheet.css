@@ -57,3 +57,4 @@ a, .ui-widget-content a
 }
 a:hover, a.active { color: #6eac2c; }
 h1, h2, h3 { color: #505050; }
+ul code { font-family: serif; font-weight: bold; }

@@ -8,7 +8,7 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
    	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
-	
+		
     <script type="text/javascript" src="../js/jquery.dform.js"></script>
 	<script type="text/javascript" src="../js/jquery.dform.subscriptions.js"></script>
 	<script type="text/javascript" src="../js/jquery.dform.ext.js"></script>
@@ -39,9 +39,8 @@
 	<div id="logo" class="centered"><img src="resources/logo.png" ald="jQuery::dForm" /></div>
 	<div id="menu" class="centered full ui-widget-content ui-corner-all">
 		<div class="padsmall">
-			<a href="#plugin">The plugin</a> |
-			<a href="#examples">Examples</a> |
-			<a href="#about">About</a> |
+			<a href="index.html" class="active">The plugin</a> |
+			<a href="documentation.html">Documentation</a> |
 			<a target="_blank" href="http://github.com/daffl/jquery.dform/downloads">Download</a> |
 			<a target="_blank" href="http://github.com/daffl/jquery.dform/wiki">Wiki</a>
 		</div>
@@ -89,7 +88,7 @@
 	<p>You should try this plugin if you want to</p>
 	<ul>
 		<li>manage all your form related jQuery plugins in a unified way
-		<br />(some supported out of the box)</li>
+		<br />(jQuery UI and the Validation plugin supported out of the box)</li>
 		<li>scaffold forms from business objects of your server side framework</li>
 		<li>have an easy way to include jQuery UI elements and JavaScript validation</li>
 		<li>write JavaScript instead of HTML markup since your page doesn't run without JS anyway</li>
@@ -143,9 +142,9 @@
 	</div>
 	
 	<h3>Registration form</h3>
-	<p>A more complex form with form field validation using the well established 
-	jQuery validation plugin (submit to see validation messages)</p>
-	
+	<p>A more complex form with form field validation using the well established
+	<a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/" target="_blank">jQuery validation plugin</a>
+	 (submit to see validation messages)</p>
 	<style type="text/css">
 		#registrationform fieldset { width: 45%; float: left; height: 420px; margin-right: 5px; }
 		#registrationform input[type=submit] { margin: 10px 0; }
@@ -281,10 +280,11 @@
 		});
 	--></script>
 	<h3>jQuery UI</h3>
-	<p>The plugin comes with support for the great jQuery UI framework and its controls.
+	<p>The plugin comes with support for the great <a href="http://jqueryui.com" target="_blank">jQuery UI</a>
+	and its controls.
 	If the form has the <strong>.ui-widget</strong> class matching jQuery UI styles will be applied
 	to all buttons and input elements as well as the validation messages.</p>
-	<p>Example for standard form enhanced with jQuery UI css, showing in a jQuery UI modal dialog</p>
+	<p>Example for standard form with validation enhanced with jQuery UI css, showing in a jQuery UI modal dialog</p>
     <div class="exampleform tabs">
 		<ul>
 			<li><a href="#uiform-div">Form</a></li>
@@ -450,10 +450,12 @@
 	<a name="about"></a>
 	<h2>About</h2>
 	<p>Download the <a target="_blank" href="http://github.com/daffl/jquery.dform/downloads">jQuery.dForm package</a></p>
+	<p>Read on in the <a href="documentation.html">Documentation</a></p>
 	<p>Visit the project page on <a target="_blank" href="http://github.com/daffl/jquery.dform">GitHub</a></p>
 	<p>File a new bug report or feature request on the <a target="_blank" href="http://github.com/daffl/jquery.dform/issues">GitHub issue tracker</a></p>
-	<p>Read more about extending and customizing the plugin in the <a target="_blank" href="http://github.com/daffl/jquery.dform/wiki">Wiki</a></p>
+	<p>Help improve the <a target="_blank" href="http://github.com/daffl/jquery.dform/wiki">Wiki</a></p>
 	<p>Follow <a target="_blank" href="http://twitter.com/daffl">@daffl</a> on Twitter</p>
+	<div style="height: 50px;"></div>
 </div>
 </body>
 </html>

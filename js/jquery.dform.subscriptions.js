@@ -24,7 +24,7 @@
  */
 
 /**
- * Initializes basic element type subscribers and core subscriber functions.
+ * Initializes basic element types and core subscriber functions.
  * 
  * @author David Luecke <daff@neyeon.de>
  */
@@ -168,7 +168,7 @@
 			$(this).addClass(options);
 		},
 		/**
-		 * Sets html content on the current element
+		 * Sets html content of the current element
 		 * 
 		 * @param options string The html content to set
 		 * @param type string The type of the <strong>this</strong> element
