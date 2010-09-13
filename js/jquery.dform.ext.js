@@ -2,27 +2,33 @@
  * jQuery dynamic form plugin
  * Copyright (C) 2010 David Luecke <daff@neyeon.de>
  * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * The MIT license
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
 /**
  * Plugin extension subscribers, adding support for jQuery UI
  * and the Validation Plugin.
  * Initializes element type subscribers and subscriber functions
- * provided by the jQuery UI framework adding jQuery UI support.
- * Only subscribes if the needed elements (like tabs, slider, progressbar etc.)
+ * provided by the jQuery UI framework.
+ * Only subscribes if the elements (like tabs, slider, progressbar etc.)
  * are actually available (in case you are using a custom jQuery UI build).
  * 
  * @author David Luecke <daff@neyeon.de>
@@ -73,7 +79,15 @@
 		});
 	}
 	
-	// TODO generalize initialization of ui elements (currently duplicated code)
+	function _getOptions(type, options)
+	{
+		var keys = $.keyset($.ui[type]["prototype"]["options"]);
+		var result = {
+			"options" : $.withKeys(options, keys),
+			"attributes" : $.dform.htmlAttributes(options, keys)
+		};
+		return result;
+	}
 	
 	if($.isFunction($.fn.progressbar))
 	{
@@ -84,10 +98,8 @@
 		 */
 		function(options)
 		{
-			var keys = $.keyset($.ui.progressbar.prototype.options);
-			var ops = $.withKeys(options, keys);
-			var attributes = $.withoutKeys(options, keys);
-			return $("<div>").attr(attributes).progressbar(ops);
+			var ops = _getOptions("progressbar", options);
+			return $("<div>").attr(ops.attributes).progressbar(ops.options);
 		});
 	}
 	
@@ -100,11 +112,8 @@
 		 */
 		function(options)
 		{
-			// Gets keys of the default options
-			var keys = $.keyset($.ui.slider.prototype.options);
-			var ops = $.withKeys(options, keys);
-			var attributes = $.withoutKeys(options, keys);
-			return $("<div>").attr(attributes).slider(ops);
+			var ops = _getOptions("slider", options);
+			return $("<div>").attr(ops.attributes).slider(ops.options);
 		});
 	}
 	
@@ -118,10 +127,8 @@
 			 */
 			"[type=tabs]" : function(options)
 			{
-				var keys = $.keyset($.ui.tabs.prototype.options);
-				var ops = $.withKeys(options, keys);
-				var attributes = $.withoutKeys(options, keys);
-				return $("<div>").attr(attributes);
+				var ops = _getOptions("tabs", options);
+				return $("<div>").attr(ops.attributes);
 			},
 			/**
 			 * Adds tabs to a tab element.
@@ -165,10 +172,9 @@
 		 */
 		function(options)
 		{
-			var keys = $.keyset($.ui.accordion.prototype.options);
-			var ops = $.withKeys(options, keys);
-			var attributes = $.withoutKeys(options, keys);
-			return $("<div>").attr(attributes);
+			// TODO finish accordion type
+			var ops = _getOptions("accordion", options);
+			return $("<div>").attr(ops.attributes);
 		});
 	}
 
@@ -247,7 +253,6 @@
 	 */
 	function(options, type)
 	{
-		// TODO style validation plugin controls with jQuery UI classes
 		if ($(this).parents("form").hasClass("ui-widget"))
 		{
 			if ( (type == "button" || type == "submit") && $.isFunction($.fn.button))

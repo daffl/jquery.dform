@@ -2,19 +2,25 @@
  * jQuery dynamic form plugin
  * Copyright (C) 2010 David Luecke <daff@neyeon.de>
  * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * The MIT license
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
 /**
@@ -30,7 +36,7 @@
 	 */
 	function _create(tag, defaults, options)
 	{
-		var ops = $.dform.getOptions(options);
+		var ops = $.dform.htmlAttributes(options);
 		return $($(tag).attr($.extend(defaults, ops)));
 	}
 
@@ -305,7 +311,7 @@
 		},
 		/**
 		 * An empty subscriber for type so that it doesn't show up as
-		 * attributed in HTML elements. Since every element needs a type
+		 * an attribute in HTML elements. Since every element needs a type
 		 * parameter feel free to add other type subscribers to do
 		 * processing between [pre] and [post]
 		 * 
@@ -327,36 +333,6 @@
 				$(this).wrap("<p>");
 		}
 	});
-	
-	if($.isFunction($.fn.validate)) // Check if the validation plugin is available
-	{
-		$.dform.subscribe(
-		{
-			/**
-			 * Add a preprocessing subscriber that calls .validate() on the form,
-			 * so that we can add rules to the input elements.
-			 * 
-			 * @param options mixed All options that have been used for 
-			 * creating the current element.
-			 * @param type string The type of the <strong>this</strong> element
-			 */
-			"[pre]" : function(options, type)
-			{
-			if(type == "form")
-				$(this).validate();
-			},
-			/**
-			 * Adds support for the jQuery validation rulesets.
-			 * 
-			 * @param options object Options as specified in the rules parameter
-			 * @param type string The type of the <strong>this</strong> element
-			 */
-			"validate" : function(options, type)
-			{
-				$(this).rules("add", options);
-			}
-		});
-	}
 
 	// TODO implement radiolist and checkboxlist
 })(jQuery);
