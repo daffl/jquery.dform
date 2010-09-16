@@ -1,26 +1,8 @@
 /*
- * jQuery dynamic form plugin
+ * jQuery dform plugin
  * Copyright (C) 2010 David Luecke <daff@neyeon.de>
  * 
- * The MIT license
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * Licensed under the MIT license
  */
 
 /**
@@ -95,6 +77,7 @@
 			var ignores = $.keyset(_subscriptions);
 			if($.isArray(excludes))
 				$.merge(ignores, excludes);
+			// TODO return $.withoutKeys(object, ignores);
 			var ops = {};
 			$.each(object, function(name, value)
 			{
@@ -175,12 +158,12 @@
 			if (!type) throw "No element type given! Must always exist.";
 			var name = "[type=" + options["type"] + "]";
 			var element = null;
+			// We don't need the type key in the options
 			var ops = $.withoutKeys(options, ["type"]);
 			if (_subscriptions[name])
 			{
 				// Run all builder functions called [type=<typename>]
-				$.each(_subscriptions[name], function(i, sfn)
-				{
+				$.each(_subscriptions[name], function(i, sfn) {
 					element = sfn.call(element, ops);
 				});
 			}
@@ -205,8 +188,7 @@
 			var element = $(this);
 			if ($.dform.hasSubscription(name))
 			{
-				$.each(_subscriptions[name], function(i, sfn)
-				{
+				$.each(_subscriptions[name], function(i, sfn) {
 					// run subscriber function with options
 					sfn.call(element, options, type);
 				});
@@ -223,8 +205,7 @@
 			var scoper = $(this);
 			// Run preprocessing subscribers
 			$(this).runSubscription("[pre]", options, type);
-			$.each(options, function(name, sopts)
-			{
+			$.each(options, function(name, sopts) {
 				// TODO each loop for list of dom elements
 				$(scoper).runSubscription(name, sopts, type);
 			});
@@ -255,8 +236,7 @@
 		{
 			if ($(this).is("form"))
 			{
-				var ops = $.extend({}, options);
-				ops.type = "form";
+				var ops = $.extend({ "type" : "form" }, options);
 				$(this).attr($.dform.htmlAttributes(ops));
 				$(this).runAll(ops);
 			} else

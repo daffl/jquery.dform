@@ -1,35 +1,16 @@
 /*
- * jQuery dynamic form plugin
+ * jQuery dform plugin
  * Copyright (C) 2010 David Luecke <daff@neyeon.de>
  * 
- * The MIT license
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * Licensed under the MIT license
  */
 
 /**
- * Plugin extension subscribers, to support external jQuery plugins,
- * adding support for jQuery UI and the Validation Plugin.
- * Initializes element types and subscriber functions
- * provided by the jQuery UI framework.
- * Only subscribes if the elements (like tabs, slider, progressbar etc.)
- * are actually available (in case you are using a custom jQuery UI build).
+ * Subscribers for supporting external jQuery Plugins
+ * (like jQuery UI and the validation plugin).
+ * Only subscribes if the elements (like validate, tabs, slider, progressbar etc.)
+ * are actually available (in case you are using customs builds).
+ * Make sure, that these plugins have been loaded before.
  * 
  * @author David Luecke <daff@neyeon.de>
  */
@@ -51,16 +32,18 @@
 			{
 				var defaults = {};
 				if($(this).hasClass("ui-widget"))
-				defaults = {
-					highlight: function(input)
-					{
-						$(input).addClass("ui-state-highlight");
-					},
-					unhighlight: function(input)
-					{
-						$(input).removeClass("ui-state-highlight");
-					}
-				};
+				{
+					defaults = {
+						highlight: function(input)
+						{
+							$(input).addClass("ui-state-highlight");
+						},
+						unhighlight: function(input)
+						{
+							$(input).removeClass("ui-state-highlight");
+						}
+					};
+				}
 				$(this).validate(defaults);
 			}
 		},

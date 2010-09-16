@@ -1,26 +1,8 @@
 /*
- * jQuery dynamic form plugin
+ * jQuery dform plugin
  * Copyright (C) 2010 David Luecke <daff@neyeon.de>
  * 
- * The MIT license
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * Licensed under the MIT license
  */
 
 /**
@@ -31,13 +13,18 @@
 (function($)
 {
 	/**
-	 * Create a new element with given tag and default attributes and settings.
-	 * Use only options that have no subscriptions. Append to parent if given.
+	 * Returns a function that uses the given tag and default values to create
+	 * a new element from given options.
+	 * @param tag The tag to use
+	 * @param defaults The default options
 	 */
-	function _create(tag, defaults, options)
+	function _creatorFunction(tag, defaults)
 	{
-		var ops = $.dform.htmlAttributes(options);
-		return $($(tag).attr($.extend(defaults, ops)));
+		// Currying :)
+		return function(options) {
+			var ops = $.dform.htmlAttributes(options);
+			return $(tag).attr($.extend(ops, defaults));		
+		};
 	}
 
 	// Type subscriber functions
@@ -47,110 +34,74 @@
 		 * Type function that creates a text input field
 		 * @param options object All parameters for this type
 		 */
-		"[type=text]" : function(options)
-		{
-			return _create("<input>",
-			{
-				"type" : "text"
-			}, options);
-		},
+		"[type=text]" : _creatorFunction("<input>", { "type" : "text" }),
 		/**
 		 * Type function that creates a password input field
 		 * @param options object All parameters for this type
 		 */
-		"[type=password]" : function(options)
-		{
-			return _create("<input>",
-			{
-				"type" : "password"
-			}, options);
-		},
+		"[type=password]" : _creatorFunction("<input>", { "type" : "password" }),
 		/**
 		 * Type function that creates a select input (without options)
 		 * @param options object All parameters for this type
 		 */
-		"[type=select]" : function(options)
-		{
-			return _create("<select>",
-			{}, options);
-		},
+		"[type=select]" : _creatorFunction("<select>", {}),
 		/**
 		 * Type function that creates a fieldset
 		 * @param options object All parameters for this type
 		 */
-		"[type=fieldset]" : function(options)
-		{
-			return _create("<fieldset>",
-			{}, options);
-		},
+		"[type=fieldset]" : _creatorFunction("<fieldset>", {}),
 		/**
 		 * Type function that creates a textarea
 		 * @param options object All parameters for this type
 		 */
-		"[type=textarea]" : function(options)
-		{
-			return _create("<textarea>",
-			{}, options);
-		},
+		"[type=textarea]" : _creatorFunction("<textarea>", {}),
 		/**
 		 * Type function that creates a submit button
 		 * @param options object All parameters for this type
 		 */
-		"[type=submit]" : function(options)
-		{
-			return _create("<input>",
-			{
-				"type" : "submit"
-			}, options);
-		},
-		/**
-		 * Type function that creates a single radio button
-		 * @param options object All parameters for this type
-		 */
-		"[type=radio]" : function(options)
-		{
-			return _create("<input>",
-			{
-				"type" : "radio"
-			}, options);
-		},
-		/**
-		 * Type function that creates a single radio checkbox
-		 * @param options object All parameters for this type
-		 */
-		"[type=checkbox]" : function(options)
-		{
-			return _create("<input>",
-			{
-				"type" : "checkbox"
-			}, options);
-		},
+		"[type=submit]" : _creatorFunction("<input>", { "type" : "submit" }),
 		/**
 		 * Type function that creates a label (without text)
 		 * @param options object All parameters for this type
 		 */
-		"[type=label]" : function(options)
-		{
-			return _create("<label>",
-			{}, options);
-		},
+		"[type=label]" : _creatorFunction("<label>", {}),
 		/**
 		 * Type function that returns a span element
 		 * @param options object All parameters for this type
 		 */
-		"[type=html]" : function(options)
-		{
-			return _create("<span>",
-			{}, options);
-		},
+		"[type=html]" : _creatorFunction("<span>", {}),
 		/**
 		 * Returns a button element.
 		 * @param options object All parameters for this type
 		 */
-		"[type=button]" : function(options)
-		{
-			return _create("<button>", {}, options);
-		}
+		"[type=button]" : _creatorFunction("<button>", {}),
+		/**
+		 * Returns a hidden input field.
+		 * @param options object All parameters for this type
+		 */
+		"[type=hidden]" : _creatorFunction("<input>", { "type" : "hidden" }),
+		/**
+		 * Type function that creates a single radio button
+		 * @param options object All parameters for this type
+		 */
+		"[type=radio]" : _creatorFunction("<input>", { "type" : "radio" }),
+		/**
+		 * Type function that creates a single radio checkbox
+		 * @param options object All parameters for this type
+		 */
+		"[type=checkbox]" : _creatorFunction("<input>", { "type" : "checkbox" }),
+		/**
+		 * Returns an empty container for checkbox lists
+		 */
+		"[type=checkboxes]" : _creatorFunction("<div>", {}),
+		/**
+		 * Returns an empty container for radiobuttons
+		 */
+		"[type=radiobuttons]" : _creatorFunction("<div>", {}),
+		/**
+		 * Create a file upload element
+		 */
+		"[type=file]" : _creatorFunction("<input>", { "type" : "file" })
 	});
 
 	// Subscriber functions
@@ -216,9 +167,10 @@
 		 */
 		"options" : function(options, type)
 		{
-			if (type == "select")
+			var scoper = $(this);
+			if (type == "select") // Options for select elements
 			{
-				var scoper = $(this);
+				// TODO optgroup
 				$.each(options, function(value, content)
 				{
 					var option;
@@ -226,8 +178,23 @@
 						option = $("<option>").attr("value", value).html(
 								content);
 					if (typeof (content) == "object")
-						option = _create("<option>", {}, content).html(content["value"]);
+					{
+						var fn = _creatorFunction("<option>", {});
+						option = fn($.withoutKeys(content, ["value"])).html(content["value"]);
+					}
 					$(scoper).append(option);
+				});
+			}
+			// Options for checkbox and radiobutton lists
+			if(type == "checkboxes" || type == "radiobuttons")
+			{
+				$.each(options, function(value, content) {
+					var boxoptions = ((type == "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
+					if(typeof(content) == "string")
+						boxoptions["label"] = content;
+					else
+						$.extend(boxoptions, content);
+					$(scoper).formElement(boxoptions);
 				});
 			}
 		},
@@ -240,11 +207,11 @@
 		 * with instructions for the user (e.g. enter mail here...)
 		 * @param type string The type of the <strong>this</strong> element
 		 */
-		"hint" : function(options, type)
+		"placeholder" : function(options, type)
 		{
-			if (type == "text")
+			if (type == "text" || type == "textarea")
 			{
-				var key = "hint";
+				var key = "placeholder";
 				var scoper = this;
 				$(this).data(key, options);
 				$(this).val(options);
@@ -268,7 +235,8 @@
 		},
 		/**
 		 * Adds a label element before the current element or a legend
-		 * if the current element is a fieldset.
+		 * if the current element is a fieldset or a decription next to it
+		 * if the current element is a radiobutton or a checkbox.
 		 * 
 		 * @param options string The label text or an object with label
 		 * options.
@@ -284,21 +252,12 @@
 			}
 			else
 			{
-				var labelops =
-				{
-					"type" : "label"
-				};
+				var labelops = { "type" : "label" };
 				if (typeof (options) == "string")
 					labelops["html"] = options;
 				else
 					$.extend(labelops, options);
-	
-				if ($(this).attr("name") != "" && $(this).attr("id") == ""
-						&& ($(this).is("input") || $(this).is("textarea")))
-				{
-					var id = "dform-" + type + "-" + $(this).attr("name");
-					$(this).attr("id", id);
-				}
+				// TODO automatic id generation?
 				if ($(this).attr("id"))
 					labelops["for"] = $(this).attr("id");
 				var label = $.dform.createElement(labelops);
@@ -310,10 +269,10 @@
 			}
 		},
 		/**
-		 * An empty subscriber for type so that it doesn't show up as
+		 * An empty subscriber for types so that it doesn't show up as
 		 * an attribute in HTML elements. Since every element needs a type
 		 * parameter feel free to add other type subscribers to do
-		 * processing between [pre] and [post]
+		 * any processing between [pre] and [post]
 		 * 
 		 * @param options string the name of the type.
 		 * @param type string The type of the <strong>this</strong> element
@@ -331,8 +290,12 @@
 		{
 			if (type == "submit")
 				$(this).wrap("<p>");
+			if (type == "checkboxes")
+			{
+				$(this).children("[type=checkbox]").each(function() {
+					$(this).attr("name", options.name);
+				});
+			}
 		}
 	});
-
-	// TODO implement radiolist and checkboxlist
 })(jQuery);

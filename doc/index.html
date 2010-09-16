@@ -97,7 +97,7 @@
 	<a name="examples"></a>
 	<h2>Examples</h2>
 	<h3>Login form</h3>
-	<p>A simple login form. The hint in the username field will dissapear when
+	<p>A simple login form. The placeholder in the username field will dissapear when
 	you focus it or submit the form.</p>
 
     <div class="exampleform tabs">
@@ -124,7 +124,7 @@
 						"id" : "txt-username",
 						"label" : "Username",
 						"type" : "text",
-						"hint" : "E.g. user@example.com"
+						"placeholder" : "E.g. user@example.com"
 					},
 					{
 						"name" : "password",
@@ -174,7 +174,7 @@
 								"name" : "email",
 								"label" : "Email address",
 								"type" : "text",
-								"hint" : "E.g. user@example.com",
+								"placeholder" : "E.g. user@example.com",
 								"validate" : 
 								{
 									"email" : true
@@ -219,7 +219,7 @@
 								"name" : "name",
 								"label" : "Your name",
 								"type" : "text",
-								"hint" : "E.g. John Doe"
+								"placeholder" : "E.g. John Doe"
 							},
 							{
 								"name" : "address",
@@ -255,6 +255,16 @@
 									},
 									"asia" : "Asia",
 									"australia" : "Australia"
+								}
+							},
+							{
+								"type" : "checkboxes",
+								"name" : "test",
+								"options" :
+								{
+									"red" : "Red",
+									"green" : "Green",
+									"blue" : "Blue" 
 								}
 							}
 						]
@@ -386,7 +396,7 @@
 						"name" : "textfield",
 						"label" : "Autocomplete",
 						"type" : "text",
-						"hint" : "Type 'A' or 'S'",
+						"placeholder" : "Type 'A' or 'S'",
 						"autocomplete" :
 						{
 							"source" :  [ "Apple", "Acer", "Sony", "Summer" ]
