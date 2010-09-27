@@ -63,8 +63,8 @@
 	{
 		var keys = $.keyset($.ui[type]["prototype"]["options"]);
 		var result = {
-			"options" : $.withKeys(options, keys),
-			"attributes" : $.dform.htmlAttributes(options, keys)
+			options : $.withKeys(options, keys),
+			attributes : $.dform.htmlAttributes(options, keys)
 		};
 		return result;
 	}
@@ -93,6 +93,7 @@
 	
 	$.dform.subscribeIf($.isFunction($.fn.tabs),
 	{
+		// TODO optimize this tabs function
 		/**
 		 * Creates a container for jQuery UI tabs.
 		 * @param options object All parameters for this type
@@ -195,6 +196,12 @@
 		{
 			if (type == "text")
 				$(this).autocomplete(options);
+		});
+	
+	$.dform.subscribeIf($.isFunction($.fn.wysiwyg), "wysiwyg",
+		function(options, type)
+		{
+			// TODO WYSIWYG
 		});
 	
 	$.dform.subscribe("[post]",

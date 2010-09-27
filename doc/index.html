@@ -150,6 +150,7 @@
 		#registrationform input[type=submit] { margin: 10px 0; }
 		#registrationform label.error { font-size: 80%; color: #e14f1c; margin-left: 10px; }
 		#registrationform input.error { border: 1px solid #e14f1c; }
+		.labellist label { margin: 0; display: inline; }
 	</style>
     <div class="exampleform tabs">
     	<ul>
@@ -208,6 +209,33 @@
 										"equalTo" : "Please repeat your password"
 									}
 								}
+							},
+							{
+								"type" : "radiobuttons",
+								"label" : "Sex",
+								"name" : "sex",
+								"class" : "labellist",
+								"options" :
+								{
+									"f" : "Female",
+									"m" : "Male"
+								}								
+							},
+							{
+								"type" : "checkboxes",
+								"name" : "test",
+								"label" : "Receive newsletter about",
+								"class" : "labellist",
+								"options" :
+								{
+									"updates" : "Product updates<br />",
+									"errors" : 
+									{
+										"value" : "security",
+										"label" : "Security warnings<br />",
+										"checked" : "checked"
+									} 
+								}
 							}
 						]
 					},
@@ -255,16 +283,6 @@
 									},
 									"asia" : "Asia",
 									"australia" : "Australia"
-								}
-							},
-							{
-								"type" : "checkboxes",
-								"name" : "test",
-								"options" :
-								{
-									"red" : "Red",
-									"green" : "Green",
-									"blue" : "Blue" 
 								}
 							}
 						]

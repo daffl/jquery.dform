@@ -38,8 +38,9 @@
 	{
 		var result = {};
 		$.each(keys, function(index, value) {
-			if(object[value])
+			if(object[value]) {
 				result[value] = object[value];
+			}
 		});
 		return result;
 	};
@@ -55,8 +56,9 @@
 	{
 		var result = {};
 		$.each(object, function(index, value) {
-			if($.inArray(index, keys) == -1)
+			if($.inArray(index, keys) == -1) {
 				result[index] = value;
+			}
 		});
 		return result;
 	};
@@ -75,16 +77,10 @@
 		{
 			// Ignore any subscriber name and the objects given in excludes
 			var ignores = $.keyset(_subscriptions);
-			if($.isArray(excludes))
+			if($.isArray(excludes)) {
 				$.merge(ignores, excludes);
-			// TODO return $.withoutKeys(object, ignores);
-			var ops = {};
-			$.each(object, function(name, value)
-			{
-				if ($.inArray(name, ignores) == -1)
-					ops[name] = value;
-			});
-			return ops;
+			}
+			return $.withoutKeys(object, ignores);
 		},
 		/**
 		 * Returns the names of all subscriber functions registered
@@ -104,8 +100,9 @@
 		{
 			if (typeof (data) == "string")
 			{
-				if (!$.isArray(_subscriptions[data]))
+				if (!$.isArray(_subscriptions[data])) {
 					_subscriptions[data] = [];
+				}
 				_subscriptions[data].push(fn);
 			} else if (typeof (data) == "object")
 			{
@@ -127,8 +124,9 @@
 		 */
 		subscribeIf : function(condition, data, fn)
 		{
-			if(condition)
+			if(condition) {
 				$.dform.subscribe(data, fn);
+			}
 		},
 		/**
 		 * Delete all subscriptions for a given name.
@@ -154,12 +152,14 @@
 		 */
 		createElement : function(options)
 		{
-			var type = options["type"];
-			if (!type) throw "No element type given! Must always exist.";
-			var name = "[type=" + options["type"] + "]";
+			var type = options.type;
+			if (!type) {
+				throw "No element type given! Must always exist.";
+			}
+			var name = "[type=" + options.type + "]";
 			var element = null;
 			// We don't need the type key in the options
-			var ops = $.withoutKeys(options, ["type"]);
+			var ops = $.withoutKeys(options, "type");
 			if (_subscriptions[name])
 			{
 				// Run all builder functions called [type=<typename>]
@@ -167,8 +167,9 @@
 					element = sfn.call(element, ops);
 				});
 			}
-			else
+			else {
 				throw "Element type '" + type + "' does not exist";
+			}
 			return $(element);
 		}
 	};
@@ -201,7 +202,7 @@
 		 */
 		runAll : function(options)
 		{
-			var type = options["type"];
+			var type = options.type;
 			var scoper = $(this);
 			// Run preprocessing subscribers
 			$(this).runSubscription("[pre]", options, type);
@@ -239,8 +240,9 @@
 				var ops = $.extend({ "type" : "form" }, options);
 				$(this).attr($.dform.htmlAttributes(ops));
 				$(this).runAll(ops);
-			} else
+			} else {
 				$(this).formElement(options);
+			}
 		}
 	});
 })(jQuery);

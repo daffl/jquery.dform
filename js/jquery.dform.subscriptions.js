@@ -18,7 +18,7 @@
 	 * @param tag The tag to use
 	 * @param defaults The default options
 	 */
-	function _creatorFunction(tag, defaults)
+	function _c(tag, defaults)
 	{
 		// Currying :)
 		return function(options) {
@@ -34,74 +34,74 @@
 		 * Type function that creates a text input field
 		 * @param options object All parameters for this type
 		 */
-		"[type=text]" : _creatorFunction("<input>", { "type" : "text" }),
+		"[type=text]" : _c("<input>", { "type" : "text" }),
 		/**
 		 * Type function that creates a password input field
 		 * @param options object All parameters for this type
 		 */
-		"[type=password]" : _creatorFunction("<input>", { "type" : "password" }),
+		"[type=password]" : _c("<input>", { "type" : "password" }),
 		/**
 		 * Type function that creates a select input (without options)
 		 * @param options object All parameters for this type
 		 */
-		"[type=select]" : _creatorFunction("<select>", {}),
+		"[type=select]" : _c("<select>", {}),
 		/**
 		 * Type function that creates a fieldset
 		 * @param options object All parameters for this type
 		 */
-		"[type=fieldset]" : _creatorFunction("<fieldset>", {}),
+		"[type=fieldset]" : _c("<fieldset>", {}),
 		/**
 		 * Type function that creates a textarea
 		 * @param options object All parameters for this type
 		 */
-		"[type=textarea]" : _creatorFunction("<textarea>", {}),
+		"[type=textarea]" : _c("<textarea>", {}),
 		/**
 		 * Type function that creates a submit button
 		 * @param options object All parameters for this type
 		 */
-		"[type=submit]" : _creatorFunction("<input>", { "type" : "submit" }),
+		"[type=submit]" : _c("<input>", { "type" : "submit" }),
 		/**
 		 * Type function that creates a label (without text)
 		 * @param options object All parameters for this type
 		 */
-		"[type=label]" : _creatorFunction("<label>", {}),
+		"[type=label]" : _c("<label>", {}),
 		/**
 		 * Type function that returns a span element
 		 * @param options object All parameters for this type
 		 */
-		"[type=html]" : _creatorFunction("<span>", {}),
+		"[type=html]" : _c("<span>", {}),
 		/**
 		 * Returns a button element.
 		 * @param options object All parameters for this type
 		 */
-		"[type=button]" : _creatorFunction("<button>", {}),
+		"[type=button]" : _c("<button>", {}),
 		/**
 		 * Returns a hidden input field.
 		 * @param options object All parameters for this type
 		 */
-		"[type=hidden]" : _creatorFunction("<input>", { "type" : "hidden" }),
+		"[type=hidden]" : _c("<input>", { "type" : "hidden" }),
 		/**
 		 * Type function that creates a single radio button
 		 * @param options object All parameters for this type
 		 */
-		"[type=radio]" : _creatorFunction("<input>", { "type" : "radio" }),
+		"[type=radio]" : _c("<input>", { "type" : "radio" }),
 		/**
 		 * Type function that creates a single radio checkbox
 		 * @param options object All parameters for this type
 		 */
-		"[type=checkbox]" : _creatorFunction("<input>", { "type" : "checkbox" }),
+		"[type=checkbox]" : _c("<input>", { "type" : "checkbox" }),
 		/**
 		 * Returns an empty container for checkbox lists
 		 */
-		"[type=checkboxes]" : _creatorFunction("<div>", {}),
+		"[type=checkboxes]" : _c("<div>", {}),
 		/**
 		 * Returns an empty container for radiobuttons
 		 */
-		"[type=radiobuttons]" : _creatorFunction("<div>", {}),
+		"[type=radiobuttons]" : _c("<div>", {}),
 		/**
 		 * Create a file upload element
 		 */
-		"[type=file]" : _creatorFunction("<input>", { "type" : "file" })
+		"[type=file]" : _c("<input>", { "type" : "file" })
 	});
 
 	// Subscriber functions
@@ -162,7 +162,7 @@
 		 * Adds options to select type elements.
 		 * 
 		 * @param options object A key value pair where the key is the
-		 * option value and the value the options text
+		 * option value and the value the options text or the settings for the element.
 		 * @param type string The type of the <strong>this</strong> element
 		 */
 		"options" : function(options, type)
@@ -179,22 +179,10 @@
 								content);
 					if (typeof (content) == "object")
 					{
-						var fn = _creatorFunction("<option>", {});
+						var fn = _c("<option>", {});
 						option = fn($.withoutKeys(content, ["value"])).html(content["value"]);
 					}
 					$(scoper).append(option);
-				});
-			}
-			// Options for checkbox and radiobutton lists
-			if(type == "checkboxes" || type == "radiobuttons")
-			{
-				$.each(options, function(value, content) {
-					var boxoptions = ((type == "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
-					if(typeof(content) == "string")
-						boxoptions["label"] = content;
-					else
-						$.extend(boxoptions, content);
-					$(scoper).formElement(boxoptions);
 				});
 			}
 		},
@@ -290,12 +278,37 @@
 		{
 			if (type == "submit")
 				$(this).wrap("<p>");
-			if (type == "checkboxes")
+			if (type == "checkboxes" || type == "radiobuttons")
 			{
-				$(this).children("[type=checkbox]").each(function() {
+				var boxtype = ((type == "checkboxes") ? "checkbox" : "radio");
+				$(this).children("[type=" + boxtype + "]").each(function() {
 					$(this).attr("name", options.name);
 				});
 			}
 		}
 	});
+	
+	$.dform.subscribe("options", 
+		/**
+		 * Adds options to checkbox- or radiobutton lists.
+		 * 
+		 * @param options object A key value pair where the key is the
+		 * option value and the value the options text or the settings for the element.
+		 * @param type string The type of the <strong>this</strong> element
+		 */
+		function(options, type) {
+			// Options for checkbox and radiobutton lists
+			if(type == "checkboxes" || type == "radiobuttons")
+			{
+				var scoper = this;
+				$.each(options, function(value, content) {
+					var boxoptions = ((type == "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
+					if(typeof(content) == "string")
+						boxoptions["label"] = content;
+					else
+						$.extend(boxoptions, content);
+					$(scoper).formElement(boxoptions);
+				});
+			}
+		});
 })(jQuery);
