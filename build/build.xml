@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="../" name="jquery.dform" default="min">
+	<property file="build/build.properties" />
+	
+	<target name="doc">
+		<!--
+			perl ../NaturalDocs -i src/  -o HTML docs -p docdata/
+		-->
+		<exec executable="${doc.bin}">
+			<arg line="-i ${doc.src}" />
+			<arg line="-i ${doc.txt}" />
+			<arg line="-o ${doc.format} ${doc.out}" />
+			<arg line="-p ${doc.project}" />
+		</exec>
+	</target>
+	
+	<target name="concat">
+		<echo>Hello ${doc.src}</echo>
+	</target>
+	
+	<target name="min" depends="concat">
+	</target>
+</project>
