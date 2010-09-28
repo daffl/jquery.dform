@@ -59,7 +59,7 @@
 				[
 					{
 						"name" : "textfield",
-						"label" : "Label for textfield",
+						"caption" : "Label for textfield",
 						"type" : "text",
 						"value" : "Hello world"
 					},
@@ -116,19 +116,19 @@
 				"elements" : 
 				[
 					{
-						"type" : "html",
+						"type" : "span",
 						"html" : "<p>You must login</p>"
 					},
 					{
 						"name" : "username",
 						"id" : "txt-username",
-						"label" : "Username",
+						"caption" : "Username",
 						"type" : "text",
 						"placeholder" : "E.g. user@example.com"
 					},
 					{
 						"name" : "password",
-						"label"  : "Password",
+						"caption"  : "Password",
 						"type" : "password"
 					},
 					{
@@ -169,11 +169,11 @@
 				[
 					{
 						"type" : "fieldset",
-						"label" : "User information",
+						"caption" : "User information",
 						"elements" : [
 							{
 								"name" : "email",
-								"label" : "Email address",
+								"caption" : "Email address",
 								"type" : "text",
 								"placeholder" : "E.g. user@example.com",
 								"validate" : 
@@ -183,7 +183,7 @@
 							},
 							{
 								"name" : "password",
-								"label"  : "Password",
+								"caption"  : "Password",
 								"type" : "password",
 								"id" : "registration-password",
 								"validate" :
@@ -199,7 +199,7 @@
 							},
 							{
 								"name" : "password-repeat",
-								"label"  : "Repeat password",
+								"caption"  : "Repeat password",
 								"type" : "password",
 								"validate" :
 								{
@@ -212,7 +212,7 @@
 							},
 							{
 								"type" : "radiobuttons",
-								"label" : "Sex",
+								"caption" : "Sex",
 								"name" : "sex",
 								"class" : "labellist",
 								"options" :
@@ -224,7 +224,7 @@
 							{
 								"type" : "checkboxes",
 								"name" : "test",
-								"label" : "Receive newsletter about",
+								"caption" : "Receive newsletter about",
 								"class" : "labellist",
 								"options" :
 								{
@@ -232,7 +232,7 @@
 									"errors" : 
 									{
 										"value" : "security",
-										"label" : "Security warnings<br />",
+										"caption" : "Security warnings<br />",
 										"checked" : "checked"
 									} 
 								}
@@ -241,37 +241,37 @@
 					},
 					{
 						"type" : "fieldset",
-						"label" : "Address information",
+						"caption" : "Address information",
 						"elements" : [
 							{
 								"name" : "name",
-								"label" : "Your name",
+								"caption" : "Your name",
 								"type" : "text",
 								"placeholder" : "E.g. John Doe"
 							},
 							{
 								"name" : "address",
-								"label" : "Address",
+								"caption" : "Address",
 								"type" : "text",
 								"validate" :  { "required" : true }
 							},
 							{
 								"name" : "zip",
-								"label" : "ZIP code",
+								"caption" : "ZIP code",
 								"type" : "text",
 								"size" : 5,
 								"validate" :  { "required" : true }
 							},
 							{
 								"name" : "city",
-								"label" : "City",
+								"caption" : "City",
 								"type" : "text",
 								"validate" :  { "required" : true }
 							},
 							{
 								"type" : "select",
 								"name" : "continent",
-								"label" : "Choose a continent",
+								"caption" : "Choose a continent",
 								"options" :
 								{
 									"america" : "America",
@@ -336,7 +336,7 @@
 				"elements" : [
 					{
 						"name" : "email",
-						"label" : "Email address",
+						"caption" : "Email address",
 						"type" : "text",
 						"validate" : 
 						{
@@ -346,7 +346,7 @@
 					},
 					{
 						"name" : "password",
-						"label"  : "Password",
+						"caption"  : "Password",
 						"type" : "password",
 						"id" : "dialog-registration-password",
 						"validate" :
@@ -362,7 +362,7 @@
 					},
 					{
 						"name" : "password-repeat",
-						"label"  : "Repeat password",
+						"caption"  : "Repeat password",
 						"type" : "password",
 						"validate" :
 						{
@@ -407,12 +407,12 @@
 						"type" : "slider",
 						"values" : [ 10, 80 ],
 						"range" : true,
-						"label" : "Slider",
+						"caption" : "Slider",
 						"id" : "myslider"
 					},
 					{
 						"name" : "textfield",
-						"label" : "Autocomplete",
+						"caption" : "Autocomplete",
 						"type" : "text",
 						"placeholder" : "Type 'A' or 'S'",
 						"autocomplete" :
@@ -422,12 +422,12 @@
 					},
 					{
 						"name" : "date",
-						"label" : "Datepicker",
+						"caption" : "Datepicker",
 						"type" : "text",
 						"datepicker" : {  "showOn" : "button" }
 					},
 					{
-						"label" : "A progressbar",
+						"caption" : "A progressbar",
 						"type" : "progressbar",
 						"value" : 40
 					},
@@ -447,7 +447,7 @@
 								[
 									{
 										"name" : "textfield",
-										"label" : "Just a textfield",
+										"caption" : "Just a textfield",
 										"type" : "text"
 									}
 								]
@@ -458,7 +458,7 @@
 								"elements" :
 								[
 									{
-										"type" : "html",
+										"type" : "span",
 										"html" : "Some html in tab 2"
 									},
 									{

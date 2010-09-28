@@ -6,138 +6,405 @@
  */
 
 /**
+ * file: Core Subscribers
+ * 
+ * About:
  * Initializes basic element types and core subscriber functions.
  * 
- * @author David Luecke <daff@neyeon.de>
+ * Author:
+ * David Luecke (daff@neyeon.de)
  */
 (function($)
 {
-	/**
-	 * Returns a function that uses the given tag and default values to create
-	 * a new element from given options.
-	 * @param tag The tag to use
-	 * @param defaults The default options
-	 */
-	function _c(tag, defaults)
-	{
-		// Currying :)
-		return function(options) {
-			var ops = $.dform.htmlAttributes(options);
-			return $(tag).attr($.extend(ops, defaults));		
-		};
-	}
-
-	// Type subscriber functions
 	$.dform.subscribe(
 	{
 		/**
+		 * type: text
+		 * 
 		 * Type function that creates a text input field
-		 * @param options object All parameters for this type
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An input element with type text
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"name" : "textfield",
+		 * 		"type" : "text",
+		 * 		"id" : "my-textfield"
+		 * }
+		 * (end)
 		 */
-		"[type=text]" : _c("<input>", { "type" : "text" }),
+		"[type=text]" : $.dform.elementBuilder("<input>", { "type" : "text" }),
 		/**
+		 * type: password
+		 * 
 		 * Type function that creates a password input field
-		 * @param options object All parameters for this type
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An input element with type password
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"name" : "password",
+		 * 		"type" : "password"
+		 * }
+		 * (end)
 		 */
-		"[type=password]" : _c("<input>", { "type" : "password" }),
+		"[type=password]" : $.dform.elementBuilder("<input>", { "type" : "password" }),
 		/**
-		 * Type function that creates a select input (without options)
-		 * @param options object All parameters for this type
+		 * type: select
+		 * 
+		 * Creates a select input element
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An empty select input
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "select",
+		 * 		"name" : "testselect"
+		 * }
+		 * (end)
 		 */
-		"[type=select]" : _c("<select>", {}),
+		"[type=select]" : $.dform.elementBuilder("<select>", {}),
 		/**
-		 * Type function that creates a fieldset
-		 * @param options object All parameters for this type
+		 * type: fieldset
+		 * 
+		 * Creates an empty fieldset to contain other elements
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An empty fieldset
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "fieldset",
+		 * 		"id" : "my-fieldset"
+		 * }
+		 * (end)
 		 */
-		"[type=fieldset]" : _c("<fieldset>", {}),
+		"[type=fieldset]" : $.dform.elementBuilder("<fieldset>", {}),
 		/**
-		 * Type function that creates a textarea
-		 * @param options object All parameters for this type
+		 * type: textarea
+		 * 
+		 * Creates a textarea
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	A textarea input element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "textarea",
+		 * 		"cols" : 30,
+		 * 		"rows" : 10
+		 * }
+		 * (end)
 		 */
-		"[type=textarea]" : _c("<textarea>", {}),
+		"[type=textarea]" : $.dform.elementBuilder("<textarea>", {}),
 		/**
-		 * Type function that creates a submit button
-		 * @param options object All parameters for this type
+		 * type: submit
+		 * 
+		 * Creates a form submit button
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	A form submit button
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "submit",
+		 * 		"value" : "Send..."
+		 * }
+		 * (end)
 		 */
-		"[type=submit]" : _c("<input>", { "type" : "submit" }),
+		"[type=submit]" : $.dform.elementBuilder("<input>", { "type" : "submit" }),
 		/**
-		 * Type function that creates a label (without text)
-		 * @param options object All parameters for this type
+		 * type: label
+		 * 
+		 * Creates an empty label element
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An empty label element
+		 * 
+		 * Example:
+		 * In this example the label will be filled with text by using the
+		 * <html> element subscriber
+		 * 
+		 * (start code)
+		 * {
+		 * 		"type" : "label",
+		 * 		"html" : "Label content"
+		 * }
+		 * (end)
 		 */
-		"[type=label]" : _c("<label>", {}),
+		"[type=label]" : $.dform.elementBuilder("<label>", {}),
 		/**
-		 * Type function that returns a span element
-		 * @param options object All parameters for this type
+		 * type: span
+		 * 
+		 * Returns an empty span element
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An empty span HTML element
+		 * 
+		 * Example:
+		 * In this example the span element will be filled with text by using the
+		 * <html> element subscriber
+		 * 
+		 * (start code)
+		 * {
+		 * 		"type" : "span",
+		 * 		"html" : "Some simple HTML text"
+		 * }
+		 * (end)
 		 */
-		"[type=html]" : _c("<span>", {}),
+		"[type=span]" : $.dform.elementBuilder("<span>", {}),
 		/**
-		 * Returns a button element.
-		 * @param options object All parameters for this type
+		 * type: button
+		 * 
+		 * Creates a button element
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	A button element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "button",
+		 * 		"html" : "Send..."
+		 * }
+		 * (end)
 		 */
-		"[type=button]" : _c("<button>", {}),
+		"[type=button]" : $.dform.elementBuilder("<button>", {}),
 		/**
-		 * Returns a hidden input field.
-		 * @param options object All parameters for this type
+		 * type: hidden
+		 * 
+		 * Creates a hidden input field
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	A hidden input field element
+		 * 
+		 * Example:
+		 * This example uses the <value> subscriber to set a value to the
+		 * field.
+		 * 
+		 * (start code)
+		 * {
+		 * 		"type" : "hidden",
+		 * 		"value" : "hiddenvalue"
+		 * }
+		 * (end)
 		 */
-		"[type=hidden]" : _c("<input>", { "type" : "hidden" }),
+		"[type=hidden]" : $.dform.elementBuilder("<input>", { "type" : "hidden" }),
 		/**
-		 * Type function that creates a single radio button
-		 * @param options object All parameters for this type
+		 * type: radio
+		 * 
+		 * Creates a single radio button
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	A single radio input element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "radio",
+		 * 		"name" : "radioselection"
+		 * }
+		 * (end)
 		 */
-		"[type=radio]" : _c("<input>", { "type" : "radio" }),
+		"[type=radio]" : $.dform.elementBuilder("<input>", { "type" : "radio" }),
 		/**
-		 * Type function that creates a single radio checkbox
-		 * @param options object All parameters for this type
+		 * type: checkbox
+		 * 
+		 * Creates a single checkbox
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	A single checkbox input element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "checkbox",
+		 * 		"name" : "checkboxselection"
+		 * }
+		 * (end)
 		 */
-		"[type=checkbox]" : _c("<input>", { "type" : "checkbox" }),
+		"[type=checkbox]" : $.dform.elementBuilder("<input>", { "type" : "checkbox" }),
 		/**
-		 * Returns an empty container for checkbox lists
+		 * type: checkboxes
+		 * 
+		 * Returns an empty container for a checkbox list
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An empty div to contain checkbox lists
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "checkboxes",
+		 * 		"name" : "checkboxselection"
+		 * }
+		 * (end)
 		 */
-		"[type=checkboxes]" : _c("<div>", {}),
+		"[type=checkboxes]" : $.dform.elementBuilder("<div>", {}),
 		/**
-		 * Returns an empty container for radiobuttons
+		 * type: radiobuttons
+		 * 
+		 * Returns an empty container for a radiobutton list
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An empty div to contain radiobutton lists
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "radiobuttons",
+		 * 		"name" : "radioselection"
+		 * }
+		 * (end)
 		 */
-		"[type=radiobuttons]" : _c("<div>", {}),
+		"[type=radiobuttons]" : $.dform.elementBuilder("<div>", {}),
 		/**
-		 * Create a file upload element
+		 * type: file
+		 * 
+		 * Returns a file upload input element
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	A file upload element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "file",
+		 * 		"name" : "upload"
+		 * }
+		 * (end)
 		 */
-		"[type=file]" : _c("<input>", { "type" : "file" })
+		"[type=file]" : $.dform.elementBuilder("<input>", { "type" : "file" })
 	});
 
-	// Subscriber functions
 	$.dform.subscribe(
 	{
 		/**
-		 * Calls addClass on the current element
-		 * (instead of of the standard behaviour which is replacing the class attribute)
+		 * subscriber: class
 		 * 
-		 * @param options string A list of whitespace separated classnames
-		 * @param type string The type of the <strong>this</strong> element
+		 * Adds a class to the current element.
+		 * 
+		 * Ovverrides the default behaviour which would be replacing the class attribute.
+		 * 
+		 * Parameters:
+		 * 	options - A list of whitespace separated classnames
+		 * 	type - The type of the *this* element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "text",
+		 * 		"class" : "ui-corner-all"
+		 * }
+		 * (end)
 		 */
 		"class" : function(options, type)
 		{
 			$(this).addClass(options);
 		},
 		/**
+		 * subscriber: html
+		 * 
 		 * Sets html content of the current element
 		 * 
-		 * @param options string The html content to set
-		 * @param type string The type of the <strong>this</strong> element
+		 * Parameters:
+		 * 	options - The html content to set as a string
+		 * 	type - The type of the *this* element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "span",
+		 * 		"html" : "Some html content"
+		 * }
+		 * (end)
 		 */
-		"html" : function(options, type)
+		html : function(options, type)
 		{
 			$(this).html(options);
 		},
 		/**
+		 * subscriber: elements
+		 * 
 		 * Recursively appends subelements to the current form element.
 		 * 
-		 * @param options mixed Either an object with key value pairs
-		 * where the key is the element name and the value the
-		 * subelement options or an array of objects where each object
-		 * is the subelement options
-		 * @param type string The type of the <strong>this</strong> element
+		 * Parameters:
+		 * 	options - Either an object with key value pairs
+		 * 	where the key is the element name and the value the
+		 * 	subelement options or an array of objects where each object
+		 * 	is the options for a subelement
+		 * 	type - The type of the *this* element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "fieldset",
+		 * 		"elements" :
+		 * 		[
+		 * 			{
+		 * 				"name" : "textfield",
+		 * 				"type" : "text",
+		 * 				"id" : "my-textfield"
+		 * 			}	
+		 * 		]
+		 * }
+		 * (end)
 		 */
-		"elements" : function(options, type)
+		elements : function(options, type)
 		{
 			var scoper = $(this);
 			$.each(options, function(index, nested)
@@ -149,23 +416,58 @@
 			});
 		},
 		/**
+		 * subscriber: value
+		 * 
 		 * Sets the value of the current element.
 		 * 
-		 * @param options string The value to set
-		 * @param type string The type of the <strong>this</strong> element
+		 * Parameters:
+		 * 	options - string The value to set
+		 * 	type - string The type of the *this* element
+		 * 
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"name" : "textfield",
+		 * 		"type" : "text",
+		 *		"value" : "Value in Textfield"
+		 * }	
+		 * (end)
 		 */
-		"value" : function(options, type)
+		value : function(options, type)
 		{
 			$(this).val(options);
 		},
 		/**
+		 * subscriber: options
+		 * 
 		 * Adds options to select type elements.
 		 * 
-		 * @param options object A key value pair where the key is the
-		 * option value and the value the options text or the settings for the element.
-		 * @param type string The type of the <strong>this</strong> element
+		 * Parameters:
+		 * 	options - A key value pair where the key is the
+		 * 	option value and the value the options text or the settings for the element.
+		 * 	type - The type of the *this* element
+		 * 
+		 * For types:
+		 * 	<select>
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "select",
+		 * 		"name" : "testselect",
+		 *		"options" :
+		 *		{
+		 *			"option1" : "Option no. 1",
+		 *			"option2" : "Option no. 2"
+		 *		}
+		 * }	
+		 * (end)
+		 * 
+		 * Todo:
+		 * 	Option groups
 		 */
-		"options" : function(options, type)
+		options : function(options, type)
 		{
 			var scoper = $(this);
 			if (type == "select") // Options for select elements
@@ -179,7 +481,7 @@
 								content);
 					if (typeof (content) == "object")
 					{
-						var fn = _c("<option>", {});
+						var fn = $.dform.elementBuilder("<option>", {});
 						option = fn($.withoutKeys(content, ["value"])).html(content["value"]);
 					}
 					$(scoper).append(option);
@@ -187,15 +489,32 @@
 			}
 		},
 		/**
-		 * Adds a default default value to text elements, that disappears
+		 * subscriber: placeholder
+		 * 
+		 * Adds a default default value to text elements.
+		 * 
+		 * The default value will dissappear
 		 * when the element gets focussed and reappears if the element looses
 		 * focus and nothing has been entered.
 		 * 
-		 * @param options string The default value to set. Usually a helper text
-		 * with instructions for the user (e.g. enter mail here...)
-		 * @param type string The type of the <strong>this</strong> element
+		 * Parameters:
+		 * 	options - The default value to set. Usually a helper text
+		 * 	with instructions for the user (e.g. enter mail here...)
+		 * 	type - The type of the *this* element
+		 * 
+		 * For types:
+		 * 	<text>, <textarea>
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"name" : "email",
+		 * 		"type" : "text",
+		 *		"placeholder" : "e.g. mail@example.org"
+		 * }	
+		 * (end)
 		 */
-		"placeholder" : function(options, type)
+		placeholder : function(options, type)
 		{
 			if (type == "text" || type == "textarea")
 			{
@@ -222,21 +541,52 @@
 			}
 		},
 		/**
-		 * Adds a label element before the current element or a legend
-		 * if the current element is a fieldset or a decription next to it
-		 * if the current element is a radiobutton or a checkbox.
+		 * subscriber: caption
 		 * 
-		 * @param options string The label text or an object with label
-		 * options.
-		 * @param type string The type of the <strong>this</strong> element
+		 * Adds caption to elements.
+		 * 
+		 * Depending on the element type the following elements will
+		 * be used: 
+		 * - A legend for <fieldset> elements
+		 * - A <label> next to <radio> or <checkbox> elements
+		 * - A <label> before any other element
+		 * 
+		 * Parameters:
+		 * 	options - A string for the caption or the options for the
+		 * 	element to create
+		 * 	type - The type of the *this* element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"name" : "email",
+		 * 		"type" : "text",
+		 *		"caption" : "Enter your email address"
+		 * }	
+		 * (end)
 		 */
-		"label" : function(options, type)
+		caption : function(options, type)
 		{
+			// TODO make sure that options other than string
+			// will be handled properly
 			if (type == "fieldset")
 			{
 				// Labels for fieldsets are legend
 				var legend = $("<legend>").html(options);
 				$(this).prepend(legend);
+			}
+			else if(type == "checkboxes" || type == "radiobuttons")
+			{
+				// Options for checkbox and radiobutton lists
+				var scoper = this;
+				$.each(options, function(value, content) {
+					var boxoptions = ((type == "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
+					if(typeof(content) == "string")
+						boxoptions["label"] = content;
+					else
+						$.extend(boxoptions, content);
+					$(scoper).formElement(boxoptions);
+				});
 			}
 			else
 			{
@@ -257,22 +607,27 @@
 			}
 		},
 		/**
+		 * subscriber: type
+		 * 
 		 * An empty subscriber for types so that it doesn't show up as
 		 * an attribute in HTML elements. Since every element needs a type
 		 * parameter feel free to add other type subscribers to do
 		 * any processing between [pre] and [post]
 		 * 
-		 * @param options string the name of the type.
-		 * @param type string The type of the <strong>this</strong> element
+		 * Parameters:
+		 * 	options - the name of the type.
+		 * 	type - The type of the *this* element
 		 */
-		"type" : function(options, type) {},
+		type : function(options, type) {},
 		/**
-		 * The 'type' subscriber function is a post processing function,
-		 * that will run whenever all other subscribers are finished.
+		 * subscriber: [post]
 		 * 
-		 * @param options mixed All options that have been used for 
-		 * creating the current element.
-		 * @param type string The type of the <strong>this</strong> element
+		 * Post processing function, that will run whenever all other subscribers are finished.
+		 * 
+		 * Parameters:
+		 * 	options - mixed All options that have been used for 
+		 * 	creating the current element.
+		 * 	type - The type of the *this* element
 		 */
 		"[post]" : function(options, type)
 		{
@@ -287,28 +642,4 @@
 			}
 		}
 	});
-	
-	$.dform.subscribe("options", 
-		/**
-		 * Adds options to checkbox- or radiobutton lists.
-		 * 
-		 * @param options object A key value pair where the key is the
-		 * option value and the value the options text or the settings for the element.
-		 * @param type string The type of the <strong>this</strong> element
-		 */
-		function(options, type) {
-			// Options for checkbox and radiobutton lists
-			if(type == "checkboxes" || type == "radiobuttons")
-			{
-				var scoper = this;
-				$.each(options, function(value, content) {
-					var boxoptions = ((type == "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
-					if(typeof(content) == "string")
-						boxoptions["label"] = content;
-					else
-						$.extend(boxoptions, content);
-					$(scoper).formElement(boxoptions);
-				});
-			}
-		});
 })(jQuery);
