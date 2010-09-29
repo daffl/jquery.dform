@@ -44,9 +44,9 @@ Timestamp: Updated d. month yyyy
 # --------------------------------------------------------------------------
 
 
-File: Core Plugin  (/home/daff/Development/workspace/jquery.dform/js/jquery.dform.js)
-File: Core Subscribers  (/home/daff/Development/workspace/jquery.dform/js/jquery.dform.subscriptions.js)
-File: Extensions  (/home/daff/Development/workspace/jquery.dform/js/jquery.dform.ext.js)
+File: Core Plugin  (/home/daff/Development/workspace/jquery.dform/src/jquery.dform.js)
+File: Core Subscribers  (/home/daff/Development/workspace/jquery.dform/src/jquery.dform.subscriptions.js)
+File: Extensions  (/home/daff/Development/workspace/jquery.dform/src/jquery.dform.ext.js)
 File: The MIT license  (/home/daff/Development/workspace/jquery.dform/license.txt)
 
 Group: Index  {
@@ -61,5 +61,5 @@ Group: Index  {
 
 
 ##### Do not change or remove these lines. #####
-Data: 1(D3333RuEG3fpcc3BG/GouIEG\t37uHA6Ip9G3ldNGHQMfcuHE3l6)
+Data: 1(D3333RuEG3fpcc3BG/GouIEG\t37uHA6Ip9G3ldNGHQMfcuHE36H9)
 Data: 1(h3333RuEG3fpcc3BG/GouIEG\t37uHA6Ip9G3ldNGHQMfcuHE)

@@ -1,8 +1,8 @@
 1.5
 JavaScript
+/home/daff/Development/workspace/jquery.dform/build/version.txt	1285777819	0	/home/daff/Development/workspace/jquery.dform/build/version.txt
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushDiff.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushDiff.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPhp.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPhp.js
-/home/daff/Development/workspace/jquery.dform/js/jquery.dform.ext.js	1285712402	1	Extensions
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushDelphi.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushDelphi.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shCore.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shCore.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushJavaFX.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushJavaFX.js
@@ -12,26 +12,28 @@ JavaScript
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shAutoloader.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shAutoloader.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/src/shCore.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/src/shCore.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushSass.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushSass.js
+/home/daff/Development/workspace/jquery.dform/readme.txt	1283963923	0	/home/daff/Development/workspace/jquery.dform/readme.txt
+/home/daff/Development/workspace/jquery.dform/src/jquery.dform.ext.js	1285776565	1	Extensions
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushAppleScript.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushAppleScript.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shLegacy.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shLegacy.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushCpp.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushCpp.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushJava.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushJava.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushSql.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushSql.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPowerShell.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPowerShell.js
-/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushBash.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushBash.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushColdFusion.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushColdFusion.js
+/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushBash.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushBash.js
+/home/daff/Development/workspace/jquery.dform/src/jquery.dform.subscriptions.js	1285776578	1	Core Subscribers
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushRuby.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushRuby.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPlain.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPlain.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/src/shAutoloader.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/src/shAutoloader.js
-/home/daff/Development/workspace/jquery.dform/js/jquery.dform.js	1285712408	1	Core Plugin
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushCss.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushCss.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/src/shLegacy.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/src/shLegacy.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushScala.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushScala.js
-/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/compass/config.rb	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/compass/config.rb
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushGroovy.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushGroovy.js
+/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/compass/config.rb	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/compass/config.rb
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPython.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPython.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushAS3.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushAS3.js
-/home/daff/Development/workspace/jquery.dform/js/jquery.dform.subscriptions.js	1285713016	1	Core Subscribers
+/home/daff/Development/workspace/jquery.dform/src/jquery.dform.js	1285776574	1	Core Plugin
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushVb.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushVb.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPerl.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushPerl.js
 /home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushErlang.js	1283892735	0	/home/daff/Development/workspace/jquery.dform/doc/resources/highlighter/scripts/shBrushErlang.js

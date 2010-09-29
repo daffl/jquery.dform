@@ -220,8 +220,8 @@
 	 * subscriber: [post]
 	 * 
 	 * Post processing subscriber that adds jQuery UI styling classes to
-	 * "text", "textarea", "password" and "fieldset" elements as well
-	 * as calling .button() on submit buttons.
+	 * <text>, <textarea>, <password> and <fieldset> elements as well
+	 * as calling .button() on <submit> or <button> elements.
 	 * 
 	 * Parameters:
 	 * options - All options that have been used for 
