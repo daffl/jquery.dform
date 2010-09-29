@@ -7,7 +7,12 @@ Title: jQuery::dForm
 # SubTitle: [subtitle]
 
 Footer: Copyright (C) 2010 - David Luecke - daff@neyeon.de
-Timestamp: Updated d. month yyyy
+
+# You can add a timestamp to your documentation like one of these:
+# Timestamp: Generated on month day, year
+# Timestamp: Updated mm/dd/yyyy
+# Timestamp: Last updated mon day
+#
 #   m     - One or two digit month.  January is "1"
 #   mm    - Always two digit month.  January is "01"
 #   mon   - Short month word.  January is "Jan"
@@ -44,18 +49,20 @@ Timestamp: Updated d. month yyyy
 # --------------------------------------------------------------------------
 
 
-File: Core Plugin  (/home/daff/Development/workspace/jquery.dform/src/jquery.dform.js)
-File: Core Subscribers  (/home/daff/Development/workspace/jquery.dform/src/jquery.dform.subscriptions.js)
+File: The Plugin  (/home/daff/Development/workspace/jquery.dform/readme.txt)
+File: Subscribers  (/home/daff/Development/workspace/jquery.dform/src/jquery.dform.subscriptions.js)
 File: Extensions  (/home/daff/Development/workspace/jquery.dform/src/jquery.dform.ext.js)
-File: The MIT license  (/home/daff/Development/workspace/jquery.dform/license.txt)
+File: Plugin Documentation  (/home/daff/Development/workspace/jquery.dform/src/jquery.dform.js)
+File: Customization  (/home/daff/Development/workspace/jquery.dform/customize.txt)
+File: License  (/home/daff/Development/workspace/jquery.dform/license.txt)
 
 Group: Index  {
 
    Index: Everything
+   Element Type Index: Element Types
    Element Subscriber Index: Element Subscribers
-   File Index: Files
    Function Index: Functions
-   Type Subscriber Index: Type Subscribers
+   File Index: Files
    }  # Group: Index
 
 

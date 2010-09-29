@@ -6,7 +6,7 @@
  */
 
 /**
- * file: Core Plugin
+ * file: Plugin Documentation
  * 
  * About:
  * The dForm core jQuery plugin, providing helper and the jQuery plugin

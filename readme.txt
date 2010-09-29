@@ -1,10 +1,11 @@
-# jQuery.dForm  - jQuery dynamic form plugin
+Title: The Plugin
 
 The jQuery.dForm plugin allows you to create your HTML forms programmatically from
 JavaScript objects (and JSON).
 
 It is pretty straightforward to use:
 
+(start code)
 	var formdata =
 	{
 		"action" : "index.html",
@@ -24,8 +25,9 @@ It is pretty straightforward to use:
 		]			
 	};
 	$("#myform").buildForm(formdata);
+(end)
 	
-## What it is for
+What it is for:
 
 There are many server side web frameworks that support HTML forms, but
 you often end up mixing client (e.g. instant validation) and server form processing

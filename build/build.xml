@@ -25,7 +25,7 @@
 	</target>
 	
 	<target name="min" depends="concat">
-		<!-- Gets the latest Google closures compiler minifying the concatenated file -->
+		<!-- Gets the latest Google closures compiler, then minify the concatenated file -->
 		<get src="${min.compiler.url}" dest="${min.compiler.zip}"/>
 		<unzip dest="${tmp}" src="${min.compiler.zip}" />
 		<echo>Running Google clorsures compiler to minify to ${min.out}</echo>

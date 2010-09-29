@@ -81,9 +81,9 @@ Format: 1.5
 # topics [at] naturaldocs [dot] org.
 
 
-Topic Type: Type Subscriber
+Topic Type: Element Type
 
-   Plural: Type Subscribers
+   Plural: Element Types
    Scope: Always global
 
    Keywords:

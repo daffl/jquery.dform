@@ -6,7 +6,7 @@
  */
 
 /**
- * file: Core Subscribers
+ * file: Subscribers
  * 
  * About:
  * Initializes basic element types and core subscriber functions.
