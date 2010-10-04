@@ -387,7 +387,8 @@
 	<p>Examples for supported jQuery UI widgets</p>
 	<style type="text/css">
 		#uiwidgets .ui-tabs { position: absolute; left: 400px; top: 70px; }
-		#uiwidgets .ui-tabs div.ui-widget-content { width: 300px; height: 70px; }
+		#uiwidgets .ui-tabs div.ui-widget-content { width: 300px; height: 90px; }
+		#uiwidgets .ui-tabs-nav label { margin-top: 0; }
 	</style>
     <div class="exampleform tabs">
 		<ul>
@@ -436,39 +437,66 @@
 						"type" : "tabs",
 						"resizable" :
 						{
-							"minHeight" : 150,
+							"minHeight" : 180,
 							"minWidth" : 300 
 						},
-						"tabs" :
+						"entries" :
 						{
-							"tab-1" :
+							"tab1":
 							{
-								"title" : "Tab no 1",
+								"caption" : "Step 1",
 								"elements" :
 								[
 									{
 										"name" : "textfield",
 										"caption" : "Just a textfield",
 										"type" : "text"
+									},
+									{
+										"type" : "span",
+										"html" : "<p>Some HTML in tab 1</p>"
 									}
 								]
 							},
-							"tab-2" :
+							"tab2" :
 							{
-								"title" : "Tab no 1",
-								"elements" :
+								"caption" : "Step 2",
+								"elements" : 
 								[
 									{
 										"type" : "span",
-										"html" : "Some html in tab 2"
-									},
-									{
-										"type" : "submit",
-										"value" : "Submit"
+										"html" : "Some HTML in tab 2"
 									}
 								]
 							}
 						}
+					},
+					{
+						"type" : "accordion",
+						"caption" : "Accordion",
+						"entries" :
+						[
+							{
+								"caption" : "Entry 1",
+								"elements" :
+								[
+									{
+										"type" : "span",
+										"html" : "Some HTML in accordion entry 1"
+									}
+								]
+							},
+							{
+								"caption" : "Entry 2",
+								"elements" : 
+								[
+									{
+										"type" : "span",
+										"html" : "Some HTML in accordion entry 2"
+									}
+								]
+							}
+						]
 					}
 				]
 			}

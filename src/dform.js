@@ -163,7 +163,7 @@
 			return $.keyset(_types);
 		},
 		/**
-		 * function: type
+		 * function: addType
 		 * 
 		 * Register a element type function.
 		 * 
@@ -253,7 +253,7 @@
 		 * Parameters:
 		 * 	name - The name of the subscriber to delete 
 		 */
-		clearSubscription : function(name)
+		removeSubscriber : function(name)
 		{
 			delete _subscriptions[name];
 		},

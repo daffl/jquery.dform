@@ -50,11 +50,11 @@ Footer: Copyright (C) 2010 - David Luecke - daff@neyeon.de
 
 
 File: The Plugin  (/home/daff/Development/workspace/jquery.dform/readme.txt)
-File: Customization  (/home/daff/Development/workspace/jquery.dform/customize.txt)
 File: License  (/home/daff/Development/workspace/jquery.dform/license.txt)
 File: Plugin Documentation  (/home/daff/Development/workspace/jquery.dform/src/dform.js)
 File: Extensions  (/home/daff/Development/workspace/jquery.dform/src/dform.extensions.js)
 File: Subscribers  (/home/daff/Development/workspace/jquery.dform/src/dform.subscribers.js)
+File: Customization  (/home/daff/Development/workspace/jquery.dform/customization.txt)
 
 Group: Index  {
 

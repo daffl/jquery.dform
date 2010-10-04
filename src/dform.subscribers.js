@@ -51,6 +51,9 @@
  * This page will list the basic <Element Types> and <Element Subscribers> that are
  * already supported by the plugin as well as examples for using them.
  * 
+ * Read in the <Customization> chapter, how you can extend the dForm Plugin with your own
+ * element types and subscribers.
+ * 
  * Author:
  * David Luecke (daff@neyeon.de)
  */
@@ -349,6 +352,26 @@
 		 * (end)
 		 */
 		radiobuttons : $.dform.elementBuilder("<div>", {}),
+		/**
+		 * type: container
+		 * 
+		 * Returns an empty container (div) for general use
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An empty div
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "container",
+		 * 		"caption" : "An empty div"
+		 * }
+		 * (end)
+		 */
+		container : $.dform.elementBuilder("<div>", {}),
 		/**
 		 * type: file
 		 * 

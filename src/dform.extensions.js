@@ -19,7 +19,7 @@
  * (e.g. with jQuery UI custom builds that don't include all the widgets) 
  * is actually available, so make sure, these plugins are loaded before the dform plugin.
  * 
- * Read in the <Customization> chapter, how you can extend the dForm Plugin with your own
+ * Read in the <Customization> chapter, how you can extend the dForm plugin with your own
  * element types and subscribers. 
  * 
  * Author:
@@ -31,8 +31,11 @@
 	 * section: jQuery UI
 	 *
 	 * Subscribers using the <jQuery UI Framework 
-	 * at http://jqueryui.com>.
-	 * 
+	 * at http://jqueryui.com>. Types and subscribers will only be
+	 * added, if the corresponding jQuery UI plugin functions are available.
+	 */
+	
+	/**
 	 * type: progressbar
 	 * 
 	 * Returns a jQuery UI progressbar.
@@ -67,27 +70,19 @@
 	/**
 	 * type: accordion
 	 * 
-	 * Returns an element container 
-	 * <jQuery UI accordion documentation at http://jqueryui.com/demos/accordion/> 
+	 * Creates an element container for a jQuery UI accordion.
 	 * 
 	 * Parameters:
-	 * 	options - As specified in the 
-	 * 
-	 * Todo:
-	 * 	Not finished yet
+	 * 	options - As specified in the <jQuery UI accordion documentation at 
+	 * 	http://jqueryui.com/demos/accordion/> 
 	 */
 	$.dform.addTypeIf($.isFunction($.fn.accordion), "accordion",
-		/**
-		 * Creates a container for the jQuery UI accordion.
-		 * @param options object All parameters for this type
-		 */
 		function(options)
 		{
-			// TODO finish accordion type
 			var ops = _getOptions("accordion", options);
 			return $("<div>").attr(ops.attributes);
 		});
-	
+
 	/**
 	 * type: tabs
 	 * 
@@ -103,49 +98,59 @@
 			var ops = _getOptions("tabs", options);
 			return $("<div>").attr(ops.attributes);
 		});
-
+	
 	/**
-	 * subscriber: tabs
+	 * subscriber: entries
 	 * 
-	 * Adds tabs to a tab element.
-	 * 
-	 * Parameters:
-	 * 	options - An object containing a tab with its unique id as a key
-	 * 	and the tab options including an "elements" with all
-	 * 	subelements as a value.
-	 * 	type - The type of the *this* element
+	 * Creates entries for <tabs> or <accordion> elements.
+	 * Use the <elements> subscriber to create subelements in each entry.
 	 * 
 	 * For types:
-	 * 	<tabs>
-	 */
-	$.dform.subscribeIf($.isFunction($.fn.tabs), "tabs",
-		function(options, type)
-		{
-			if (type == "tabs")
+	 * 	<tabs>, <accordion>
+	 * 
+	 * Parameters:
+	 * 	options - All options for the container div. The <caption> will be
+	 * 	turned into the accordion or tab title.
+	 * 	type - The type of the *this* element
+	 */	
+	$.dform.subscribeIf($.isFunction($.fn.accordion), "entries",
+		function(options, type) {
+			var scoper = this;
+			if(type == "accordion")
 			{
-				$(this).append("<ul>");
-				var scoper = $(this);
-				$.each(options, function(tabname, ops)
-				{
-					var tablink = $("<a>").attr(
-					{
-						"href" : "#" + tabname
-					}).html(ops.title);
-					var li = $("<li>").append(tablink);
-					var tabdiv = $("<div>").attr("id", tabname);
-					$(scoper).children("ul").first().append(li);
-					$(scoper).append(tabdiv);
-					
-					$(tabdiv).runAll(ops);
+				$.each(options, function(index, options) {
+					$.extend(options, { "type" : "container" });
+					$(scoper).formElement(options);
+					// Wrap label text into link for formatting
+					$(scoper).children("div:last").prev().wrapInner($("<a>").attr("href", "#"));
 				});
 			}
-			$(this).tabs();
 		});
-	
+	$.dform.subscribeIf($.isFunction($.fn.tabs), "entries",
+		function(options, type) {
+			var scoper = this;
+			if(type == "tabs")
+			{
+				$(this).append("<ul>");
+				var ul = $(scoper).children("ul:first");
+				$.each(options, function(index, options) {
+					var id = options.id ? options.id : index;
+					$.extend(options, { "type" : "container", "id" : id });
+					$(scoper).formElement(options);
+					var label = $(scoper).children("div:last").prev();
+					$(label).wrapInner($("<a>").attr("href", "#" + id));
+					$(ul).append($("<li>").wrapInner(label));
+				});
+			}
+		});
+		
 	/**
 	 * subscriber: dialog
 	 * 
-	 * Creates a dialog on <form> or <fieldset> elements.
+	 * Creates a dialog on container elements.
+	 * 
+	 * For types:
+	 * 	<form>, <fieldset>
 	 * 
 	 * Parameters:
 	 * 	options - As specified in the <jQuery UI dialog documentation at
@@ -214,12 +219,6 @@
 			if (type == "text")
 				$(this).autocomplete(options);
 		});
-	
-	$.dform.subscribeIf($.isFunction($.fn.wysiwyg), "wysiwyg",
-		function(options, type)
-		{
-			// TODO WYSIWYG
-		});
 
 	/**
 	 * subscriber: [post]
@@ -227,6 +226,9 @@
 	 * Post processing subscriber that adds jQuery UI styling classes to
 	 * <text>, <textarea>, <password> and <fieldset> elements as well
 	 * as calling .button() on <submit> or <button> elements.
+	 * 
+	 * Additionally, <accordion> and <tabs> elements will be initialized
+	 * with their options given.
 	 * 
 	 * Parameters:
 	 * options - All options that have been used for 
@@ -243,6 +245,20 @@
 				if ($.inArray(type, [ "text", "textarea", "password",
 						"fieldset" ]) != -1)
 					$(this).addClass("ui-widget-content ui-corner-all");
+			}
+			// We can assume it is save since the types wouldn't even be registered
+			// without the jQuery functions available
+			if(type == "accordion") {
+				var ops = _getOptions(type, options).options;
+				// Change the header to a label since this is the default element
+				// for captions
+				$.extend(ops, { "header" : "label" });
+				$(this).accordion(ops);
+			}
+			else if(type == "tabs")
+			{
+				var ops = _getOptions(type, options).options;
+				$(this).tabs(ops);
 			}
 		});
 	
@@ -271,7 +287,7 @@
 	/**
 	 * section: Validation Plugin
 	 *
-	 * Subscribers using the <jQuery validation 
+	 * Support for the <jQuery validation 
 	 * plugin at http://bassistance.de/jquery-plugins/jquery-plugin-validation/>
 	 */
 	$.dform.subscribeIf($.isFunction($.fn.validate), // Subscribe if validation plugin is available
@@ -324,4 +340,18 @@
 			$(this).rules("add", options);
 		}
 	});
+
+	/**
+	 * section: WYSIWYG
+	 *
+	 * Support for several WYSIWYG editors
+	 * 
+	 *  TODO:
+	 *  	To implement
+	 */	
+	$.dform.subscribeIf($.isFunction($.fn.wysiwyg), "wysiwyg",
+		function(options, type)
+		{
+			// TODO WYSIWYG
+		});
 })(jQuery);
