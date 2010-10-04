@@ -8,9 +8,7 @@
 /**
  * file: Plugin Documentation
  * 
- * About:
- * The dForm core jQuery plugin, providing helper and the jQuery plugin
- * functions.
+ * This is the documentation for the plugin functions itself.
  * 
  * Author:
  * David Luecke (daff@neyeon.de)
@@ -18,6 +16,24 @@
 (function($)
 {
 	var _subscriptions = {};
+	var _types = {};
+	
+	function _addToObject(obj, data, fn)
+	{
+		if (typeof (data) == "string")
+		{
+			if (!$.isArray(obj[data])) {
+				obj[data] = [];
+			}
+			obj[data].push(fn);
+		} else if (typeof (data) == "object")
+		{
+			$.each(data, function(name, fn)
+			{
+				_addToObject(obj, name, fn);
+			});
+		}
+	}
 	
 	/**
 	 * section: Global helper functions
@@ -126,6 +142,63 @@
 			return $.withoutKeys(object, ignores);
 		},
 		/**
+		 * function: removeType
+		 * 
+		 * Delete an element type.
+		 * 
+		 * Parameters:
+		 * 	name - The name of the type to delete 
+		 */
+		removeType : function(name)
+		{
+			delete _types[name];
+		},
+		/**
+		 * function: typeNames
+		 * 
+		 * Returns the names of all types registered
+		 */
+		typeNames : function()
+		{
+			return $.keyset(_types);
+		},
+		/**
+		 * function: type
+		 * 
+		 * Register a element type function.
+		 * 
+		 * Parameters:
+		 * 	data - Can either be the name of the type
+		 * 	function or an object that contains name : type function
+		 * 	pairs
+		 * 	fn - The function that creates a new type element
+		 */
+		addType : function(data, fn)
+		{
+			_addToObject(_types, data, fn);
+		},
+		/**
+		 * function: addTypeIf
+		 * 
+		 * Register a element type function.
+		 * 
+		 * Parameters:
+		 * 	condition - The condition under which to subscribe
+		 * 	data - Can either be the name of the type builder
+		 * 	function or an object that contains name : type function
+		 * 	pairs
+		 * 	fn - The function to subscribe or nothing if an object is passed for data
+		 * 
+		 * See also:
+		 * 	<addType>
+		 */
+		addTypeIf : function(condition, data, fn)
+		{
+			if(condition) {
+				$.dform.addType(data, fn);
+			}
+		},
+		/**
 		 * function: subscriberNames
 		 * 
 		 * Returns the names of all subscriber functions registered
@@ -147,19 +220,7 @@
 		 */
 		subscribe : function(data, fn)
 		{
-			if (typeof (data) == "string")
-			{
-				if (!$.isArray(_subscriptions[data])) {
-					_subscriptions[data] = [];
-				}
-				_subscriptions[data].push(fn);
-			} else if (typeof (data) == "object")
-			{
-				$.each(data, function(name, fn)
-				{
-					$.dform.subscribe(name, fn);
-				});
-			}
+			_addToObject(_subscriptions, data, fn);
 		},
 		/**
 		 * function: subscribeIf
@@ -231,14 +292,13 @@
 			if (!type) {
 				throw "No element type given! Must always exist.";
 			}
-			var name = "[type=" + options.type + "]";
 			var element = null;
 			// We don't need the type key in the options
 			var ops = $.withoutKeys(options, "type");
-			if (_subscriptions[name])
+			if (_types[type])
 			{
-				// Run all builder functions called [type=<typename>]
-				$.each(_subscriptions[name], function(i, sfn) {
+				// Run all type element builder functions called typename
+				$.each(_types[type], function(i, sfn) {
 					element = sfn.call(element, ops);
 				});
 			}
@@ -334,7 +394,7 @@
 		/**
 		 * function: formElement
 		 * 
-		 * Creates a form element on a element with given options
+		 * Creates a form element on an element with given options
 		 * 
 		 * Parameters:
 		 * 	options - The options to use

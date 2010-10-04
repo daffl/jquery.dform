@@ -8,14 +8,19 @@
 /**
  * file: Extensions
  * 
- * About:
- * Subscribers for supporting external jQuery Plugins
- * (like <jQuery UI at http://jquerui.com> and the <validation plugin
- * at http://bassistance.de/jquery-plugins/jquery-plugin-validation/>).
+ * There are many great form related jQuery Plugins out there. The extension package
+ * provides out of the box support for some of these plugins.
  * 
- * Only subscribes if the elements (like validate, tabs, slider, progressbar etc.)
- * are actually available (in case you are using customs builds).
- * Make sure, that these plugins have been loaded before.
+ * Currently supported plugins:
+ * - <jQuery UI>
+ * - The <Validation Plugin>
+ * 
+ * The corresponding subscribers will only be added if the plugin or the part of the plugin
+ * (e.g. with jQuery UI custom builds that don't include all the widgets) 
+ * is actually available, so make sure, these plugins are loaded before the dform plugin.
+ * 
+ * Read in the <Customization> chapter, how you can extend the dForm Plugin with your own
+ * element types and subscribers. 
  * 
  * Author:
  * David Luecke (daff@neyeon.de)
@@ -36,7 +41,7 @@
 	 * 	options - As specified in the <jQuery UI progressbar documentation at
 	 * 	http://jqueryui.com/demos/progressbar/>
 	 */
-	$.dform.subscribeIf($.isFunction($.fn.progressbar), "[type=progressbar]", 
+	$.dform.addTypeIf($.isFunction($.fn.progressbar), "progressbar", 
 		function(options)
 		{
 			var ops = _getOptions("progressbar", options);
@@ -52,7 +57,7 @@
 	 * 	options - As specified in the <jQuery UI slider documentation at
 	 * 	http://jqueryui.com/demos/slider/>
 	 */
-	$.dform.subscribeIf($.isFunction($.fn.slider), "[type=slider]", 
+	$.dform.addTypeIf($.isFunction($.fn.slider), "slider", 
 		function(options)
 		{
 			var ops = _getOptions("slider", options);
@@ -71,7 +76,7 @@
 	 * Todo:
 	 * 	Not finished yet
 	 */
-	$.dform.subscribeIf($.isFunction($.fn.accordion), "[type=accordion]",
+	$.dform.addTypeIf($.isFunction($.fn.accordion), "accordion",
 		/**
 		 * Creates a container for the jQuery UI accordion.
 		 * @param options object All parameters for this type
@@ -92,8 +97,8 @@
 	 * 	options - As specified in the <jQuery UI tabs documentation at
 	 * 	http://jqueryui.com/demos/tabs/>
 	 */
-	$.dform.subscribeIf($.isFunction($.fn.tabs),
-		"[type=tabs]", function(options)
+	$.dform.addTypeIf($.isFunction($.fn.tabs),
+		"tabs", function(options)
 		{
 			var ops = _getOptions("tabs", options);
 			return $("<div>").attr(ops.attributes);

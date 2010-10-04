@@ -14,6 +14,7 @@
 			<arg line="-i ${doc.txt}" />
 			<arg line="-o ${doc.format} ${doc.out}" />
 			<arg line="-p ${doc.project}" />
+			<arg line="-s ${doc.stylesheet}" />
 		</exec>
 	</target>
 	

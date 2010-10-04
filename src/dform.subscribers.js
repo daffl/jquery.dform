@@ -8,15 +8,55 @@
 /**
  * file: Subscribers
  * 
- * About:
- * Initializes basic element types and core subscriber functions.
+ * Subscribers are the core concept of the dForm plugin.
+ * 
+ * They are functions, that will be called when traversing the options 
+ * passed to the plugin.
+ * You can use the already existing subscribers as well as register your own.
+ * 
+ * The plugin has three different types of subscribers
+ * 
+ * Element Types - Also called type subscribers, for creating a new element of the given type.
+ * Element Subscribers - Will be called when the name they are registered with
+ * appears in the options given to the plugin.
+ * Special subscribers - Will be called on special events.
+ * 
+ * Currently there are two types of special subscribers supported
+ * 
+ * [pre] - Functions registered with this name will be called before any processing occurs.
+ * [post] - Functions registered with this name will be called after all processing is finished.
+ * 
+ * Example:
+ * (start code)
+ * $("#myform").buildForm({
+ * 		"name" : "textfield",
+ * 		"type" : "text",
+ *  	"id" : "testid",
+ *  	"value" : "Testvalue",
+ *  	"class" : "text-class"
+ *  	"caption" : "Label for textfield"
+ * });
+ * (end)
+ *  
+ * The above JavaScript snippet will do the following
+ * 
+ * - Look for a type subscriber called [type=text], which creates an input field with the type text.
+ * - Add all attributes as HTML attributes to the input element that don't have a registered element 
+ * subscriber (which, in this case, are name and id)
+ * - Add the new element to the DOM (append to #myform).
+ * - Run the <value> element subscriber which sets the value of this form element
+ * - Run the <class> element subscriber which adds a class to this element
+ * - Run the <caption> element subscriber which adds a label to the current element
+ * 
+ * This page will list the basic <Element Types> and <Element Subscribers> that are
+ * already supported by the plugin as well as examples for using them.
  * 
  * Author:
  * David Luecke (daff@neyeon.de)
  */
 (function($)
 {
-	$.dform.subscribe(
+	$.dform.addType(
 	{
 		/**
 		 * type: text
@@ -38,7 +78,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=text]" : $.dform.elementBuilder("<input>", { "type" : "text" }),
+		text : $.dform.elementBuilder("<input>", { "type" : "text" }),
 		/**
 		 * type: password
 		 * 
@@ -58,7 +98,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=password]" : $.dform.elementBuilder("<input>", { "type" : "password" }),
+		password : $.dform.elementBuilder("<input>", { "type" : "password" }),
 		/**
 		 * type: select
 		 * 
@@ -78,7 +118,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=select]" : $.dform.elementBuilder("<select>", {}),
+		select : $.dform.elementBuilder("<select>", {}),
 		/**
 		 * type: fieldset
 		 * 
@@ -98,7 +138,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=fieldset]" : $.dform.elementBuilder("<fieldset>", {}),
+		fieldset : $.dform.elementBuilder("<fieldset>", {}),
 		/**
 		 * type: textarea
 		 * 
@@ -119,7 +159,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=textarea]" : $.dform.elementBuilder("<textarea>", {}),
+		textarea : $.dform.elementBuilder("<textarea>", {}),
 		/**
 		 * type: submit
 		 * 
@@ -139,7 +179,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=submit]" : $.dform.elementBuilder("<input>", { "type" : "submit" }),
+		submit : $.dform.elementBuilder("<input>", { "type" : "submit" }),
 		/**
 		 * type: label
 		 * 
@@ -162,7 +202,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=label]" : $.dform.elementBuilder("<label>", {}),
+		label : $.dform.elementBuilder("<label>", {}),
 		/**
 		 * type: span
 		 * 
@@ -185,7 +225,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=span]" : $.dform.elementBuilder("<span>", {}),
+		span : $.dform.elementBuilder("<span>", {}),
 		/**
 		 * type: button
 		 * 
@@ -205,7 +245,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=button]" : $.dform.elementBuilder("<button>", {}),
+		button : $.dform.elementBuilder("<button>", {}),
 		/**
 		 * type: hidden
 		 * 
@@ -228,7 +268,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=hidden]" : $.dform.elementBuilder("<input>", { "type" : "hidden" }),
+		hidden : $.dform.elementBuilder("<input>", { "type" : "hidden" }),
 		/**
 		 * type: radio
 		 * 
@@ -248,7 +288,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=radio]" : $.dform.elementBuilder("<input>", { "type" : "radio" }),
+		radio : $.dform.elementBuilder("<input>", { "type" : "radio" }),
 		/**
 		 * type: checkbox
 		 * 
@@ -268,7 +308,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=checkbox]" : $.dform.elementBuilder("<input>", { "type" : "checkbox" }),
+		checkbox : $.dform.elementBuilder("<input>", { "type" : "checkbox" }),
 		/**
 		 * type: checkboxes
 		 * 
@@ -288,7 +328,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=checkboxes]" : $.dform.elementBuilder("<div>", {}),
+		checkboxes : $.dform.elementBuilder("<div>", {}),
 		/**
 		 * type: radiobuttons
 		 * 
@@ -308,7 +348,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=radiobuttons]" : $.dform.elementBuilder("<div>", {}),
+		radiobuttons : $.dform.elementBuilder("<div>", {}),
 		/**
 		 * type: file
 		 * 
@@ -328,7 +368,7 @@
 		 * }
 		 * (end)
 		 */
-		"[type=file]" : $.dform.elementBuilder("<input>", { "type" : "file" })
+		file : $.dform.elementBuilder("<input>", { "type" : "file" })
 	});
 
 	$.dform.subscribe(
@@ -352,7 +392,7 @@
 		 * }
 		 * (end)
 		 */
-		"class" : function(options, type)
+		class : function(options, type)
 		{
 			$(this).addClass(options);
 		},
@@ -441,7 +481,7 @@
 		/**
 		 * subscriber: options
 		 * 
-		 * Adds options to select type elements.
+		 * Adds options to select type elements or radio and checkbox list elements.
 		 * 
 		 * Parameters:
 		 * 	options - A key value pair where the key is the
@@ -449,7 +489,7 @@
 		 * 	type - The type of the *this* element
 		 * 
 		 * For types:
-		 * 	<select>
+		 * 	<select>, <checkboxes>, <radiobuttons>
 		 * 
 		 * Example:
 		 * (start code)
@@ -485,6 +525,19 @@
 						option = fn($.withoutKeys(content, ["value"])).html(content["value"]);
 					}
 					$(scoper).append(option);
+				});
+			}
+			else if(type == "checkboxes" || type == "radiobuttons")
+			{
+				// Options for checkbox and radiobutton lists
+				var scoper = this;
+				$.each(options, function(value, content) {
+					var boxoptions = ((type == "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
+					if(typeof(content) == "string")
+						boxoptions["caption"] = content;
+					else
+						$.extend(boxoptions, content);
+					$(scoper).formElement(boxoptions);
 				});
 			}
 		},
@@ -575,19 +628,6 @@
 				var legend = $("<legend>").html(options);
 				$(this).prepend(legend);
 			}
-			else if(type == "checkboxes" || type == "radiobuttons")
-			{
-				// Options for checkbox and radiobutton lists
-				var scoper = this;
-				$.each(options, function(value, content) {
-					var boxoptions = ((type == "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
-					if(typeof(content) == "string")
-						boxoptions["label"] = content;
-					else
-						$.extend(boxoptions, content);
-					$(scoper).formElement(boxoptions);
-				});
-			}
 			else
 			{
 				var labelops = { "type" : "label" };
@@ -636,7 +676,7 @@
 			if (type == "checkboxes" || type == "radiobuttons")
 			{
 				var boxtype = ((type == "checkboxes") ? "checkbox" : "radio");
-				$(this).children("[type=" + boxtype + "]").each(function() {
+				$(this).children(boxtype).each(function() {
 					$(this).attr("name", options.name);
 				});
 			}
