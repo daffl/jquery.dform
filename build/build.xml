@@ -16,6 +16,13 @@
 			<arg line="-p ${doc.project}" />
 			<arg line="-s ${doc.stylesheet}" />
 		</exec>
+		<antcall target="doc-js" />
+	</target>
+	
+	<target name="doc-js">
+		<property name="doc.js.src" value="${doc.project}${doc.js}" />
+		<property name="doc.js.out" value="${doc.out}javascript/${doc.js}" />
+		<copy overwrite="true" tofile="${doc.js.out}" file="${doc.js.src}" />
 	</target>
 	
 	<target name="concat" depends="init">
