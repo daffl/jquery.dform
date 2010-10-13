@@ -81,19 +81,19 @@ Format: 1.5
 # topics [at] naturaldocs [dot] org.
 
 
-Topic Type: Element Type
+Alter Topic Type: Type
 
-   Plural: Element Types
+   Plural: Types
    Scope: Always global
 
-   Keywords:
+   Add Keywords:
       type
       types
 
 
-Topic Type: Element Subscriber
+Topic Type: Subscriber
 
-   Plural: Element Subscribers
+   Plural: Subscribers
    Scope: Always global
 
    Keywords:

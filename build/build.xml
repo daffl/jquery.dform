@@ -15,14 +15,17 @@
 			<arg line="-o ${doc.format} ${doc.out}" />
 			<arg line="-p ${doc.project}" />
 			<arg line="-s ${doc.stylesheet}" />
+			<arg line="-hl ${doc.highlight}" />
 		</exec>
 		<antcall target="doc-js" />
 	</target>
 	
 	<target name="doc-js">
-		<property name="doc.js.src" value="${doc.project}${doc.js}" />
-		<property name="doc.js.out" value="${doc.out}javascript/${doc.js}" />
-		<copy overwrite="true" tofile="${doc.js.out}" file="${doc.js.src}" />
+		<property name="doc.js.out" value="${doc.out}/${doc.js}" />
+		<property name="doc.js.src" value="${doc.project}/${doc.js}" />
+		<copy todir="${doc.js.out}" overwrite="true">
+		    <fileset dir="${doc.js.src}"/>
+		 </copy>
 	</target>
 	
 	<target name="concat" depends="init">

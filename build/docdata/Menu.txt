@@ -49,18 +49,19 @@ Footer: Copyright (C) 2010 - David Luecke - daff@neyeon.de
 # --------------------------------------------------------------------------
 
 
-File: The Plugin  (/home/daff/Development/workspace/jquery.dform/readme.txt)
-File: License  (/home/daff/Development/workspace/jquery.dform/license.txt)
-File: Plugin Documentation  (/home/daff/Development/workspace/jquery.dform/src/dform.js)
-File: Extensions  (/home/daff/Development/workspace/jquery.dform/src/dform.extensions.js)
+File: Home  (/home/daff/Development/workspace/jquery.dform/readme.txt)
 File: Subscribers  (/home/daff/Development/workspace/jquery.dform/src/dform.subscribers.js)
 File: Customization  (/home/daff/Development/workspace/jquery.dform/customization.txt)
+File: Extensions  (/home/daff/Development/workspace/jquery.dform/src/dform.extensions.js)
+File: Plugin  (/home/daff/Development/workspace/jquery.dform/src/dform.js)
+File: Changelog  (/home/daff/Development/workspace/jquery.dform/changelog.txt)
+File: License  (/home/daff/Development/workspace/jquery.dform/license.txt)
 
 Group: Index  {
 
    Index: Everything
-   Element Type Index: Element Types
-   Element Subscriber Index: Element Subscribers
+   Type Index: Types
+   Subscriber Index: Subscribers
    Function Index: Functions
    File Index: Files
    }  # Group: Index

@@ -839,4 +839,25 @@ function SearchResults(name, mode)
         };
     };
 
-alert("Hello that worked! :)");
+    function include(jsFile)
+    {
+      document.write('<script type="text/javascript" src="'
+        + jsFile + '"></scr' + 'ipt>'); 
+    }
+
+    function includeCss(cssurl)
+    {
+    	document.write('<link href="' + cssurl + '" rel="stylesheet" type="text/css" />');
+    }
+    
+    include("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+    include("http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js");
+    include("http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js");
+    
+    include("http://alexgorbatchev.com/pub/sh/2.0.320/scripts/shCore.js");
+    include("http://alexgorbatchev.com/pub/sh/2.0.320/scripts/shBrushJScript.js");
+    
+    include("../javascript/custom.js");
+    include("../javascript/jquery.beautyofcode.js");
+    
+    includeCss("http://alexgorbatchev.com/pub/sh/2.0.320/styles/shThemeDefault.css");
