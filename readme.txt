@@ -1,4 +1,4 @@
-Title: The Plugin
+Title: Home
 
 The jQuery.dForm plugin allows you to create your HTML forms programmatically from
 JavaScript objects (and JSON).

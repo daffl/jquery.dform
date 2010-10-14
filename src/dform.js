@@ -6,9 +6,10 @@
  */
 
 /**
- * file: Plugin Documentation
+ * file: Plugin
  * 
- * This is the documentation for the plugin functions itself.
+ * This is the documentation for the core helpers and jQuery
+ * functions of the plugin.
  * 
  * Author:
  * David Luecke (daff@neyeon.de)
@@ -117,6 +118,10 @@
 	 */
 	$.dform =
 	{
+		options :
+		{
+			prefix : "ui-dform-"
+		},
 		/**
 		 * function: htmlAttributes
 		 * 

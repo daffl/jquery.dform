@@ -8,7 +8,7 @@
 /**
  * file: Subscribers
  * 
- * Subscribers are the core concept of the dForm plugin.
+ * Subscribers are the core concept of the jQuery.dForm.
  * 
  * They are functions, that will be called when traversing the options 
  * passed to the plugin.
@@ -16,15 +16,14 @@
  * 
  * The plugin has three different types of subscribers
  * 
- * Element Types - Also called type subscribers, for creating a new element of the given type.
- * Element Subscribers - Will be called when the name they are registered with
- * appears in the options given to the plugin.
- * Special subscribers - Will be called on special events.
+ * Types - For creating a new element of the given type.
+ * Subscribers - Which will be called when the name they are registered with
+ * appears in the options given to the plugin and after the type element has been added to the DOM.
+ * Special subscribers - Will be called on special events. 
  * 
- * Currently there are two types of special subscribers supported
- * 
- * [pre] - Functions registered with this name will be called before any processing occurs.
- * [post] - Functions registered with this name will be called after all processing is finished.
+ * Currently there are two types of special subscribers
+ * * [pre] - Functions registered with this name will be called before any processing occurs.
+ * * [post] - Functions registered with this name will be called after all processing is finished.
  * 
  * Example:
  * (start code)
@@ -33,26 +32,25 @@
  * 		"type" : "text",
  *  	"id" : "testid",
  *  	"value" : "Testvalue",
- *  	"class" : "text-class"
  *  	"caption" : "Label for textfield"
  * });
  * (end)
  *  
  * The above JavaScript snippet will do the following
  * 
- * - Look for a type subscriber called [type=text], which creates an input field with the type text.
- * - Add all attributes as HTML attributes to the input element that don't have a registered element 
- * subscriber (which, in this case, are name and id)
+ * - Look for a type subscriber called <text>, which creates an input field with the type text.
+ * - Add all attributes as HTML attributes to the input element that don't have a 
+ * subscriber registered (which are name and id)
  * - Add the new element to the DOM (append to #myform).
- * - Run the <value> element subscriber which sets the value of this form element
- * - Run the <class> element subscriber which adds a class to this element
- * - Run the <caption> element subscriber which adds a label to the current element
+ * - Run the <type> subscriber which adds the auto generated class name ui-dform-text to the input field
+ * - Run the <value> subscriber which sets the value of this form element
+ * - Run the <caption> subscriber which adds a label before the textfield
  * 
- * This page will list the basic <Element Types> and <Element Subscribers> that are
- * already supported by the plugin as well as examples for using them.
+ * This page will list the basic <Types> and <Subscribers> that are
+ * supported by the plugin as well as examples for using them.
  * 
- * Read in the <Customization> chapter, how you can extend the dForm Plugin with your own
- * element types and subscribers.
+ * Read in the <Extensions> chapter, how you can extend the dForm Plugin with your own
+ * types and subscribers.
  * 
  * Author:
  * David Luecke (daff@neyeon.de)
@@ -367,7 +365,7 @@
 		 * (start code)
 		 * {
 		 * 		"type" : "container",
-		 * 		"caption" : "An empty div"
+		 * 		"style" : "border: 1px solid #505050;"
 		 * }
 		 * (end)
 		 */
@@ -415,7 +413,7 @@
 		 * }
 		 * (end)
 		 */
-		class : function(options, type)
+		"class" : function(options, type)
 		{
 			$(this).addClass(options);
 		},
@@ -672,16 +670,24 @@
 		/**
 		 * subscriber: type
 		 * 
-		 * An empty subscriber for types so that it doesn't show up as
-		 * an attribute in HTML elements. Since every element needs a type
+		 * The subscriber for the type parameter.
+		 * Although the type parameter is used to get the correct element
+		 * type it is just treated as a simple subscriber otherwise.
+		 * Since every element needs a type
 		 * parameter feel free to add other type subscribers to do
-		 * any processing between [pre] and [post]
+		 * any processing between [pre] and [post].
+		 * 
+		 * This subscriber adds the auto generated classes according
+		 * to the type given.
 		 * 
 		 * Parameters:
 		 * 	options - the name of the type.
 		 * 	type - The type of the *this* element
 		 */
-		type : function(options, type) {},
+		type : function(options, type) {
+			if($.dform.options.prefix)
+				$(this).addClass($.dform.options.prefix + type);
+		},
 		/**
 		 * subscriber: [post]
 		 * 
@@ -694,8 +700,6 @@
 		 */
 		"[post]" : function(options, type)
 		{
-			if (type == "submit")
-				$(this).wrap("<p>");
 			if (type == "checkboxes" || type == "radiobuttons")
 			{
 				var boxtype = ((type == "checkboxes") ? "checkbox" : "radio");

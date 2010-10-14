@@ -8,6 +8,45 @@
 /**
  * file: Extensions
  * 
+ * This page covers how to extend the dform plugin of your own types
+ * and subscribers as well as providing a documentation for form related
+ * plugins that are already supported out of the box.
+ * 
+ * Adding your own:
+ * 
+ * The main difference between types and element subscribers is,
+ * that element subscribers get the element passed which is already added into the DOM.
+ * So you will have to decide if you own subscriber will create a new element or extend an existing one.
+ * In the following hands on example we will create a custom hello world button and a subscriber that will
+ * alert some text when the element was clicked.
+ * 
+ * (start code)
+ *	$.dform.addType("hellobutton", function(options) {
+ *		// Get the HTML attributes without element subscriber options for the button
+ *		var htmlattributes = $.dform.htmlAttributes(options);
+ *		// Return the newly created element
+ *		return $("<button>").attr(htmlattributes).html("Say hello");
+ *	 });
+ *	
+ *	$.dform.subscribe("alert", function(options, type) {
+ *		if(type == "hellobutton")
+ *		{
+ *			$(this).click(function() {
+ *				alert(options);
+ *			});
+ *		}
+ *	 });
+ *	
+ *	// Use it like this
+ *	$("#mydiv").buildForm(
+ *	{
+ *		"type" : "hellobutton",
+ *		"alert" : "Hello world!"
+ *	});
+ * (end)
+ * 
+ * Supported plugins:
+ * 
  * There are many great form related jQuery Plugins out there. The extension package
  * provides out of the box support for some of these plugins.
  * 
@@ -17,10 +56,7 @@
  * 
  * The corresponding subscribers will only be added if the plugin or the part of the plugin
  * (e.g. with jQuery UI custom builds that don't include all the widgets) 
- * is actually available, so make sure, these plugins are loaded before the dform plugin.
- * 
- * Read in the <Customization> chapter, how you can extend the dForm plugin with your own
- * element types and subscribers. 
+ * is actually available, so make sure, these plugins are loaded before the dform plugin. 
  * 
  * Author:
  * David Luecke (daff@neyeon.de)
@@ -341,7 +377,7 @@
 		}
 	});
 
-	/**
+	/*
 	 * section: WYSIWYG
 	 *
 	 * Support for several WYSIWYG editors

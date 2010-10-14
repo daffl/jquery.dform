@@ -1,0 +1,12 @@
+Title: Changelog
+
+0.1.1:
+* Separated type and subscriber functions
+* Added types <file>, <container>, <hidden>, <accordion>, <checkboxes> and <radiobuttons>
+* Added auto class generation based on element type
+* Finished jQuery UI <accordion> and unified with <tabs> usage
+* Switched documentation to <Natualdocs at http://naturaldocs.org>
+* Added build.xml for generating documentation and minifying JavaScript
+
+0.1:
+* Initial release
