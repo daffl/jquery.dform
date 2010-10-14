@@ -45,7 +45,7 @@ supported out of the box)
 * write JavaScript instead of HTML markup since your page doesn't run without JS anyway
 
 How to get it:
-<Download jQuery.dForm 0.1.1 at http://bla>
+<Download jQuery.dForm 0.1.1 at http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.1.tar.gz>
 
 Contribute:
 
