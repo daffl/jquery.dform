@@ -859,5 +859,6 @@ function SearchResults(name, mode)
     
     include("../javascript/custom.js");
     include("../javascript/jquery.beautyofcode.js");
+    include("../../../jquery.dform-0.1.1.min.js");
     
     includeCss("http://alexgorbatchev.com/pub/sh/2.0.320/styles/shThemeDefault.css");

@@ -18,6 +18,7 @@
 			<arg line="-hl ${doc.highlight}" />
 		</exec>
 		<antcall target="doc-resources" />
+		<antcall target="doc-clean" />
 	</target>
 	
 	<target name="doc-resources" description="Copy and overwrite additional NaturalDoc resources">
@@ -35,10 +36,18 @@
 		</copy>
 	</target>
 	
-	<target name="concat" depends="init" description="Concatenate all JavaScript source files">
+	<target name="doc-clean" description="Delete temporary data folder">
+		<delete dir="${doc.project}Data" />
+	</target>
+		
+	<target name="concat" depends="init" description="Concatenate all JavaScript source files in the right order">
 		<echo>Concatenating files to ${min.concat}</echo>
 		<concat destfile="${min.concat}">
-			<fileset dir="${src}" />
+			<filelist dir="src">
+				<file name="dform.js" />
+				<file name="dform.subscribers.js" />
+				<file name="dform.extensions.js" />
+			</filelist>
 		</concat>
 	</target>
 	

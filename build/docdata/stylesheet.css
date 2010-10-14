@@ -24,11 +24,6 @@ body
     height: 100%;
 }
 
-pre
-{
-    background-color: #ffede6;
-}
-
 a:link, a:visited
 {
     color: #0078ae;
@@ -267,4 +262,4 @@ input, select, textarea
     color: #535254;
 }
 
-blockquote { background-color: #FFFFFF; }
+code, blockquote { background-color: #FFFFFF; }

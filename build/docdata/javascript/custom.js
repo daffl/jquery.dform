@@ -11,7 +11,8 @@ $(document).ready(function() {
 	
 	$("pre").each(function() { $(this).wrapInner("<code>"); });
 	
-	$(".CSubscriber pre, .CType pre").each(function(count) { 	
+	$(".CSubscriber pre, .CType pre").each(function(count) {
+		var code = $.parseJSON($(this).children("code").html());
 		var elem = $(this).parent();
 		var codeid = "code-" + count;
 		var formid = "form-" + count;
@@ -23,6 +24,7 @@ $(document).ready(function() {
 			.append($("<li>").append($("<a>").attr("href", "#" + formid).html("Form")))
 			.append($("<li>").append($("<a>").attr("href", "#" + codeid).html("JSON")));
 		$(tabs).prepend(ul);
+		$("#" + formid).buildForm(code);
 		$(tabs).tabs();
 	});
 });
