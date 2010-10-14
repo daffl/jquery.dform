@@ -7,9 +7,9 @@
 		<mkdir dir="${tmp}"/>
 	</target>
 	
-	<target name="doc">
+	<target name="doc" description="Generate Natualdocs documentation">
 		<echo>Running ${doc.bin} to generate ${doc.format} documentation in ${doc.out}</echo>
-		<exec executable="${doc.bin}">
+		<exec executable="${doc.bin}" dir=".">
 			<arg line="-i ${src}" />
 			<arg line="-i ${doc.txt}" />
 			<arg line="-o ${doc.format} ${doc.out}" />
@@ -17,25 +17,32 @@
 			<arg line="-s ${doc.stylesheet}" />
 			<arg line="-hl ${doc.highlight}" />
 		</exec>
-		<antcall target="doc-js" />
+		<antcall target="doc-resources" />
 	</target>
 	
-	<target name="doc-js">
+	<target name="doc-resources" description="Copy and overwrite additional NaturalDoc resources">
 		<property name="doc.js.out" value="${doc.out}/${doc.js}" />
 		<property name="doc.js.src" value="${doc.project}/${doc.js}" />
+		<echo>Copying data from JavaScript folder ${doc.js.src} to ${doc.js.out}</echo>
 		<copy todir="${doc.js.out}" overwrite="true">
 		    <fileset dir="${doc.js.src}"/>
-		 </copy>
+		</copy>
+		<property name="doc.css.out" value="${doc.out}/${doc.css}" />
+		<property name="doc.css.src" value="${doc.project}/${doc.css}" />
+		<echo>Copying data from stylesheet folder ${doc.css.src} to ${doc.css.out}</echo>
+		<copy todir="${doc.css.out}" overwrite="true">
+		    <fileset dir="${doc.css.src}"/>
+		</copy>
 	</target>
 	
-	<target name="concat" depends="init">
+	<target name="concat" depends="init" description="Concatenate all JavaScript source files">
 		<echo>Concatenating files to ${min.concat}</echo>
 		<concat destfile="${min.concat}">
 			<fileset dir="${src}" />
 		</concat>
 	</target>
 	
-	<target name="min" depends="concat">
+	<target name="min" depends="concat" description="Download Google closure compiler and compile the concatenated file">
 		<!-- Gets the latest Google closures compiler, then minify the concatenated file -->
 		<get src="${min.compiler.url}" dest="${min.compiler.zip}"/>
 		<unzip dest="${tmp}" src="${min.compiler.zip}" />
@@ -50,5 +57,8 @@
 	
 	<target name="cleanup">
 		<delete dir="${tmp}" />
+	</target>
+	
+	<target name="all" depends="doc,min">
 	</target>
 </project>

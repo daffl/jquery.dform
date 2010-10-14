@@ -11,6 +11,9 @@
  * Error orange: #e14f1c
  * Errpr red:
  */
+ 
+@import url("start/jquery-ui-1.8.4.custom.css");
+
 body
 {
     font: 10pt Verdana, Arial, sans-serif;
