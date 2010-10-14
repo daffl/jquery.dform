@@ -35,6 +35,111 @@
 			});
 		}
 	}
+
+	/**
+	 * section: JQuery Plugin functions
+	 *
+	 * Functions that will be used as jQuery plugins.
+	 */
+	$.fn.extend(
+	{
+		/**
+		 * function: runSubscription
+		 * 
+		 * Run all subscriptions with the given name and options
+		 * on an element.
+		 * 
+		 * Parameters:
+		 * 	name - The name of the subscriber functions
+		 * 	options - Options for the function
+		 * 	type - The type of the current element (as in
+		 * 	the registered types)
+		 * 
+		 * Returns:
+		 * 	The jQuery element this function has been called on
+		 */
+		runSubscription : function(name, options, type)
+		{
+			var element = $(this);
+			if ($.dform.hasSubscription(name))
+			{
+				$.each(_subscriptions[name], function(i, sfn) {
+					// run subscriber function with options
+					sfn.call(element, options, type);
+				});
+			}
+			return $(this);
+		},
+		/**
+		 * function: runAll
+		 * 
+		 * Run all subscription functions with given options.
+		 * 
+		 * Parameters:
+		 * 	options - The options to use
+		 * 
+		 * Returns:
+		 * 	The jQuery element this function has been called on
+		 */
+		runAll : function(options)
+		{
+			var type = options.type;
+			var scoper = $(this);
+			// Run preprocessing subscribers
+			$(this).runSubscription("[pre]", options, type);
+			$.each(options, function(name, sopts) {
+				// TODO each loop for list of dom elements
+				$(scoper).runSubscription(name, sopts, type);
+			});
+			// Run post processing subscribers
+			$(this).runSubscription("[post]", options, type);
+			return $(this);
+		},
+		/**
+		 * function: formElement
+		 * 
+		 * Creates a form element on an element with given options
+		 * 
+		 * Parameters:
+		 * 	options - The options to use
+		 * 
+		 * Returns:
+		 * 	The jQuery element this function has been called on
+		 */
+		formElement : function(options)
+		{
+			// Create element (run builder function for type)
+			var element = $.dform.createElement(options);
+			$(this).append($(element));
+			// Run all subscriptions
+			$(element).runAll(options);
+			return $(this);
+		},
+		/**
+		 * function: buildForm
+		 * 
+		 * Build an entire form, if the current element is a form.
+		 * Otherwise the formElement function will be called on the
+		 * current element.
+		 * 
+		 * Parameters:
+		 * 	options - The options to use
+		 * 
+		 * Returns:
+		 * 	The jQuery element this function has been called on
+		 */
+		buildForm : function(options)
+		{
+			if ($(this).is("form"))
+			{
+				var ops = $.extend({ "type" : "form" }, options);
+				$(this).attr($.dform.htmlAttributes(ops));
+				$(this).runAll(ops);
+			} else {
+				$(this).formElement(options);
+			}
+		}
+	});
 	
 	/**
 	 * section: Global helper functions
@@ -327,118 +432,13 @@
 		 * 	a new element from the given tag, extending the defaults settings for
 		 * 	that element with the options given to the returned function.
 		 */
-		elementBuilder : function(tag, defaults)
+		elementBuilder : function(tag, defaults, excludes)
 		{
 			// Currying :)
 			return function(options) {
-				var ops = $.dform.htmlAttributes(options);
+				var ops = $.dform.htmlAttributes(options, excludes);
 				return $(tag).attr($.extend(ops, defaults));		
 			};
 		}
 	};
-
-	/**
-	 * section: JQuery Plugin functions
-	 *
-	 * Functions that will be used as jQuery plugins.
-	 */
-	$.fn.extend(
-	{
-		/**
-		 * function: runSubscription
-		 * 
-		 * Run all subscriptions with the given name and options
-		 * on an element.
-		 * 
-		 * Parameters:
-		 * 	name - The name of the subscriber functions
-		 * 	options - Options for the function
-		 * 	type - The type of the current element (as in
-		 * 	the registered types)
-		 * 
-		 * Returns:
-		 * 	The jQuery element this function has been called on
-		 */
-		runSubscription : function(name, options, type)
-		{
-			var element = $(this);
-			if ($.dform.hasSubscription(name))
-			{
-				$.each(_subscriptions[name], function(i, sfn) {
-					// run subscriber function with options
-					sfn.call(element, options, type);
-				});
-			}
-			return $(this);
-		},
-		/**
-		 * function: runAll
-		 * 
-		 * Run all subscription functions with given options.
-		 * 
-		 * Parameters:
-		 * 	options - The options to use
-		 * 
-		 * Returns:
-		 * 	The jQuery element this function has been called on
-		 */
-		runAll : function(options)
-		{
-			var type = options.type;
-			var scoper = $(this);
-			// Run preprocessing subscribers
-			$(this).runSubscription("[pre]", options, type);
-			$.each(options, function(name, sopts) {
-				// TODO each loop for list of dom elements
-				$(scoper).runSubscription(name, sopts, type);
-			});
-			// Run post processing subscribers
-			$(this).runSubscription("[post]", options, type);
-			return $(this);
-		},
-		/**
-		 * function: formElement
-		 * 
-		 * Creates a form element on an element with given options
-		 * 
-		 * Parameters:
-		 * 	options - The options to use
-		 * 
-		 * Returns:
-		 * 	The jQuery element this function has been called on
-		 */
-		formElement : function(options)
-		{
-			// Create element (run builder function for type)
-			var element = $.dform.createElement(options);
-			$(this).append($(element));
-			// Run all subscriptions
-			$(element).runAll(options);
-			return $(this);
-		},
-		/**
-		 * function: buildForm
-		 * 
-		 * Build an entire form, if the current element is a form.
-		 * Otherwise the formElement function will be called on the
-		 * current element.
-		 * 
-		 * Parameters:
-		 * 	options - The options to use
-		 * 
-		 * Returns:
-		 * 	The jQuery element this function has been called on
-		 */
-		buildForm : function(options)
-		{
-			if ($(this).is("form"))
-			{
-				var ops = $.extend({ "type" : "form" }, options);
-				$(this).attr($.dform.htmlAttributes(ops));
-				$(this).runAll(ops);
-			} else {
-				$(this).formElement(options);
-			}
-		}
-	});
 })(jQuery);

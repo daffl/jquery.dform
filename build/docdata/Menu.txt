@@ -50,8 +50,8 @@ Footer: Copyright (C) 2010 - David Luecke - daff@neyeon.de
 
 
 File: Home  (/home/daff/Development/workspace/jquery.dform/readme.txt)
-File: Subscribers  (/home/daff/Development/workspace/jquery.dform/src/dform.subscribers.js)
-File: Extensions  (/home/daff/Development/workspace/jquery.dform/src/dform.extensions.js)
+File: Usage  (/home/daff/Development/workspace/jquery.dform/src/dform.subscribers.js)
+File: Extension  (/home/daff/Development/workspace/jquery.dform/src/dform.extensions.js)
 File: Plugin  (/home/daff/Development/workspace/jquery.dform/src/dform.js)
 File: Changelog  (/home/daff/Development/workspace/jquery.dform/changelog.txt)
 File: License  (/home/daff/Development/workspace/jquery.dform/license.txt)
@@ -63,6 +63,7 @@ Group: Index  {
    Subscriber Index: Subscribers
    Function Index: Functions
    File Index: Files
+   Example Index: Examples
    }  # Group: Index
 
 

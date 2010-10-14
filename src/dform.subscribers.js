@@ -6,7 +6,7 @@
  */
 
 /**
- * file: Subscribers
+ * file: Usage
  * 
  * Subscribers are the core concept of the jQuery.dForm.
  * 
@@ -46,11 +46,11 @@
  * - Run the <value> subscriber which sets the value of this form element
  * - Run the <caption> subscriber which adds a label before the textfield
  * 
- * This page will list the basic <Types> and <Subscribers> that are
- * supported by the plugin as well as examples for using them.
- * 
  * Read in the <Extensions> chapter, how you can extend the dForm Plugin with your own
  * types and subscribers.
+ * 
+ * This page will list the basic <Types> and <Subscribers> that are
+ * supported by the plugin as well as examples for using them.
  * 
  * Author:
  * David Luecke (daff@neyeon.de)
@@ -71,11 +71,14 @@
 		 * 	An input element with type text
 		 * 
 		 * Example:
+		 * Uses the <value> subscriber to set the textfield value
+		 * 
 		 * (start code)
 		 * {
 		 * 		"name" : "textfield",
 		 * 		"type" : "text",
-		 * 		"id" : "my-textfield"
+		 * 		"id" : "my-textfield",
+		 * 		"value" : "Hello world"
 		 * }
 		 * (end)
 		 */
@@ -112,10 +115,17 @@
 		 * 	An empty select input
 		 * 
 		 * Example:
+		 * Uses the <options> subscriber to add options to the select field
+		 * 
 		 * (start code)
 		 * {
 		 * 		"type" : "select",
-		 * 		"name" : "testselect"
+		 * 		"name" : "testselect",
+		 *		"options" :
+		 *		{
+		 *			"red" : "Color red",
+		 *			"blue" : "Color blue"
+		 *		}
 		 * }
 		 * (end)
 		 */
@@ -132,10 +142,21 @@
 		 * 	An empty fieldset
 		 * 
 		 * Example:
+		 * Uses the <caption> subscriber to add a legend and the
+		 * <elements> subscriber to add a <span> element in the fieldset.
+		 * 
 		 * (start code)
 		 * {
 		 * 		"type" : "fieldset",
-		 * 		"id" : "my-fieldset"
+		 * 		"id" : "my-fieldset",
+		 * 		"caption" : "My fieldset",
+		 * 		"elements" :
+		 * 		[
+		 * 			{
+		 * 				"type" : "span",
+		 * 				"html" : "Some text in here"
+		 * 			}	
+		 * 		]
 		 * }
 		 * (end)
 		 */
@@ -193,8 +214,7 @@
 		 * 	An empty label element
 		 * 
 		 * Example:
-		 * In this example the label will be filled with text by using the
-		 * <html> element subscriber
+		 * Uses the <html> element subscriber to add text to the label
 		 * 
 		 * (start code)
 		 * {
@@ -239,6 +259,8 @@
 		 * 	A button element
 		 * 
 		 * Example:
+		 * Uses the <html> subscriber
+		 * 
 		 * (start code)
 		 * {
 		 * 		"type" : "button",
@@ -282,10 +304,13 @@
 		 * 	A single radio input element
 		 * 
 		 * Example:
+		 * Uses the <caption> subscriber to add text to the radiobutton
+		 * 
 		 * (start code)
 		 * {
 		 * 		"type" : "radio",
-		 * 		"name" : "radioselection"
+		 * 		"name" : "radioselection",
+		 * 		"caption" : "Radiobutton"
 		 * }
 		 * (end)
 		 */
@@ -302,10 +327,13 @@
 		 * 	A single checkbox input element
 		 * 
 		 * Example:
+		 * Uses the <caption> subscriber to add text to the checkbox
+		 * 
 		 * (start code)
 		 * {
 		 * 		"type" : "checkbox",
-		 * 		"name" : "checkboxselection"
+		 * 		"name" : "checkboxselection",
+		 * 		"caption" : "Checkbox"
 		 * }
 		 * (end)
 		 */
@@ -322,14 +350,21 @@
 		 * 	An empty div to contain checkbox lists
 		 * 
 		 * Example:
+		 * Uses the <options> subscriber to add a list of checkboxes
+		 * 
 		 * (start code)
 		 * {
 		 * 		"type" : "checkboxes",
-		 * 		"name" : "checkboxselection"
+		 * 		"name" : "radioselection",
+		 * 		"options" :
+		 * 		{
+		 * 			"red" : "Color red",
+		 * 			"blue" : "Color blue",
+		 * 		}
 		 * }
 		 * (end)
 		 */
-		checkboxes : $.dform.elementBuilder("<div>", {}),
+		checkboxes : $.dform.elementBuilder("<div>", {}, ["name"]),
 		/**
 		 * type: radiobuttons
 		 * 
@@ -342,14 +377,21 @@
 		 * 	An empty div to contain radiobutton lists
 		 * 
 		 * Example:
+		 * Uses the <options> subscriber to add a list of radiobuttons
+		 * 
 		 * (start code)
 		 * {
 		 * 		"type" : "radiobuttons",
-		 * 		"name" : "radioselection"
+		 * 		"name" : "radioselection",
+		 * 		"options" :
+		 * 		{
+		 * 			"red" : "Color red",
+		 * 			"blue" : "Color blue",
+		 * 		}
 		 * }
 		 * (end)
 		 */
-		radiobuttons : $.dform.elementBuilder("<div>", {}),
+		radiobuttons : $.dform.elementBuilder("<div>", {}, ["name"]),
 		/**
 		 * type: container
 		 * 
@@ -362,10 +404,13 @@
 		 * 	An empty div
 		 * 
 		 * Example:
+		 * Uses the style property although you should separate your CSS
+		 * 
 		 * (start code)
 		 * {
 		 * 		"type" : "container",
-		 * 		"style" : "border: 1px solid #505050;"
+		 * 		"style" : "border: 1px solid #505050; padding: 10px;",
+		 * 		"html" : "Text in div"
 		 * }
 		 * (end)
 		 */
@@ -409,7 +454,7 @@
 		 * (start code)
 		 * {
 		 * 		"type" : "text",
-		 * 		"class" : "ui-corner-all"
+		 * 		"class" : "ui-corner-all ui-widget"
 		 * }
 		 * (end)
 		 */
@@ -454,13 +499,15 @@
 		 * (start code)
 		 * {
 		 * 		"type" : "fieldset",
+		 * 		"caption" : "Fieldset with elements",
 		 * 		"elements" :
 		 * 		[
 		 * 			{
 		 * 				"name" : "textfield",
 		 * 				"type" : "text",
-		 * 				"id" : "my-textfield"
-		 * 			}	
+		 * 				"id" : "my-textfield",
+		 * 				"caption" : "My textfield"
+		 * 			}
 		 * 		]
 		 * }
 		 * (end)
@@ -633,9 +680,21 @@
 		 * Example:
 		 * (start code)
 		 * {
-		 * 		"name" : "email",
-		 * 		"type" : "text",
-		 *		"caption" : "Enter your email address"
+		 * 		"type" : "fieldset",
+		 * 		"caption" : "Use of caption",
+		 * 		"elements" :
+		 * 		[
+		 * 			{
+		 * 				"name" : "email",
+		 * 				"type" : "text",
+		 *				"caption" : "Enter your email address"
+		 * 			},
+		 * 			{
+		 * 				"type" : "checkbox",
+		 * 				"name" : "mycheckbox",
+		 * 				"caption" : "Checkbox caption"
+		 * 			}
+		 * 		]
 		 * }	
 		 * (end)
 		 */
@@ -661,9 +720,15 @@
 					labelops["for"] = $(this).attr("id");
 				var label = $.dform.createElement(labelops);
 				if (type == "checkbox" || type == "radio")
+				{
+					if($.dform.options.prefix)
+						$(label).addClass($.dform.options.prefix + type);
 					$(this).parent().append($(label));
+				}
 				else
+				{
 					$(label).insertBefore($(this));
+				}
 				$(label).runAll(labelops);
 			}
 		},
@@ -703,7 +768,7 @@
 			if (type == "checkboxes" || type == "radiobuttons")
 			{
 				var boxtype = ((type == "checkboxes") ? "checkbox" : "radio");
-				$(this).children(boxtype).each(function() {
+				$(this).children("[type=" + boxtype + "]").each(function() {
 					$(this).attr("name", options.name);
 				});
 			}

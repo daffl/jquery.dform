@@ -6,11 +6,11 @@
  */
 
 /**
- * file: Extensions
+ * file: Extension
  * 
  * This page covers how to extend the dform plugin of your own types
  * and subscribers as well as providing a documentation for form related
- * plugins that are already supported out of the box.
+ * jQuery plugins that are already supported out of the box.
  * 
  * Adding your own:
  * 
@@ -22,7 +22,7 @@
  * 
  * (start code)
  *	$.dform.addType("hellobutton", function(options) {
- *		// Get the HTML attributes without element subscriber options for the button
+ *		// Get the HTML attributes without element subscriber options
  *		var htmlattributes = $.dform.htmlAttributes(options);
  *		// Return the newly created element
  *		return $("<button>").attr(htmlattributes).html("Say hello");
@@ -79,6 +79,15 @@
 	 * Parameters:
 	 * 	options - As specified in the <jQuery UI progressbar documentation at
 	 * 	http://jqueryui.com/demos/progressbar/>
+	 * 
+	 * Example:
+	 * (start code)
+	 * {
+	 * 		"type" : "progressbar",
+	 * 		"value" : 30,
+	 * 		"caption" : "Progressbar"
+	 * }
+	 * (end)
 	 */
 	$.dform.addTypeIf($.isFunction($.fn.progressbar), "progressbar", 
 		function(options)
@@ -95,6 +104,16 @@
 	 * Parameters:
 	 * 	options - As specified in the <jQuery UI slider documentation at
 	 * 	http://jqueryui.com/demos/slider/>
+	 * 
+	 * Example:
+	 * (start code)
+	 * {
+	 * 		"type" : "slider",
+	 * 		"values" : [ 30, 80 ],
+	 * 		"range" : true,
+	 * 		"caption" : "Slider"
+	 * }
+	 * (end)
 	 */
 	$.dform.addTypeIf($.isFunction($.fn.slider), "slider", 
 		function(options)
@@ -111,6 +130,37 @@
 	 * Parameters:
 	 * 	options - As specified in the <jQuery UI accordion documentation at 
 	 * 	http://jqueryui.com/demos/accordion/> 
+	 * 
+	 * Example:
+	 * (start code)
+	 * {
+	 * 		"type" : "accordion",
+	 * 		"caption" : "Accordion",
+	 * 		"entries" :
+	 * 		[
+	 * 			{
+	 * 				"caption" : "Entry 1",
+	 * 				"elements" :
+	 * 				[
+	 * 					{
+	 * 						"type" : "span",
+	 * 						"html" : "Some HTML in accordion entry 1"
+	 * 					}
+	 * 				]
+	 * 			},
+	 * 			{
+	 * 				"caption" : "Entry 2",
+	 * 				"elements" :
+	 * 				[
+	 * 					{
+	 * 						"type" : "span",
+	 * 						"html" : "Some HTML in accordion entry 2"
+	 * 					}
+	 * 				]
+	 * 			}
+	 * 		]
+	 * }
+	 * (end)
 	 */
 	$.dform.addTypeIf($.isFunction($.fn.accordion), "accordion",
 		function(options)
@@ -127,6 +177,43 @@
 	 * Parameters:
 	 * 	options - As specified in the <jQuery UI tabs documentation at
 	 * 	http://jqueryui.com/demos/tabs/>
+	 * 
+	 * Example:
+	 * (start code)
+	 * {
+	 * 		"type" : "tabs",
+	 * 		"entries" :
+	 * 		{
+	 * 			"tab1":
+	 * 			{
+	 * 				"caption" : "Step 1",
+	 * 				"elements" :
+	 * 				[
+	 * 					{
+	 * 						"name" : "textfield",
+	 * 						"caption" : "Just a textfield",
+	 * 						"type" : "text"
+	 * 					},
+	 * 					{
+	 * 						"type" : "span",
+	 * 						"html" : "Some HTML in tab 1"
+	 * 					}
+	 * 				]
+	 * 			},
+	 * 			"tab2" :
+	 * 			{
+	 * 				"caption" : "Step 2",
+	 * 				"elements" :
+	 * 				[
+	 * 					{
+	 * 						"type" : "span",
+	 * 						"html" : "Some HTML in tab 2"
+	 * 					}
+	 * 				]
+	 * 			}
+	 * 		}
+	 * }
+	 * (end) 
 	 */
 	$.dform.addTypeIf($.isFunction($.fn.tabs),
 		"tabs", function(options)
@@ -209,6 +296,45 @@
 	 * 	options - As specified in the <jQuery UI resizable documentation at
 	 *	http://jqueryui.com/demos/resizable/>
 	 * 	type - The type of the *this* element
+	 * 
+	 * Example:
+	 * Makes a <tabs> element resizable
+	 * 
+	 * (start code)
+	 * {
+	 * 		"type" : "tabs",
+	 * 		"resizable" :
+	 * 		{
+	 * 			"minHeight" : 200,
+	 * 			"minWidth" : 300
+	 * 		},
+	 * 		"entries" :
+	 * 		{
+	 * 			"resizable-tab1":
+	 * 			{
+	 * 				"caption" : "Step 1",
+	 * 				"elements" :
+	 * 				[
+	 * 					{
+	 * 						"type" : "span",
+	 * 						"html" : "Some HTML in tab 1"
+	 * 					}
+	 * 				]
+	 * 			},
+	 * 			"resizable-tab2" :
+	 * 			{
+	 * 				"caption" : "Step 2",
+	 * 				"elements" :
+	 * 				[
+	 * 					{
+	 * 						"type" : "span",
+	 * 						"html" : "Some HTML in tab 2"
+	 * 					}
+	 * 				]
+	 * 			}
+	 * 		}
+	 * }
+	 * (end) 
 	 */
 	$.dform.subscribeIf($.isFunction($.fn.resizable), "resizable",
 		function(options, type)
@@ -228,6 +354,17 @@
 	 * 	options - As specified in the <jQuery UI datepicker documentation at
 	 *	http://jqueryui.com/demos/datepicker/>
 	 * 	type - The type of the *this* element
+	 * 
+	 * Example:
+	 * Initializes the datepicker, using a button to show it
+	 * 
+	 * (start code)
+	 * {
+	 * 		"name" : "date",
+	 * 		"type" : "text",
+	 * 		"datepicker" : {  "showOn" : "button" }
+	 * }
+	 * (end)
 	 */
 	$.dform.subscribeIf($.isFunction($.fn.datepicker), "datepicker", 
 		function(options, type)
@@ -248,6 +385,22 @@
 	 * 	options - As specified in the <jQuery UI autotomplete documentation at
 	 *	http://jqueryui.com/demos/autotomplete/>
 	 * 	type - The type of the *this* element
+	 * 
+	 * Example:
+	 * Initializes the datepicker, using a button to show it
+	 * 
+	 * (start code)
+	 * {
+	 * 		"name" : "textfield",
+	 * 		"caption" : "Autocomplete",
+	 * 		"type" : "text",
+	 * 		"placeholder" : "Type 'A', 'B' or 'W'",
+	 * 		"autocomplete" :
+	 * 		{
+	 * 			"source" : [ "Apple", "Android", "Windows Phone", "Blackberry" ]
+	 * 		}
+	 * }
+	 * (end)
 	 */
 	$.dform.subscribeIf($.isFunction($.fn.autocomplete), "autocomplete", 
 		function(options, type)

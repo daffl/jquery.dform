@@ -99,3 +99,13 @@ Topic Type: Subscriber
    Keywords:
       subscriber
       subscribers
+
+
+Topic Type: Example
+
+   Plural: Examples
+   Scope: Always global
+
+   Keywords:
+      example
+      examples
