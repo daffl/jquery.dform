@@ -434,7 +434,34 @@
 		 * }
 		 * (end)
 		 */
-		file : $.dform.elementBuilder("<input>", { "type" : "file" })
+		file : $.dform.elementBuilder("<input>", { "type" : "file" }),
+		/**
+		 * type: tag
+		 * 
+		 * Creates any HTML tag.
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with.
+		 * 	The key name is used as the tag name.
+		 * 
+		 * Returns:
+		 * 	The tag with the options specified
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "tag",
+		 * 		"name" : "h2",
+		 * 		"style" : "color: red;",
+		 * 		"html" : "A red heading 2"
+		 * }
+		 * (end)
+		 */
+		tag : function(options)
+		{
+			var attr = $.dform.htmlAttributes(options, [ "name" ]);
+			return $("<" + options.name + ">", attr);
+		}
 	});
 
 	$.dform.subscribe(

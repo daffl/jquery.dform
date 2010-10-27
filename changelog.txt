@@ -1,5 +1,10 @@
 Title: Changelog
 
+0.1.2:
+* Added <ajax> subscriber using the <jQuery form plugin at http://jquery.malsup.com/form>
+* Added type <tag>
+* Improved build process
+
 0.1.1:
 * Separated type and subscriber functions
 * Added types <file>, <container>, <hidden>, <accordion>, <checkboxes> and <radiobuttons>

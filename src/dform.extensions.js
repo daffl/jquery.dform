@@ -530,6 +530,20 @@
 		}
 	});
 
+	/**
+	 * section: Ajax
+	 *
+	 * Support for loading and submitting forms dynamically.
+	 * 
+	 *  TODO:
+	 *  	To implement
+	 */	
+	$.dform.subscribeIf($.isFunction($.fn.ajaxForm), "ajax",
+		function(options, type)
+		{
+			// TODO jQuery form
+		});
+		
 	/*
 	 * section: WYSIWYG
 	 *

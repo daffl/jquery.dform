@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="../" name="jquery.dform" default="min">
+<project basedir="../" name="jquery.dform" default="all">
 	<loadfile property="version" srcfile="build/version.txt" />
 	<property file="build/build.properties" />
 	
@@ -51,10 +51,19 @@
 		</concat>
 	</target>
 	
-	<target name="min" depends="concat" description="Download Google closure compiler and compile the concatenated file">
-		<!-- Gets the latest Google closures compiler, then minify the concatenated file -->
+	<target name="compiler-exists" description="Check if Google closures compiler has been downloaded already">
+	    <available file="${min.compiler}" property="min.compiler.present"/>
+	</target>
+
+	<target name="compiler-get" depends="compiler-exists" unless="min.compiler.present" description="Download and unzip Google closures compiler if not found">
+		<mkdir dir="${min.compiler.dir}" />
+		<echo>Closures compiler.jar not found. Downloading from ${min.compiler.url}</echo>
 		<get src="${min.compiler.url}" dest="${min.compiler.zip}"/>
-		<unzip dest="${tmp}" src="${min.compiler.zip}" />
+		<unzip dest="${min.compiler.dir}" src="${min.compiler.zip}" />
+	</target> 
+	
+	<target name="min" depends="concat,compiler-get" description="Download Google closure compiler and compile the concatenated file">
+		<!-- Minify the concatenated file -->
 		<echo>Running Google clorsures compiler to minify to ${min.out}</echo>
 		<exec executable="java">
 			<arg line="-jar ${min.compiler}" />

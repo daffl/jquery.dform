@@ -1,7 +1,7 @@
 Format: 1.5
 
 
-Title: jQuery::dForm
+Title: jQuery::dForm 0.1.2
 
 # You can also add a sub-title to your menu like this:
 # SubTitle: [subtitle]
@@ -50,6 +50,7 @@ Footer: Copyright (C) 2010 - David Luecke - daff@neyeon.de
 
 
 File: Home  (/home/daff/Development/workspace/jquery.dform/readme.txt)
+File: Examples  (/home/daff/Development/workspace/jquery.dform/examples.txt)
 File: Usage  (/home/daff/Development/workspace/jquery.dform/src/dform.subscribers.js)
 File: Extension  (/home/daff/Development/workspace/jquery.dform/src/dform.extensions.js)
 File: Plugin  (/home/daff/Development/workspace/jquery.dform/src/dform.js)
