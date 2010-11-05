@@ -57,8 +57,53 @@
  */
 (function($)
 {
+	function _element(tag, defaults, excludes)
+	{
+		// Currying :)
+		return function(options) {
+			var ops = $.dform.htmlAttributes(options, excludes);
+			return $(tag).attr($.extend(ops, defaults));		
+		};
+	}
+	
 	$.dform.addType(
 	{
+		/**
+		 * type: Default types
+		 * 
+		 * Default types are handled by the <defaultType> function.
+		 * Its standard behaviour allows you to create any
+		 * HTML tag with standard attributes (attributes are
+		 * any key value pair in the given options, where the
+		 * key is not one of the registered <Subscribers>).
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An input element with type text
+		 * 
+		 * Example:
+		 * Uses the <elements> and <html> subscribers to create
+		 * a div with an h2 heading inside.
+		 * 
+		 * (start code)
+		 * {
+		 * 		"type" : "div",
+		 * 		"id" : "my-div",
+		 * 		"class" : "ui-widget-content ui-corner-all",
+		 * 		"style" : "padding: 10px",
+		 * 		"elements" :
+		 * 		[
+		 * 			{
+		 * 				"type" : "h2",
+		 * 				"html" : "A H2 heading in a div with corners"
+		 * 			}
+		 * 		]
+		 * }
+		 * (end)
+		 */
+		
 		/**
 		 * type: text
 		 * 
@@ -82,7 +127,7 @@
 		 * }
 		 * (end)
 		 */
-		text : $.dform.elementBuilder("<input>", { "type" : "text" }),
+		text : _element("<input>", { "type" : "text" }),
 		/**
 		 * type: password
 		 * 
@@ -102,7 +147,7 @@
 		 * }
 		 * (end)
 		 */
-		password : $.dform.elementBuilder("<input>", { "type" : "password" }),
+		password : _element("<input>", { "type" : "password" }),
 		/**
 		 * type: select
 		 * 
@@ -113,6 +158,9 @@
 		 * 
 		 * Returns:
 		 * 	An empty select input
+		 * 
+		 * Note:
+		 * 	This type will be handled by the <defaultType> function.
 		 * 
 		 * Example:
 		 * Uses the <options> subscriber to add options to the select field
@@ -129,7 +177,6 @@
 		 * }
 		 * (end)
 		 */
-		select : $.dform.elementBuilder("<select>", {}),
 		/**
 		 * type: fieldset
 		 * 
@@ -141,9 +188,13 @@
 		 * Returns:
 		 * 	An empty fieldset
 		 * 
+		 * Note:
+		 * 	This type will be handled by the <defaultType> function.
+		 * 
 		 * Example:
 		 * Uses the <caption> subscriber to add a legend and the
 		 * <elements> subscriber to add a <span> element in the fieldset.
+		 * 
 		 * 
 		 * (start code)
 		 * {
@@ -160,7 +211,7 @@
 		 * }
 		 * (end)
 		 */
-		fieldset : $.dform.elementBuilder("<fieldset>", {}),
+
 		/**
 		 * type: textarea
 		 * 
@@ -172,6 +223,9 @@
 		 * Returns:
 		 * 	A textarea input element
 		 * 
+		 * Note:
+		 * 	This type will be handled by the <defaultType> function.
+		 * 
 		 * Example:
 		 * (start code)
 		 * {
@@ -181,7 +235,7 @@
 		 * }
 		 * (end)
 		 */
-		textarea : $.dform.elementBuilder("<textarea>", {}),
+
 		/**
 		 * type: submit
 		 * 
@@ -201,7 +255,7 @@
 		 * }
 		 * (end)
 		 */
-		submit : $.dform.elementBuilder("<input>", { "type" : "submit" }),
+		submit : _element("<input>", { "type" : "submit" }),
 		/**
 		 * type: label
 		 * 
@@ -215,6 +269,9 @@
 		 * 
 		 * Example:
 		 * Uses the <html> element subscriber to add text to the label
+		 *
+		 * Note:
+		 * 	This type will be handled by the <defaultType> function.
 		 * 
 		 * (start code)
 		 * {
@@ -223,30 +280,7 @@
 		 * }
 		 * (end)
 		 */
-		label : $.dform.elementBuilder("<label>", {}),
-		/**
-		 * type: span
-		 * 
-		 * Returns an empty span element
-		 * 
-		 * Parameters:
-		 * 	options - The options this element should be created with
-		 * 
-		 * Returns:
-		 * 	An empty span HTML element
-		 * 
-		 * Example:
-		 * In this example the span element will be filled with text by using the
-		 * <html> element subscriber
-		 * 
-		 * (start code)
-		 * {
-		 * 		"type" : "span",
-		 * 		"html" : "Some simple HTML text"
-		 * }
-		 * (end)
-		 */
-		span : $.dform.elementBuilder("<span>", {}),
+
 		/**
 		 * type: button
 		 * 
@@ -260,6 +294,9 @@
 		 * 
 		 * Example:
 		 * Uses the <html> subscriber
+		 *
+		 * Note:
+		 * 	This type will be handled by the <defaultType> function.
 		 * 
 		 * (start code)
 		 * {
@@ -268,7 +305,7 @@
 		 * }
 		 * (end)
 		 */
-		button : $.dform.elementBuilder("<button>", {}),
+		
 		/**
 		 * type: hidden
 		 * 
@@ -291,7 +328,7 @@
 		 * }
 		 * (end)
 		 */
-		hidden : $.dform.elementBuilder("<input>", { "type" : "hidden" }),
+		hidden : _element("<input>", { "type" : "hidden" }),
 		/**
 		 * type: radio
 		 * 
@@ -314,7 +351,7 @@
 		 * }
 		 * (end)
 		 */
-		radio : $.dform.elementBuilder("<input>", { "type" : "radio" }),
+		radio : _element("<input>", { "type" : "radio" }),
 		/**
 		 * type: checkbox
 		 * 
@@ -337,7 +374,7 @@
 		 * }
 		 * (end)
 		 */
-		checkbox : $.dform.elementBuilder("<input>", { "type" : "checkbox" }),
+		checkbox : _element("<input>", { "type" : "checkbox" }),
 		/**
 		 * type: checkboxes
 		 * 
@@ -364,7 +401,7 @@
 		 * }
 		 * (end)
 		 */
-		checkboxes : $.dform.elementBuilder("<div>", {}, ["name"]),
+		checkboxes : _element("<div>", {}, ["name"]),
 		/**
 		 * type: radiobuttons
 		 * 
@@ -391,7 +428,7 @@
 		 * }
 		 * (end)
 		 */
-		radiobuttons : $.dform.elementBuilder("<div>", {}, ["name"]),
+		radiobuttons : _element("<div>", {}, ["name"]),
 		/**
 		 * type: container
 		 * 
@@ -414,7 +451,7 @@
 		 * }
 		 * (end)
 		 */
-		container : $.dform.elementBuilder("<div>", {}),
+		container : _element("<div>", {}),
 		/**
 		 * type: file
 		 * 
@@ -434,34 +471,7 @@
 		 * }
 		 * (end)
 		 */
-		file : $.dform.elementBuilder("<input>", { "type" : "file" }),
-		/**
-		 * type: tag
-		 * 
-		 * Creates any HTML tag.
-		 * 
-		 * Parameters:
-		 * 	options - The options this element should be created with.
-		 * 	The key name is used as the tag name.
-		 * 
-		 * Returns:
-		 * 	The tag with the options specified
-		 * 
-		 * Example:
-		 * (start code)
-		 * {
-		 * 		"type" : "tag",
-		 * 		"name" : "h2",
-		 * 		"style" : "color: red;",
-		 * 		"html" : "A red heading 2"
-		 * }
-		 * (end)
-		 */
-		tag : function(options)
-		{
-			var attr = $.dform.htmlAttributes(options, [ "name" ]);
-			return $("<" + options.name + ">", attr);
-		}
+		file : _element("<input>", { "type" : "file" })
 	});
 
 	$.dform.subscribe(
@@ -616,7 +626,7 @@
 								content);
 					if (typeof (content) == "object")
 					{
-						var fn = $.dform.elementBuilder("<option>", {});
+						var fn = _element("<option>", {});
 						option = fn($.withoutKeys(content, ["value"])).html(content["value"]);
 					}
 					$(scoper).append(option);

@@ -541,7 +541,10 @@
 	$.dform.subscribeIf($.isFunction($.fn.ajaxForm), "ajax",
 		function(options, type)
 		{
-			// TODO jQuery form
+			if(type == "form")
+			{
+				$(this).ajaxForm(options);
+			}
 		});
 		
 	/*

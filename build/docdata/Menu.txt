@@ -65,6 +65,7 @@ Group: Index  {
    Function Index: Functions
    File Index: Files
    Example Index: Examples
+   Variable Index: Variables
    }  # Group: Index
 
 

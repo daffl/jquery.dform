@@ -2,7 +2,7 @@ Title: Changelog
 
 0.1.2:
 * Added <ajax> subscriber using the <jQuery form plugin at http://jquery.malsup.com/form>
-* Added type <tag>
+* Added the <defaultType> method to create any HTML element without having to register a type
 * Improved build process
 
 0.1.1:
