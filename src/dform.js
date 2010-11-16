@@ -123,20 +123,31 @@
 		 * current element.
 		 * 
 		 * Parameters:
-		 * 	options - The options to use
+		 * 	options - The options to use or a url that returns
+		 *  the forms JSON. 
+		 *  params - Parameters that should be passed if a URL
+		 *  is loaded
 		 * 
 		 * Returns:
 		 * 	The jQuery element this function has been called on
 		 */
-		buildForm : function(options)
+		buildForm : function(options, params)
 		{
-			if ($(this).is("form"))
-			{
-				var ops = $.extend({ "type" : "form" }, options);
-				$(this).attr($.dform.htmlAttributes(ops));
-				$(this).runAll(ops);
-			} else {
-				$(this).formElement(options);
+			var ops;
+			if(typeof(options) == "string") {
+				var scoper = this;
+				$.get(options, data, function(data, textStatus, XMLHttpRequest) {
+					$(scoper).buildForm(data);
+				});
+			}
+			else {
+				if ($(this).is("form")) {
+					var ops = $.extend({ "type" : "form" }, options);
+					$(this).attr($.dform.htmlAttributes(ops));
+					$(this).runAll(ops);
+				} else {
+					$(this).formElement(options);
+				}
 			}
 		}
 	});

@@ -1,6 +1,7 @@
 Title: Changelog
 
 0.1.2:
+* Added dynamic form definition loading by passing a URL to the <buildForm> plugin function
 * Added <ajax> subscriber using the <jQuery form plugin at http://jquery.malsup.com/form>
 * Added the <defaultType> method to create any HTML element without having to register a type
 * Improved build process

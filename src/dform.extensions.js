@@ -53,6 +53,7 @@
  * Currently supported plugins:
  * - <jQuery UI>
  * - The <Validation Plugin>
+ * - The <jQuery Form> plugin through the <ajax> subscriber
  * 
  * The corresponding subscribers will only be added if the plugin or the part of the plugin
  * (e.g. with jQuery UI custom builds that don't include all the widgets) 
@@ -531,13 +532,21 @@
 	});
 
 	/**
-	 * section: Ajax
+	 * section: jQuery Form
 	 *
-	 * Support for loading and submitting forms dynamically.
+	 * Support for loading and submitting forms dynamically via AJAX using
+	 * the <jQuery form at http://jquery.malsup.com/form/> plugin.
+	 */
+	/**
+	 * subscriber: ajax
 	 * 
-	 *  TODO:
-	 *  	To implement
-	 */	
+	 * If the current element is a form, it will be turned into a dynamic form
+	 * that can be submitted asynchronously.
+	 * 
+	 * Parameters:
+	 * options - Options as specified in the <jQuery Form plugin documentation at http://jquery.malsup.com/form/#options-object>
+	 * type - The type of the *this* element
+	 */
 	$.dform.subscribeIf($.isFunction($.fn.ajaxForm), "ajax",
 		function(options, type)
 		{
