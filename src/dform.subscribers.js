@@ -642,6 +642,7 @@
 						boxoptions["caption"] = content;
 					else
 						$.extend(boxoptions, content);
+					boxoptions["value"] = value;
 					$(scoper).formElement(boxoptions);
 				});
 			}
