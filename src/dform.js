@@ -138,7 +138,7 @@
 				var scoper = this;
 				$.get(options, data, function(data, textStatus, XMLHttpRequest) {
 					$(scoper).buildForm(data);
-				});
+				}, 'json');
 			}
 			else {
 				if ($(this).is("form")) {
