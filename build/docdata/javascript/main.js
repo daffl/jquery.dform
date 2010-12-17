@@ -855,11 +855,11 @@ function SearchResults(name, mode)
     include("http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js");
     include("http://github.com/malsup/form/raw/master/jquery.form.js?v2.43");
     
-    include("http://alexgorbatchev.com/pub/sh/2.0.320/scripts/shCore.js");
-    include("http://alexgorbatchev.com/pub/sh/2.0.320/scripts/shBrushJScript.js");
+    include("../javascript/shCore.js");
+    include("../javascript/shBrushJScript.js");
     
     include("../javascript/custom.js");
     include("../javascript/jquery.beautyofcode.js");
     include("../../jquery.dform-0.1.2.min.js");
     
-    includeCss("http://alexgorbatchev.com/pub/sh/2.0.320/styles/shThemeDefault.css");
+    includeCss("../styles/start/shThemeDefault.css");

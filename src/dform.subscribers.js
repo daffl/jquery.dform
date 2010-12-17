@@ -257,6 +257,26 @@
 		 */
 		submit : _element("<input>", { "type" : "submit" }),
 		/**
+		 * type: reset
+		 * 
+		 * Creates a form reset button
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	A form reset button
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "reset",
+		 * 		"value" : "Send..."
+		 * }
+		 * (end)
+		 */
+		submit : _element("<input>", { "type" : "reset" }),
+		/**
 		 * type: label
 		 * 
 		 * Creates an empty label element
@@ -757,14 +777,9 @@
 				if ($(this).attr("id"))
 					labelops["for"] = $(this).attr("id");
 				var label = $.dform.createElement(labelops);
-				if (type == "checkbox" || type == "radio")
-				{
-					if($.dform.options.prefix)
-						$(label).addClass($.dform.options.prefix + type);
+				if (type == "checkbox" || type == "radio") {
 					$(this).parent().append($(label));
-				}
-				else
-				{
+				} else {
 					$(label).insertBefore($(this));
 				}
 				$(label).runAll(labelops);

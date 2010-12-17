@@ -6,7 +6,7 @@ jQuery.beautyOfCode = {
         autoLoad: true,
         // the base url to alex' hosted sources
         // http://alexgorbatchev.com/wiki/SyntaxHighlighter:Hosting
-        baseUrl: 'http://alexgorbatchev.com/pub/sh/2.1.364/',
+        baseUrl: '../javascript/sh/',
         // the baseurl for the hosted scripts
         scripts: 'scripts/',
         // the baseurl for the hosted styles
