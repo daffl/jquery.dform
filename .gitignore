@@ -3,3 +3,4 @@
 /.project
 /.project
 /test**
+/build/compiler**

@@ -275,7 +275,7 @@
 		 * }
 		 * (end)
 		 */
-		submit : _element("<input>", { "type" : "reset" }),
+		reset : _element("<input>", { "type" : "reset" }),
 		/**
 		 * type: label
 		 * 
@@ -717,6 +717,7 @@
 					if($(scoper).val() == $(scoper).data(key))
 						$(scoper).val("");
 				});
+				// TODO onreset
 			}
 		},
 		/**
