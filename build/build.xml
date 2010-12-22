@@ -45,6 +45,7 @@
 		<concat destfile="${min.concat}">
 			<filelist dir="src">
 				<file name="dform.js" />
+				<file name="dform.plugins.js" />
 				<file name="dform.subscribers.js" />
 				<file name="dform.extensions.js" />
 			</filelist>

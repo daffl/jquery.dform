@@ -57,12 +57,15 @@
  */
 (function($)
 {
-	function _element(tag, defaults, excludes)
+	function _element(tag, excludes)
 	{
 		// Currying :)
 		return function(options) {
-			var ops = $.dform.htmlAttributes(options, excludes);
-			return $(tag).attr($.extend(ops, defaults));		
+			var el = $(tag).dformAttr(options, excludes);
+			if($(el).is("input") || $(el).is("button")) {
+				$(el).attr("type", options.type);
+			}
+			return el;
 		};
 	}
 	
@@ -127,7 +130,7 @@
 		 * }
 		 * (end)
 		 */
-		text : _element("<input>", { "type" : "text" }),
+		text : _element("<input>"),
 		/**
 		 * type: password
 		 * 
@@ -147,7 +150,7 @@
 		 * }
 		 * (end)
 		 */
-		password : _element("<input>", { "type" : "password" }),
+		password : _element("<input>"),
 		/**
 		 * type: select
 		 * 
@@ -255,7 +258,7 @@
 		 * }
 		 * (end)
 		 */
-		submit : _element("<input>", { "type" : "submit" }),
+		submit : _element("<input>"),
 		/**
 		 * type: reset
 		 * 
@@ -275,7 +278,7 @@
 		 * }
 		 * (end)
 		 */
-		reset : _element("<input>", { "type" : "reset" }),
+		reset : _element("<input>"),
 		/**
 		 * type: label
 		 * 
@@ -348,7 +351,7 @@
 		 * }
 		 * (end)
 		 */
-		hidden : _element("<input>", { "type" : "hidden" }),
+		hidden : _element("<input>"),
 		/**
 		 * type: radio
 		 * 
@@ -371,7 +374,7 @@
 		 * }
 		 * (end)
 		 */
-		radio : _element("<input>", { "type" : "radio" }),
+		radio : _element("<input>"),
 		/**
 		 * type: checkbox
 		 * 
@@ -394,7 +397,7 @@
 		 * }
 		 * (end)
 		 */
-		checkbox : _element("<input>", { "type" : "checkbox" }),
+		checkbox : _element("<input>"),
 		/**
 		 * type: checkboxes
 		 * 
@@ -421,7 +424,7 @@
 		 * }
 		 * (end)
 		 */
-		checkboxes : _element("<div>", {}, ["name"]),
+		checkboxes : _element("<div>", ["name"]),
 		/**
 		 * type: radiobuttons
 		 * 
@@ -448,7 +451,7 @@
 		 * }
 		 * (end)
 		 */
-		radiobuttons : _element("<div>", {}, ["name"]),
+		radiobuttons : _element("<div>", ["name"]),
 		/**
 		 * type: container
 		 * 
@@ -471,7 +474,7 @@
 		 * }
 		 * (end)
 		 */
-		container : _element("<div>", {}),
+		container : _element("<div>"),
 		/**
 		 * type: file
 		 * 
@@ -491,7 +494,7 @@
 		 * }
 		 * (end)
 		 */
-		file : _element("<input>", { "type" : "file" })
+		file : _element("<input>")
 	});
 
 	$.dform.subscribe(
@@ -668,59 +671,6 @@
 			}
 		},
 		/**
-		 * subscriber: placeholder
-		 * 
-		 * Adds a default default value to text elements.
-		 * 
-		 * The default value will dissappear
-		 * when the element gets focussed and reappears if the element looses
-		 * focus and nothing has been entered.
-		 * 
-		 * Parameters:
-		 * 	options - The default value to set. Usually a helper text
-		 * 	with instructions for the user (e.g. enter mail here...)
-		 * 	type - The type of the *this* element
-		 * 
-		 * For types:
-		 * 	<text>, <textarea>
-		 * 
-		 * Example:
-		 * (start code)
-		 * {
-		 * 		"name" : "email",
-		 * 		"type" : "text",
-		 *		"placeholder" : "e.g. mail@example.org"
-		 * }	
-		 * (end)
-		 */
-		placeholder : function(options, type)
-		{
-			if (type == "text" || type == "textarea")
-			{
-				var key = "placeholder";
-				var scoper = this;
-				$(this).data(key, options);
-				$(this).val(options);
-				$(this).focus(function()
-				{
-					if ($(this).val() == $(this).data(key))
-						$(this).val("");
-				});
-				$(this).blur(function()
-				{
-					if ($(this).val() == "")
-						$(this).val($(this).data(key));
-				});
-				// Submit handler that clears the field before submit
-				$(this).parents("form").submit(function()
-				{
-					if($(scoper).val() == $(scoper).data(key))
-						$(scoper).val("");
-				});
-				// TODO onreset
-			}
-		},
-		/**
 		 * subscriber: caption
 		 * 
 		 * Adds caption to elements.
@@ -804,8 +754,7 @@
 		 * 	type - The type of the *this* element
 		 */
 		type : function(options, type) {
-			if($.dform.options.prefix)
-				$(this).addClass($.dform.options.prefix + type);
+			$.dform.options.prefix && $(this).addClass($.dform.options.prefix + type);
 		},
 		/**
 		 * subscriber: [post]

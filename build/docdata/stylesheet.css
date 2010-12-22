@@ -342,3 +342,7 @@ a.IFile { display: block; margin-right: 10px; }
 .ui-tabs-panel blockquote { margin: 0; }
 
 label.ui-accordion-header { margin: 0; }
+
+.ui-dform-radio, .ui-dform-checkbox {
+	float: left;
+}

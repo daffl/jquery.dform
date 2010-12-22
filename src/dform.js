@@ -149,6 +149,16 @@
 					$(this).formElement(options);
 				}
 			}
+		},
+		dformAttr : function(object, excludes)
+		{
+			// Ignore any subscriber name and the objects given in excludes
+			var ignores = $.keyset(_subscriptions);
+			if($.isArray(excludes)) {
+				$.merge(ignores, excludes);
+			}
+			this.attr($.withoutKeys(object, ignores));
+			return this;
 		}
 	});
 	
@@ -341,9 +351,7 @@
 		 */
 		addTypeIf : function(condition, data, fn)
 		{
-			if(condition) {
-				$.dform.addType(data, fn);
-			}
+			condition && $.dform.addType(data, fn);
 		},
 		/**
 		 * function: subscriberNames
@@ -388,9 +396,7 @@
 		 */
 		subscribeIf : function(condition, data, fn)
 		{
-			if(condition) {
-				$.dform.subscribe(data, fn);
-			}
+			condition && $.dform.subscribe(data, fn);
 		},
 		/**
 		 * function: removeSubscription

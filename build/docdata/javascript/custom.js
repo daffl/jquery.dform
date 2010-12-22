@@ -2,13 +2,6 @@
  * @author daff
  */
 $(document).ready(function() {
-	$.beautyOfCode.init({
-		brushes: ['JScript', 'Plain'],
-		ready: function() {
-				$("pre").beautifyCode('javascript');
-			}
-	});
-	
 	$("pre").each(function() { $(this).wrapInner("<code>"); });
 	
 	$(".CSubscriber pre, .CType pre").each(function(count) {
@@ -44,5 +37,12 @@ $(document).ready(function() {
 		$("#" + formid).append("<form>");
 		$("#" + formid).children("form").buildForm(code);
 		$(tabs).tabs();
+	});
+	
+	$.beautyOfCode.init({
+		brushes: ['JScript', 'Plain'],
+		ready: function() {
+				$("pre").beautifyCode('javascript');
+			}
 	});
 });

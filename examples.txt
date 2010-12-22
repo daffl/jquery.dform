@@ -14,8 +14,7 @@ Demonstration of a simple login form
 	"elements" :
 	[
 		{
-			"type" : "tag",
-			"name" : "p",			
+			"type" : "p",
 			"html" : "You must login"
 		},
 		{
