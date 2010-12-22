@@ -22,10 +22,9 @@
  * 
  * (start code)
  *	$.dform.addType("hellobutton", function(options) {
- *		// Get the HTML attributes without element subscriber options
- *		var htmlattributes = $.dform.htmlAttributes(options);
- *		// Return the newly created element
- *		return $("<button>").attr(htmlattributes).html("Say hello");
+ *		// Return a new button element that has all options that
+ * 		// don't have a registered subscriber as attributes 
+ *		return $("<button>").dformAttr(options).html("Say hello");
  *	 });
  *	
  *	$.dform.subscribe("alert", function(options, type) {
@@ -110,7 +109,23 @@
 	 * at http://jqueryui.com>. Types and subscribers will only be
 	 * added, if the corresponding jQuery UI plugin functions are available.
 	 */
-	
+
+	/**
+	 * function: _getOptions
+	 * 
+	 * Returns a object containing the options for a jQuery UI widget.
+	 * The options will be taken from jQuery.ui.[typename].prototype.options
+	 * 
+	 * Parameters:
+	 * 	type - The jQuery UI type
+	 * 	options - The options to evaluate
+	 */
+	function _getOptions(type, options)
+	{
+		var keys = $.keyset($.ui[type]["prototype"]["options"]);
+		return $.withKeys(options, keys);
+	}
+		
 	/**
 	 * type: progressbar
 	 * 
@@ -132,8 +147,7 @@
 	$.dform.addTypeIf($.isFunction($.fn.progressbar), "progressbar", 
 		function(options)
 		{
-			var ops = _getOptions("progressbar", options);
-			return $("<div>").attr(ops.attributes).progressbar(ops.options);
+			return $("<div>").dformAttr(options).progressbar(_getOptions("progressbar", options));
 		});
 	
 	/**
@@ -158,8 +172,7 @@
 	$.dform.addTypeIf($.isFunction($.fn.slider), "slider", 
 		function(options)
 		{
-			var ops = _getOptions("slider", options);
-			return $("<div>").attr(ops.attributes).slider(ops.options);
+			return $("<div>").dformAttr(options).slider(_getOptions("slider", options));
 		});
 
 	/**
@@ -205,8 +218,7 @@
 	$.dform.addTypeIf($.isFunction($.fn.accordion), "accordion",
 		function(options)
 		{
-			var ops = _getOptions("accordion", options);
-			return $("<div>").attr(ops.attributes);
+			return $("<div>").dformAttr(options);
 		});
 
 	/**
@@ -258,8 +270,7 @@
 	$.dform.addTypeIf($.isFunction($.fn.tabs),
 		"tabs", function(options)
 		{
-			var ops = _getOptions("tabs", options);
-			return $("<div>").attr(ops.attributes);
+			return $("<div>").dformAttr(options);
 		});
 	
 	/**
@@ -478,7 +489,7 @@
 			// We can assume it is save since the types wouldn't even be registered
 			// without the jQuery functions available
 			if(type == "accordion") {
-				var ops = _getOptions(type, options).options;
+				var ops = _getOptions(type, options);
 				// Change the header to a label since this is the default element
 				// for captions
 				$.extend(ops, { "header" : "label" });
@@ -486,32 +497,10 @@
 			}
 			else if(type == "tabs")
 			{
-				var ops = _getOptions(type, options).options;
+				var ops = _getOptions(type, options);
 				$(this).tabs(ops);
 			}
 		});
-	
-	/**
-	 * function: _getOptions
-	 * 
-	 * Returns a object containing the options and HTML 
-	 * attributes for an element. Options will be taken
-	 * from the jQuery UI default values for the given
-	 * type located in jQuery.ui.[typename].prototype.options
-	 * 
-	 * Parameters:
-	 * 	type - The jQuery UI type
-	 * 	options - The options to evaluate
-	 */
-	function _getOptions(type, options)
-	{
-		var keys = $.keyset($.ui[type]["prototype"]["options"]);
-		var result = {
-			options : $.withKeys(options, keys),
-			attributes : $.dform.htmlAttributes(options, keys)
-		};
-		return result;
-	}
 	
 	/**
 	 * section: Validation Plugin

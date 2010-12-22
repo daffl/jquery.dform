@@ -143,7 +143,7 @@
 			else {
 				if ($(this).is("form")) {
 					var ops = $.extend({ "type" : "form" }, options);
-					$(this).attr($.dform.htmlAttributes(ops));
+					$(this).dformAttr(ops);
 					$(this).runAll(ops);
 				} else {
 					$(this).formElement(options);
@@ -264,8 +264,7 @@
 			 */
 			defaultType : function(options)
 			{
-				var attr = $.dform.htmlAttributes(options);
-				return $("<" + options.type + ">").attr(attr);
+				return $("<" + options.type + ">").dformAttr(options);
 			}
 		},
 		/**
@@ -273,31 +272,6 @@
 		 *
 		 * Static helpers for the plugin, that can be found in the *$.dform* namespace.
 		 */
-		
-		/**
-		 * function: htmlAttributes
-		 * 
-		 * Returns the HTML attributes based on a given object.
-		 * The returned object will contain any key value pair
-		 * where the key is not the name of a subscriber function
-		 * and the key is not in a string in the excludes array.
-		 * 
-		 * Parameters:
-		 * 	object - The attribute object
-		 * 	excludes - A list of keys that should also be excluded
-		 * 
-		 * Returns:
-		 * 	All HTML attributes for the given object
-		 */
-		htmlAttributes : function(object, excludes)
-		{
-			// Ignore any subscriber name and the objects given in excludes
-			var ignores = $.keyset(_subscriptions);
-			if($.isArray(excludes)) {
-				$.merge(ignores, excludes);
-			}
-			return $.withoutKeys(object, ignores);
-		},
 		/**
 		 * function: removeType
 		 * 
