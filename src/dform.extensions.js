@@ -30,7 +30,7 @@
  *	$.dform.subscribe("alert", function(options, type) {
  *		if(type == "hellobutton")
  *		{
- *			$(this).click(function() {
+ *			this.click(function() {
  *				alert(options);
  *			});
  *		}
@@ -99,7 +99,7 @@
 		function(options, type)
 		{
 			if(type == "text" || type == "textarea")
-				$(this).placeholder(options);
+				this.placeholder(options);
 		});
 		
 	/**
@@ -305,7 +305,7 @@
 			var scoper = this;
 			if(type == "tabs")
 			{
-				$(this).append("<ul>");
+				this.append("<ul>");
 				var ul = $(scoper).children("ul:first");
 				$.each(options, function(index, options) {
 					var id = options.id ? options.id : index;
@@ -335,7 +335,7 @@
 		function(options, type)
 		{
 			if (type == "form" || type == "fieldset")
-				$(this).dialog(options);
+				this.dialog(options);
 		});
 
 	/**
@@ -390,7 +390,7 @@
 	$.dform.subscribeIf($.isFunction($.fn.resizable), "resizable",
 		function(options, type)
 		{
-			$(this).resizable(options);
+			this.resizable(options);
 		});
 
 	/**
@@ -421,7 +421,7 @@
 		function(options, type)
 		{
 			if (type == "text")
-				$(this).datepicker(options);
+				this.datepicker(options);
 		});
 
 	/**
@@ -457,7 +457,7 @@
 		function(options, type)
 		{
 			if (type == "text")
-				$(this).autocomplete(options);
+				this.autocomplete(options);
 		});
 
 	/**
@@ -478,13 +478,13 @@
 	$.dform.subscribe("[post]",
 		function(options, type)
 		{
-			if ($(this).parents("form").hasClass("ui-widget"))
+			if (this.parents("form").hasClass("ui-widget"))
 			{
 				if ((type == "button" || type == "submit") && $.isFunction($.fn.button))
-					$(this).button();
+					this.button();
 				if ($.inArray(type, [ "text", "textarea", "password",
 						"fieldset" ]) != -1)
-					$(this).addClass("ui-widget-content ui-corner-all");
+					this.addClass("ui-widget-content ui-corner-all");
 			}
 			// We can assume it is save since the types wouldn't even be registered
 			// without the jQuery functions available
@@ -493,12 +493,12 @@
 				// Change the header to a label since this is the default element
 				// for captions
 				$.extend(ops, { "header" : "label" });
-				$(this).accordion(ops);
+				this.accordion(ops);
 			}
 			else if(type == "tabs")
 			{
 				var ops = _getOptions(type, options);
-				$(this).tabs(ops);
+				this.tabs(ops);
 			}
 		});
 	
@@ -528,7 +528,7 @@
 			if(type == "form")
 			{
 				var defaults = {};
-				if($(this).hasClass("ui-widget"))
+				if(this.hasClass("ui-widget"))
 				{
 					defaults = {
 						highlight: function(input)
@@ -541,7 +541,7 @@
 						}
 					};
 				}
-				$(this).validate(defaults);
+				this.validate(defaults);
 			}
 		},
 		/**
@@ -555,7 +555,7 @@
 		 */
 		"validate" : function(options, type)
 		{
-			$(this).rules("add", options);
+			this.rules("add", options);
 		}
 	});
 
@@ -580,7 +580,7 @@
 		{
 			if(type == "form")
 			{
-				$(this).ajaxForm(options);
+				this.ajaxForm(options);
 			}
 		});
 		

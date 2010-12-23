@@ -273,8 +273,18 @@
 		 * Example:
 		 * (start code)
 		 * {
-		 * 		"type" : "reset",
-		 * 		"value" : "Send..."
+		 * 		"action" : "#",
+		 * 		"elements" :
+		 * 		[
+		 * 			{
+		 * 				"type" : "text",
+		 * 				"name" : "textfield"
+		 * 			},
+		 *			{ 		
+		 * 				"type" : "reset",
+		 * 				"value" : "Reset"
+		 * 			}
+		 * 		]
 		 * }
 		 * (end)
 		 */
@@ -520,7 +530,7 @@
 		 */
 		"class" : function(options, type)
 		{
-			$(this).addClass(options);
+			this.addClass(options);
 		},
 		/**
 		 * subscriber: html
@@ -541,7 +551,7 @@
 		 */
 		html : function(options, type)
 		{
-			$(this).html(options);
+			this.html(options);
 		},
 		/**
 		 * subscriber: elements
@@ -604,7 +614,7 @@
 		 */
 		value : function(options, type)
 		{
-			$(this).val(options);
+			this.val(options);
 		},
 		/**
 		 * subscriber: options
@@ -715,7 +725,7 @@
 			{
 				// Labels for fieldsets are legend
 				var legend = $("<legend>").html(options);
-				$(this).prepend(legend);
+				this.prepend(legend);
 			}
 			else
 			{
@@ -725,11 +735,11 @@
 				else
 					$.extend(labelops, options);
 				// TODO automatic id generation?
-				if ($(this).attr("id"))
-					labelops["for"] = $(this).attr("id");
+				if (this.attr("id"))
+					labelops["for"] = this.attr("id");
 				var label = $.dform.createElement(labelops);
 				if (type == "checkbox" || type == "radio") {
-					$(this).parent().append($(label));
+					this.parent().append($(label));
 				} else {
 					$(label).insertBefore($(this));
 				}
@@ -754,7 +764,7 @@
 		 * 	type - The type of the *this* element
 		 */
 		type : function(options, type) {
-			$.dform.options.prefix && $(this).addClass($.dform.options.prefix + type);
+			$.dform.options.prefix && this.addClass($.dform.options.prefix + type);
 		},
 		/**
 		 * subscriber: [post]
@@ -771,7 +781,7 @@
 			if (type == "checkboxes" || type == "radiobuttons")
 			{
 				var boxtype = ((type == "checkboxes") ? "checkbox" : "radio");
-				$(this).children("[type=" + boxtype + "]").each(function() {
+				this.children("[type=" + boxtype + "]").each(function() {
 					$(this).attr("name", options.name);
 				});
 			}

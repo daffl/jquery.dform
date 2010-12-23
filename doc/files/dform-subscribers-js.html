@@ -82,8 +82,18 @@ if (browserType) {document.write("<div class=" + browserType + ">");if (browserV
 }</pre></blockquote></div></div></div>
 
 <div class="CType"><div class=CTopic><h3 class=CTitle><a name="reset"></a>reset</h3><div class=CBody><p>Creates a form reset button</p><h4 class=CHeading>Parameters</h4><table border=0 cellspacing=0 cellpadding=0 class=CDescriptionList><tr><td class=CDLEntry>options</td><td class=CDLDescription>The options this element should be created with</td></tr></table><h4 class=CHeading>Returns</h4><p>A form reset button</p><h4 class=CHeading>Example</h4><blockquote><pre>{
-     &quot;type&quot; : &quot;reset&quot;,
-     &quot;value&quot; : &quot;Send...&quot;
+     &quot;action&quot; : &quot;#&quot;,
+     &quot;elements&quot; :
+     [
+         {
+             &quot;type&quot; : &quot;text&quot;,
+             &quot;name&quot; : &quot;textfield&quot;
+         },
+         {
+             &quot;type&quot; : &quot;reset&quot;,
+             &quot;value&quot; : &quot;Reset&quot;
+         }
+     ]
 }</pre></blockquote></div></div></div>
 
 <div class="CType"><div class=CTopic><h3 class=CTitle><a name="label"></a>label</h3><div class=CBody><p>Creates an empty label element</p><h4 class=CHeading>Parameters</h4><table border=0 cellspacing=0 cellpadding=0 class=CDescriptionList><tr><td class=CDLEntry>options</td><td class=CDLDescription>The options this element should be created with</td></tr></table><h4 class=CHeading>Returns</h4><p>An empty label element</p><h4 class=CHeading>Example</h4><p>Uses the <a href="#html" class=LSubscriber id=link17 onMouseOver="ShowTip(event, 'tt8', 'link17')" onMouseOut="HideTip('tt8')">html</a> element subscriber to add text to the label</p><h4 class=CHeading>Note</h4><p>This type will be handled by the <a href="dform-js.html#defaultType" class=LFunction id=link18 onMouseOver="ShowTip(event, 'tt1', 'link18')" onMouseOut="HideTip('tt1')">defaultType</a> function.</p><blockquote><pre>{

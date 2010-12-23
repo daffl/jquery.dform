@@ -1,6 +1,8 @@
 Title: Changelog
 
 0.1.2:
+* Added <dformAttr> to add HTML attributes to elements
+* Moved <placeholder> into a separate plugin
 * Added <reset> button type
 * Added dynamic form definition loading by passing a URL to the <buildForm> plugin function
 * Added <ajax> subscriber using the <jQuery form plugin at http://jquery.malsup.com/form>

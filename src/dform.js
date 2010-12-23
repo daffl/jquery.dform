@@ -60,7 +60,7 @@
 		 */
 		runSubscription : function(name, options, type)
 		{
-			var element = $(this);
+			var element = this;
 			if ($.dform.hasSubscription(name))
 			{
 				$.each(_subscriptions[name], function(i, sfn) {
@@ -68,7 +68,7 @@
 					sfn.call(element, options, type);
 				});
 			}
-			return $(this);
+			return this;
 		},
 		/**
 		 * function: runAll
@@ -84,16 +84,16 @@
 		runAll : function(options)
 		{
 			var type = options.type;
-			var scoper = $(this);
+			var scoper = this;
 			// Run preprocessing subscribers
-			$(this).runSubscription("[pre]", options, type);
+			this.runSubscription("[pre]", options, type);
 			$.each(options, function(name, sopts) {
 				// TODO each loop for list of dom elements
 				$(scoper).runSubscription(name, sopts, type);
 			});
 			// Run post processing subscribers
-			$(this).runSubscription("[post]", options, type);
-			return $(this);
+			this.runSubscription("[post]", options, type);
+			return this;
 		},
 		/**
 		 * function: formElement
@@ -110,15 +110,16 @@
 		{
 			// Create element (run builder function for type)
 			var element = $.dform.createElement(options);
-			$(this).append($(element));
+			this.append($(element));
 			// Run all subscriptions
 			$(element).runAll(options);
-			return $(this);
+			return this;
 		},
 		/**
 		 * function: buildForm
 		 * 
-		 * Build an entire form, if the current element is a form.
+		 * Build an entire form, if the current element is a form or append
+		 * a new form if the root element does not have a type given.
 		 * Otherwise the formElement function will be called on the
 		 * current element.
 		 * 
@@ -131,32 +132,43 @@
 		 * Returns:
 		 * 	The jQuery element this function has been called on
 		 */
-		buildForm : function(options, params)
+		buildForm : function(options)
 		{
-			var ops;
 			if(typeof(options) == "string") {
-				var scoper = this;
-				$.get(options, data, function(data, textStatus, XMLHttpRequest) {
+				var scoper = $(this);
+				$.get(options, function(data, textStatus, XMLHttpRequest) {
 					$(scoper).buildForm(data);
-				}, 'json');
+				}, $.dform.options.ajaxFormat);
 			}
 			else {
-				if ($(this).is("form")) {
+				if(!options.type) {
+					var form = this.is("form") ? this : this.append("<form>").children("form:last");
 					var ops = $.extend({ "type" : "form" }, options);
-					$(this).dformAttr(ops);
-					$(this).runAll(ops);
+					$(form).dformAttr(ops);
+					$(form).runAll(ops);
 				} else {
-					$(this).formElement(options);
+					this.formElement(options);
 				}
 			}
 		},
+		/**
+		 * Adds HTML attributes to the current element from the given options.
+		 * Any subscriber will be ommited so that the attributes will contain any
+		 * key value pair where the key is not the name of a subscriber function
+		 * and is not in the string array excludes.
+		 * 
+		 * Parameters:
+		 * 	object - The attribute object
+		 * 	excludes - A list of keys that should also be excluded
+		 * 
+		 * Returns:
+		 * 	The jQuery object of the this reference
+		 */
 		dformAttr : function(object, excludes)
 		{
 			// Ignore any subscriber name and the objects given in excludes
 			var ignores = $.keyset(_subscriptions);
-			if($.isArray(excludes)) {
-				$.merge(ignores, excludes);
-			}
+			$.isArray(excludes) && $.merge(ignores, excludes);
 			this.attr($.withoutKeys(object, ignores));
 			return this;
 		}
@@ -254,6 +266,13 @@
 			 * E.g. an element with type text will have the class ui-dform-text
 			 */
 			prefix : "ui-dform-",
+			/**
+			 * var: ajaxFormat
+			 * 
+			 * The format used if forms are loaded via AJAX.
+			 * Defaults to JSON
+			 */
+			ajaxFormat : "json",
 			/**
 			 * Function: defaultType
 			 * 

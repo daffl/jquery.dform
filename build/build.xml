@@ -65,7 +65,7 @@
 	
 	<target name="min" depends="concat,compiler-get" description="Download Google closure compiler and compile the concatenated file">
 		<!-- Minify the concatenated file -->
-		<echo>Running Google clorsures compiler to minify to ${min.out}</echo>
+		<echo>Running Google closures compiler to minify to ${min.out}</echo>
 		<exec executable="java">
 			<arg line="-jar ${min.compiler}" />
 			<arg line="--js ${min.concat}" />

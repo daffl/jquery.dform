@@ -20,7 +20,7 @@ if (browserType) {document.write("<div class=" + browserType + ">");if (browserV
 $.dform.subscribe(&quot;alert&quot;, function(options, type) {
     if(type == &quot;hellobutton&quot;)
     {
-        $(this).click(function() {
+        this.click(function() {
             alert(options);
         });
     }

@@ -6,20 +6,20 @@
 	{
 		var key = "placeholder";
 		var scoper = this;
-		$(this).data(key, options);
-		$(this).val(options);
-		$(this).focus(function()
+		this.data(key, options);
+		this.val(options);
+		this.focus(function()
 		{
-			if ($(this).val() == $(this).data(key))
-				$(this).val("");
+			if (this.val() == this.data(key))
+				this.val("");
 		});
-		$(this).blur(function()
+		this.blur(function()
 		{
-			if ($(this).val() == "")
-				$(this).val($(this).data(key));
+			if (this.val() == "")
+				this.val(this.data(key));
 		});
 		// Submit handler that clears the field before submit
-		$(this).parents("form").submit(function()
+		this.parents("form").submit(function()
 		{
 			if($(scoper).val() == $(scoper).data(key))
 				$(scoper).val("");
