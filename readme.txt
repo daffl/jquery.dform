@@ -25,10 +25,13 @@ Usage:
 		]			
 	};
 	$("#myform").buildForm(formdata);
+	
+	// Or to load the form definition via AJAX
+	$("#myform").buildForm("http://example.com/myform.json");
 (end)
 
 How to get it:
-<Download jQuery.dForm 0.1.1 at http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.1.tar.gz>
+<Download jQuery.dForm 0.1.2 at http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.2.tar.gz>
 
 What it is for:
 

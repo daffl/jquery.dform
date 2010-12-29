@@ -99,7 +99,7 @@
 		function(options, type)
 		{
 			if(type == "text" || type == "textarea")
-				this.placeholder(options);
+				$(this).placeholder(options);
 		});
 		
 	/**

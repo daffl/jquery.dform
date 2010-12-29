@@ -152,6 +152,8 @@
 			}
 		},
 		/**
+		 * function: dfromAttr
+		 * 
 		 * Adds HTML attributes to the current element from the given options.
 		 * Any subscriber will be ommited so that the attributes will contain any
 		 * key value pair where the key is not the name of a subscriber function
