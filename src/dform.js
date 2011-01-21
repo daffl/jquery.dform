@@ -126,18 +126,22 @@
 		 * Parameters:
 		 * 	options - The options to use or a url that returns
 		 *  the forms JSON. 
-		 *  params - Parameters that should be passed if a URL
-		 *  is loaded
+		 *  params (optional) - Parameters that should be passed if a URL
+		 *  callback (optional) - An on success callback 
+		 *  when the form is loaded
 		 * 
 		 * Returns:
 		 * 	The jQuery element this function has been called on
 		 */
-		buildForm : function(options)
+		buildForm : function(options, params, callback)
 		{
 			if(typeof(options) == "string") {
 				var scoper = $(this);
-				$.get(options, function(data, textStatus, XMLHttpRequest) {
+				$.get(options, params, function(data, textStatus, XMLHttpRequest) {
 					$(scoper).buildForm(data);
+					if($.isFunction(callback)) {
+						callback(data, textStatus, XMLHttpRequest);
+					}
 				}, $.dform.options.ajaxFormat);
 			}
 			else {
