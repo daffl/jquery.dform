@@ -628,7 +628,8 @@
 	 * options - The html string to localize
 	 * type - The type of the *this* element
 	 */	
-	$.dform.subscribeIf($.global, 'html', function(options, type) 
+	$.dform.subscribeIf(($.global && $.isFunction($.global.localize)),
+		'html', function(options, type) 
 	{
 		var elements = options.split('.');
 		if(elements.length > 1)
