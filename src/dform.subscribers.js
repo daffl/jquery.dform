@@ -723,35 +723,32 @@
 		 */
 		caption : function(options, type)
 		{
+			var ops = {};
+			if (typeof (options) == "string")
+				ops["html"] = options;
+			else
+				$.extend(ops, options);
+			
 			if (type == "fieldset")
 			{
 				// Labels for fieldsets are legend
-				var legendops = { "type" : "legend" };
-				if (typeof (options) == "string")
-					legendops["html"] = options;
-				else
-					$.extend(legendops, options);
-				var legend = $.dform.createElement(legendops);
+				ops.type = "legend";
+				var legend = $.dform.createElement(ops);
 				this.prepend(legend);
-				$(legend).runAll(legendops);
+				$(legend).runAll(ops);
 			}
 			else
 			{
-				var labelops = { "type" : "label" };
-				if (typeof (options) == "string")
-					labelops["html"] = options;
-				else
-					$.extend(labelops, options);
-				// TODO automatic id generation?
+				ops.type = "label";
 				if (this.attr("id"))
-					labelops["for"] = this.attr("id");
-				var label = $.dform.createElement(labelops);
+					ops["for"] = this.attr("id");
+				var label = $.dform.createElement(ops);
 				if (type == "checkbox" || type == "radio") {
 					this.parent().append($(label));
 				} else {
 					$(label).insertBefore($(this));
 				}
-				$(label).runAll(labelops);
+				$(label).runAll(ops);
 			}
 		},
 		/**

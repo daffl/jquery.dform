@@ -860,6 +860,6 @@ function SearchResults(name, mode)
     
     include("../javascript/custom.js");
     include("../javascript/jquery.beautyofcode.js");
-    include("../../jquery.dform-0.1.2.min.js");
+    include("../../jquery.dform-0.1.3.min.js");
     
     includeCss("../styles/start/shThemeDefault.css");
