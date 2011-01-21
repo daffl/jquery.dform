@@ -137,6 +137,7 @@
 		{
 			if(typeof(options) == "string") {
 				var scoper = $(this);
+				var data = params || {};
 				$.get(options, params, function(data, textStatus, XMLHttpRequest) {
 					$(scoper).buildForm(data);
 					if($.isFunction(callback)) {
