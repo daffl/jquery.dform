@@ -643,7 +643,7 @@
 	$.dform.subscribeIf(($.global && $.isFunction($.global.localize)),
 		'html', function(options, type) 
 	{
-		var translate = _getTranslate(options);
+		var translated = _getTranslate(options);
 		if(translated) $(this).html(translated);
 	});
 	/**
