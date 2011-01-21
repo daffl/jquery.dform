@@ -55,9 +55,9 @@
  * - The <Validation Plugin>
  * - The <jQuery Form> plugin through the <ajax> subscriber
  * 
- * The corresponding subscribers will only be added if the plugin or the part of the plugin
+ * *NOTE* : The corresponding subscribers will only be added if the plugin or the part of the plugin
  * (e.g. with jQuery UI custom builds that don't include all the widgets) 
- * is actually available, so make sure, these plugins are loaded before the dform plugin. 
+ * is actually available, so make sure, these plugins are loaded *before* the dform plugin. 
  * 
  * Author:
  * David Luecke (daff@neyeon.de)
@@ -644,7 +644,7 @@
 		'html', function(options, type) 
 	{
 		var translate = _getTranslate(options);
-		translated && $(this).html(translated);
+		if(translated) $(this).html(translated);
 	});
 	/**
 	 * subscriber: i18n-options
