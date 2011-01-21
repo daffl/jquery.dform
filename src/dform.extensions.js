@@ -590,6 +590,18 @@
 	 * Localization is supported by using the <jQuery Global at https://github.com/jquery/jquery-global>
 	 * plugin.
 	 */
+	function _getTranslate(options)
+	{
+		var elements = options.split('.');
+		if (elements.length > 1) {
+			var area = elements.shift();
+			var translations = jQuery.global.localize(area);
+			if (translations) {
+				return $.getValueAt(translations, elements);
+			}
+		}
+		return false;
+	}
 	/**
 	 * subscriber: i18n-html
 	 * 
@@ -631,17 +643,8 @@
 	$.dform.subscribeIf(($.global && $.isFunction($.global.localize)),
 		'html', function(options, type) 
 	{
-		var elements = options.split('.');
-		if(elements.length > 1)
-		{
-			var area = elements.shift();
-			var translations = jQuery.global.localize(area);
-			if (translations) 
-			{
-				var translated = $.getValueAt(translations, elements);
-				translated && $(this).html(translated);
-			}
-		}
+		var translate = _getTranslate(options);
+		translated && $(this).html(translated);
 	});
 	/**
 	 * subscriber: i18n-options
@@ -657,7 +660,10 @@
 	{
 		if(type == 'select' && (typeof(options) == 'string')) {
 			$(this).html('');
-			// TODO
+			var optlist = _getTranslate(options);
+			if(optlist) {
+				$(this).runSubscription("options", optlist, type);
+			}
 		}
 	});
 					
