@@ -203,7 +203,11 @@
 		 * {
 		 * 		"type" : "fieldset",
 		 * 		"id" : "my-fieldset",
-		 * 		"caption" : "My fieldset",
+		 * 		"caption" :
+		 * 		{
+		 * 			"id" : "fieldset-caption",
+		 * 			"html" : "Fieldset with elements"
+		 * 		},
 		 * 		"elements" :
 		 * 		[
 		 * 			{
@@ -693,7 +697,7 @@
 		 * 
 		 * Parameters:
 		 * 	options - A string for the caption or the options for the
-		 * 	element to create
+		 * 	element created
 		 * 	type - The type of the *this* element
 		 * 
 		 * Example:
@@ -719,13 +723,17 @@
 		 */
 		caption : function(options, type)
 		{
-			// TODO make sure that options other than string
-			// will be handled properly
 			if (type == "fieldset")
 			{
 				// Labels for fieldsets are legend
-				var legend = $("<legend>").html(options);
+				var legendops = { "type" : "legend" };
+				if (typeof (options) == "string")
+					legendops["html"] = options;
+				else
+					$.extend(legendops, options);
+				var legend = $.dform.createElement(legendops);
 				this.prepend(legend);
+				$(legend).runAll(legendops);
 			}
 			else
 			{

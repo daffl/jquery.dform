@@ -60,7 +60,11 @@ if (browserType) {document.write("<div class=" + browserType + ">");if (browserV
 <div class="CType"><div class=CTopic><h3 class=CTitle><a name="fieldset"></a>fieldset</h3><div class=CBody><p>Creates an empty fieldset to contain other elements</p><h4 class=CHeading>Parameters</h4><table border=0 cellspacing=0 cellpadding=0 class=CDescriptionList><tr><td class=CDLEntry>options</td><td class=CDLDescription>The options this element should be created with</td></tr></table><h4 class=CHeading>Returns</h4><p>An empty fieldset</p><h4 class=CHeading>Note</h4><p>This type will be handled by the <a href="dform-js.html#defaultType" class=LFunction id=link13 onMouseOver="ShowTip(event, 'tt1', 'link13')" onMouseOut="HideTip('tt1')">defaultType</a> function.</p><h4 class=CHeading>Example</h4><p>Uses the <a href="#caption" class=LSubscriber id=link14 onMouseOver="ShowTip(event, 'tt5', 'link14')" onMouseOut="HideTip('tt5')">caption</a> subscriber to add a legend and the <a href="#elements" class=LSubscriber id=link15 onMouseOver="ShowTip(event, 'tt7', 'link15')" onMouseOut="HideTip('tt7')">elements</a> subscriber to add a &lt;span&gt; element in the fieldset.</p><blockquote><pre>{
      &quot;type&quot; : &quot;fieldset&quot;,
      &quot;id&quot; : &quot;my-fieldset&quot;,
-     &quot;caption&quot; : &quot;My fieldset&quot;,
+     &quot;caption&quot; :
+     {
+         &quot;id&quot; : &quot;fieldset-caption&quot;,
+         &quot;html&quot; : &quot;Fieldset with elements&quot;
+     },
      &quot;elements&quot; :
      [
          {

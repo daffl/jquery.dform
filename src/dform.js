@@ -248,6 +248,36 @@
 				}
 			});
 			return result;
+		},
+		
+		/**
+		 * function: getValueAt
+		 * 
+		 * Returns the value in an object based on the given dot separated
+		 * path or false if not found. 
+		 * E.g. $.getValueAt({ "test" : { "inner" : { "value" : "X" }}}, "test.inner.value")
+		 * will return "X".
+		 * 
+		 * Parameters:
+		 * 	object - The object to traverse
+		 * 	path - The path to use. It can be either a dot separated string or
+		 * 		an array of indexes.
+		 * 
+		 * Returns:
+		 * 	The objects value or false
+		 */
+		getValueAt : function(object, path)
+		{
+		    var elements = $.isArray(path) ? path : path.split('.');
+		    var result = object;
+		    for (var i = 0; i < elements.length; i++) 
+			{
+				var current = elements[i];
+		        if (!result[current]) 
+		            return false;
+		        result = result[current];
+		    }
+		    return result;
 		}
 	});
 	

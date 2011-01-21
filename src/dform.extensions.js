@@ -224,7 +224,7 @@
 	/**
 	 * type: tabs
 	 * 
-	 * Returns a slider element.
+	 * Returns a container for jQuery UI tabs element.
 	 * 
 	 * Parameters:
 	 * 	options - As specified in the <jQuery UI tabs documentation at
@@ -583,7 +583,83 @@
 				this.ajaxForm(options);
 			}
 		});
-		
+
+	/**
+	 * section: i18n
+	 *
+	 * Localization is supported by using the <jQuery Global at https://github.com/jquery/jquery-global>
+	 * plugin.
+	 */
+	/**
+	 * subscriber: i18n-html
+	 * 
+	 * Extends the <html> subscriber that will replace any string with it's translated
+	 * equivalent using the jQuery Global plugin. The html content will be interpreted
+	 * as an index string where the first part indicates the localize main index and
+	 * every following a sub index using <getValueAt>.
+	 * 
+	 * Example:
+	 * 
+	 * // Register localized strings
+	 * jQuery.global.localize("form", "en", 
+	 * {
+	 * 		"name" : "A name",
+	 * 		"field" :
+	 * 		{
+	 * 			"username" : "User name",
+	 * 			"password" : "Password"
+	 * 		}
+	 * });
+	 * 
+	 * {
+	 * 		"type" : "div",
+	 * 		"html" : "form.name",
+	 * 		"elements" :
+	 * 		[
+	 * 			{
+	 * 				"type" : "h2",
+	 * 				"html" : "form.field.password"
+	 * 			}
+	 * 		]
+	 * }
+	 * (end code)
+	 * 
+	 * Parameters:
+	 * options - The html string to localize
+	 * type - The type of the *this* element
+	 */	
+	$.dform.subscribeIf($.global, 'html', function(options, type) 
+	{
+		var elements = options.split('.');
+		if(elements.length > 1)
+		{
+			var area = elements.shift();
+			var translations = jQuery.global.localize(area);
+			if (translations) 
+			{
+				var translated = $.getValueAt(translations, elements);
+				translated && $(this).html(translated);
+			}
+		}
+	});
+	/**
+	 * subscriber: i18n-options
+	 * 
+	 * Extends the <options> subscriber for using internationalized option
+	 * lists.
+	 *  
+	 * Parameters:
+	 * options - Options as specified in the <jQuery Form plugin documentation at http://jquery.malsup.com/form/#options-object>
+	 * type - The type of the *this* element
+	 */	
+	$.dform.subscribeIf($.global, 'options', function(options, type) 
+	{
+		if(type == 'select' && (typeof(options) == 'string')) {
+			$(this).html('');
+			// TODO
+		}
+	});
+					
 	/*
 	 * section: WYSIWYG
 	 *
