@@ -155,6 +155,7 @@
 					this.formElement(options);
 				}
 			}
+			return this;
 		},
 		/**
 		 * function: dfromAttr
