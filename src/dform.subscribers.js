@@ -60,12 +60,8 @@
 	function _element(tag, excludes)
 	{
 		// Currying :)
-		return function(options) {
-			var el = $(tag).dformAttr(options, excludes);
-			if($(el).is("input") || $(el).is("button")) {
-				$(el).attr("type", options.type);
-			}
-			return el;
+		return function(ops) {
+			return $(tag).dformAttr(ops, excludes);
 		};
 	}
 	
@@ -130,7 +126,7 @@
 		 * }
 		 * (end)
 		 */
-		text : _element("<input>"),
+		text : _element('<input type="text" />'),
 		/**
 		 * type: password
 		 * 
@@ -150,7 +146,7 @@
 		 * }
 		 * (end)
 		 */
-		password : _element("<input>"),
+		password : _element('<input type="password" />'),
 		/**
 		 * type: select
 		 * 
@@ -262,7 +258,7 @@
 		 * }
 		 * (end)
 		 */
-		submit : _element("<input>"),
+		submit : _element('<input type="submit" />'),
 		/**
 		 * type: reset
 		 * 
@@ -292,7 +288,7 @@
 		 * }
 		 * (end)
 		 */
-		reset : _element("<input>"),
+		reset : _element('<input type="reset" />'),
 		/**
 		 * type: label
 		 * 
@@ -365,7 +361,7 @@
 		 * }
 		 * (end)
 		 */
-		hidden : _element("<input>"),
+		hidden : _element('<input type="hidden" />'),
 		/**
 		 * type: radio
 		 * 
@@ -388,7 +384,7 @@
 		 * }
 		 * (end)
 		 */
-		radio : _element("<input>"),
+		radio : _element('<input type="radio" />'),
 		/**
 		 * type: checkbox
 		 * 
@@ -411,7 +407,7 @@
 		 * }
 		 * (end)
 		 */
-		checkbox : _element("<input>"),
+		checkbox : _element('<input type="checkbox" />'),
 		/**
 		 * type: checkboxes
 		 * 
@@ -508,7 +504,7 @@
 		 * }
 		 * (end)
 		 */
-		file : _element("<input>")
+		file : _element('<input type="file" />')
 	});
 
 	$.dform.subscribe(
