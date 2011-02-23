@@ -102,7 +102,49 @@
 		 * }
 		 * (end)
 		 */
-		
+		/**
+		 * type: container
+		 * 
+		 * Returns an empty container (div) for general use
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	An empty div
+		 * 
+		 * Example:
+		 * Uses the style property although you should separate your CSS
+		 * 
+		 * (start code)
+		 * {
+		 * 		"type" : "container",
+		 * 		"html" : "Text in div"
+		 * }
+		 * (end)
+		 */
+		container : _element("<div>"),
+		/**
+		 * type: form
+		 * 
+		 * Type function that creates a form. If no type is given
+		 * for the root element, a form will be created automatically.
+		 * 
+		 * Parameters:
+		 * 	options - The options this element should be created with
+		 * 
+		 * Returns:
+		 * 	A form element
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "form",
+		 * 		"action" : "index.php"
+		 * }
+		 * (end)
+		 */
+		form : _element('<form>'),
 		/**
 		 * type: text
 		 * 
@@ -429,7 +471,7 @@
 		 * 		"options" :
 		 * 		{
 		 * 			"red" : "Color red",
-		 * 			"blue" : "Color blue",
+		 * 			"blue" : "Color blue"
 		 * 		}
 		 * }
 		 * (end)
@@ -456,35 +498,12 @@
 		 * 		"options" :
 		 * 		{
 		 * 			"red" : "Color red",
-		 * 			"blue" : "Color blue",
+		 * 			"blue" : "Color blue"
 		 * 		}
 		 * }
 		 * (end)
 		 */
 		radiobuttons : _element("<div>", ["name"]),
-		/**
-		 * type: container
-		 * 
-		 * Returns an empty container (div) for general use
-		 * 
-		 * Parameters:
-		 * 	options - The options this element should be created with
-		 * 
-		 * Returns:
-		 * 	An empty div
-		 * 
-		 * Example:
-		 * Uses the style property although you should separate your CSS
-		 * 
-		 * (start code)
-		 * {
-		 * 		"type" : "container",
-		 * 		"style" : "border: 1px solid #505050; padding: 10px;",
-		 * 		"html" : "Text in div"
-		 * }
-		 * (end)
-		 */
-		container : _element("<div>"),
 		/**
 		 * type: file
 		 * 

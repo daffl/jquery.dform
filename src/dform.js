@@ -65,7 +65,7 @@
 			{
 				$.each(_subscriptions[name], function(i, sfn) {
 					// run subscriber function with options
-					sfn.call(element, options, type);
+					sfn.call($(element), options, type);
 				});
 			}
 			return this;
@@ -106,8 +106,12 @@
 		 * Returns:
 		 * 	The jQuery element this function has been called on
 		 */
-		formElement : function(options)
+		formElement : function(options, converter)
 		{
+			options = $.dform.converters.dform(options);
+			if(converter && $.dform.converters[converter]) {
+				options = $.dform.converters[converter];
+			}
 			// Create element (run builder function for type)
 			var element = $.dform.createElement(options);
 			this.append($(element));
@@ -126,7 +130,8 @@
 		 * Parameters:
 		 * 	options - The options to use or a url that returns
 		 *  the forms JSON. 
-		 *  params (optional) - Parameters that should be passed if a URL
+		 *  params (optional) - Parameters that should be passed to a URL or
+		 *  a <converter> name
 		 *  callback (optional) - An on success callback 
 		 *  when the form is loaded
 		 * 
@@ -147,13 +152,9 @@
 			}
 			else {
 				if(!options.type) {
-					var form = this.is("form") ? this : this.append("<form>").children("form:last");
-					var ops = $.extend({ "type" : "form" }, options);
-					$(form).dformAttr(ops);
-					$(form).runAll(ops);
-				} else {
-					this.formElement(options);
+					options = $.extend({ "type" : "form" }, options);
 				}
+				this.formElement(options, params);
 			}
 			return this;
 		},
@@ -322,6 +323,13 @@
 			defaultType : function(options)
 			{
 				return $("<" + options.type + ">").dformAttr(options);
+			}
+		},
+		converters :
+		{
+			dform : function(data)
+			{
+				return data;
 			}
 		},
 		/**
