@@ -151,10 +151,15 @@
 				}, $.dform.options.ajaxFormat);
 			}
 			else {
-				if(!options.type) {
-					options = $.extend({ "type" : "form" }, options);
+				if(this.is('form') && (!options.type || options.type == 'form')) {
+					this.dformAttr(options);
+					this.runAll(options);
+				} else {
+					if(!options.type) {
+						options = $.extend({ "type" : "form" }, options);
+					}
+					this.formElement(options, params);
 				}
-				this.formElement(options, params);
 			}
 			return this;
 		},
