@@ -122,7 +122,8 @@
 		/**
 		 * function: buildForm
 		 * 
-		 * Build an entire form, if the current element is a form or append
+		 * Build an entire form if the current element is a form and no
+		 * type has been given for the root element or append
 		 * a new form if the root element does not have a type given.
 		 * Otherwise the formElement function will be called on the
 		 * current element.
@@ -151,13 +152,13 @@
 				}, $.dform.options.ajaxFormat);
 			}
 			else {
-				if(this.is('form') && (!options.type || options.type == 'form')) {
+				if(!options.type)
+					options = $.extend({ "type" : "form" }, options);
+				
+				if(this.is('form') && options.type == 'form') {
 					this.dformAttr(options);
 					this.runAll(options);
 				} else {
-					if(!options.type) {
-						options = $.extend({ "type" : "form" }, options);
-					}
 					this.formElement(options, params);
 				}
 			}

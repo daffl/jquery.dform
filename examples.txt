@@ -158,9 +158,10 @@ A more complex registration form using the validation plugin
 						"america" : "America",
 						"europe" :
 						{
-						"selected" : "true",
-						"id" : "europe-option",
-						"value" : "Europe"
+							"selected" : "true",
+							"id" : "europe-option",
+							"value" : "europe",
+							"html" : "Europe"
 						},
 						"asia" : "Asia",
 						"africa" : "Africa",

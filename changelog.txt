@@ -5,6 +5,7 @@ Title: Changelog
 * Fixed issue #14, setting type attribute properly in IE
 * Added <getValueAt>
 * Added <i18n> support using the jQuery global plugin
+* Created <jQuery.dForm Google Group at http://groups.google.com/group/jquery-dform>
 
 0.1.2:
 * Added <dformAttr> to add HTML attributes to elements

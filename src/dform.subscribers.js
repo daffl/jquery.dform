@@ -38,7 +38,8 @@
  *  
  * The above JavaScript snippet will do the following
  * 
- * - Look for a type subscriber called <text>, which creates an input field with the type text.
+ * - Look for a type subscriber called <text>, which creates an input field with the type text or, if
+ * there is no matching type call the <defaultType> function which creates a HTML tag of the given type.
  * - Add all attributes as HTML attributes to the input element that don't have a 
  * subscriber registered (which are name and id)
  * - Add the new element to the DOM (append to #myform).
@@ -68,13 +69,13 @@
 	$.dform.addType(
 	{
 		/**
-		 * type: Default types
+		 * type: Default types and attributes
 		 * 
 		 * Default types are handled by the <defaultType> function.
 		 * Its standard behaviour allows you to create any
 		 * HTML tag with standard attributes (attributes are
 		 * any key value pair in the given options, where the
-		 * key is not one of the registered <Subscribers>).
+		 * key is not any of the <Subscribers>).
 		 * 
 		 * Parameters:
 		 * 	options - The options this element should be created with
@@ -672,16 +673,15 @@
 				// TODO optgroup
 				$.each(options, function(value, content)
 				{
-					var option;
-					if (typeof (content) == "string")
-						option = $("<option>").attr("value", value).html(
-								content);
-					if (typeof (content) == "object")
-					{
-						var fn = _element("<option>", {});
-						option = fn($.withoutKeys(content, ["value"])).html(content["value"]);
+					var option = { type : 'option' };
+					if (typeof (content) == "string") {
+						option.value = value;
+						option.content = content;
 					}
-					$(scoper).append(option);
+					if (typeof (content) == "object") {
+						option = $.extend(option, content);
+					}
+					$(scoper).formElement(option);
 				});
 			}
 			else if(type == "checkboxes" || type == "radiobuttons")

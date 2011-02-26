@@ -33,6 +33,11 @@ Usage:
 How to get it:
 <Download jQuery.dForm 0.1.2 at http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.2.tar.gz>
 
+How to get involved:
+* Visit the <jQuery.dForm Google Group at http://groups.google.com/group/jquery-dform>
+* Fork the project on <GitHub at http://github.com/daffl/jquery.dform/>
+* Follow <@daffl at http://twitter.com/daffl> on Twitter
+
 What it is for:
 
 There are many server side web frameworks that support HTML form generation,
@@ -49,11 +54,6 @@ supported out of the box)
 * scaffold forms from business objects of your server side framework
 * have an easy way to include jQuery UI elements and JavaScript validation
 * write JavaScript instead of HTML markup since your page doesn't run without JS anyway
-
-Contribute:
-
-* Visit the project on <GitHub at http://github.com/daffl/jquery.dform/>
-* Follow <@daffl at http://twitter.com/daffl> on Twitter
 
 Examples:
 
