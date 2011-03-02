@@ -1,6 +1,6 @@
 /*
  * jQuery dform plugin
- * Copyright (C) 2010 David Luecke <daff@neyeon.de>
+ * Copyright (C) 2011 David Luecke <daff@neyeon.de>
  * 
  * Licensed under the MIT license
  */

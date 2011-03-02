@@ -47,6 +47,7 @@
 				<file name="dform.js" />
 				<file name="dform.plugins.js" />
 				<file name="dform.subscribers.js" />
+				<file name="dform.converters.js" />
 				<file name="dform.extensions.js" />
 			</filelist>
 		</concat>
