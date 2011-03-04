@@ -110,7 +110,7 @@
 		{
 			options = $.dform.converters.dform(options);
 			if(converter && $.dform.converters[converter]) {
-				options = $.dform.converters[converter];
+				options = $.dform.converters[converter](options);
 			}
 			// Create element (run builder function for type)
 			var element = $.dform.createElement(options);
