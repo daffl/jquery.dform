@@ -676,7 +676,7 @@
 					var option = { type : 'option' };
 					if (typeof (content) == "string") {
 						option.value = value;
-						option.content = content;
+						option.html = content;
 					}
 					if (typeof (content) == "object") {
 						option = $.extend(option, content);

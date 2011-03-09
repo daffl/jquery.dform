@@ -155,7 +155,7 @@
 				if(!options.type)
 					options = $.extend({ "type" : "form" }, options);
 				
-				if(this.is('form') && options.type == 'form') {
+				if(this.is(options.type)) {
 					this.dformAttr(options);
 					this.runAll(options);
 				} else {
