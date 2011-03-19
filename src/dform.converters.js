@@ -22,8 +22,7 @@
 				},
 				"integer" :
 				{
-					"type" : "text",
-					"validate" : "int"
+					"type" : "text"
 				}
 			}
 		}
@@ -36,25 +35,29 @@
 			return data;
 		},
 
-		"json" : function(data)
+		"json" : function(data, path)
 		{
 			var converters = $.dform.options.converters.json.types;
 			var getElements = function(obj)
 			{
 				var result = [];
-				$.each(data, function(key, value)
+				$.each(obj, function(key, value)
 				{
 					var instance = typeof (value);
 					var element;
-					if (instance == 'object')
+					if($.isArray(value))
+					{
+						alert(key + ' is an array');
+					} else if($.isPlainObject(value))
 					{
 						element =
 						{
 							'type' : 'fieldset',
-							'caption' : key
+							'caption' : key,
+							'elements' : getElements(value)
 						};
-						// element.elements = getElements(value);
-					} else
+					}
+					else
 					{
 						var baseElement = converters[instance] || { 'type' : 'text' };
 						element = $.extend(baseElement, { 'caption' : key, 'name' : key, 'value' : value });
@@ -63,6 +66,7 @@
 				});
 				return result;
 			};
+			
 			return {
 				"type" : "form",
 				"elements" : getElements(data)
