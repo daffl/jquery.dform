@@ -668,7 +668,7 @@
 		options : function(options, type)
 		{
 			var scoper = $(this);
-			if (type == "select") // Options for select elements
+			if (type == "select" || type == "optgroup") // Options for select elements
 			{
 				// TODO optgroup
 				$.each(options, function(value, content)
