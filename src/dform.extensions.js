@@ -592,12 +592,17 @@
 	 */
 	function _getTranslate(options)
 	{
-		var elements = options.split('.');
-		if (elements.length > 1) {
-			var area = elements.shift();
-			var translations = jQuery.global.localize(area);
-			if (translations) {
-				return $.getValueAt(translations, elements);
+		if ($.isFunction(options.split)) 
+		{
+			var elements = options.split('.');
+			if (elements.length > 1) 
+			{
+				var area = elements.shift();
+				var translations = jQuery.global.localize(area);
+				if (translations) 
+				{
+					return $.getValueAt(translations, elements);
+				}
 			}
 		}
 		return false;
