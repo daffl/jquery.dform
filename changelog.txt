@@ -1,11 +1,13 @@
 Title: Changelog
 
 0.1.3:
-* Added <form> type to unify <buildForm> usage
-* Fixed issue #14, setting type attribute properly in IE
-* Added <getValueAt>
-* Added <i18n> support using the jQuery global plugin
+* Created some public <JSFiddles for trying the plugin at http://jsfiddle.net/user/Daff/fiddles>
 * Created <jQuery.dForm Google Group at http://groups.google.com/group/jquery-dform>
+* Added <form> type, unified <buildForm> usage
+* Fixed <issue #14 at https://github.com/daffl/jquery.dform/issues/closed#issue/14>, setting type attribute properly in IE
+* Added <getValueAt>
+* Added <i18n> support using the <jQuery global at https://github.com/jquery/jquery-global> plugin
+* Fixed minor bugs in dform plugins
 
 0.1.2:
 * Added <dformAttr> to add HTML attributes to elements

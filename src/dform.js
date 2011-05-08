@@ -102,14 +102,15 @@
 		 * 
 		 * Parameters:
 		 * 	options - The options to use
+		 *  converter - The name of the converter in $.dform.converters
+		 *  that will be used to convert the options
 		 * 
 		 * Returns:
 		 * 	The jQuery element this function has been called on
 		 */
 		formElement : function(options, converter)
 		{
-			options = $.dform.converters.dform(options);
-			if(converter && $.dform.converters[converter]) {
+			if(converter && $.dform.converters && $.dform.converters[converter]) {
 				options = $.dform.converters[converter](options);
 			}
 			// Create element (run builder function for type)

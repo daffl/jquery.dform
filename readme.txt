@@ -31,7 +31,7 @@ Usage:
 (end)
 
 How to get it:
-<Download jQuery.dForm 0.1.2 at http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.2.tar.gz>
+<Download jQuery.dForm 0.1.3 at http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.3.tar.gz>
 
 How to get involved:
 * Visit the <jQuery.dForm Google Group at http://groups.google.com/group/jquery-dform>

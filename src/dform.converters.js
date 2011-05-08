@@ -30,11 +30,6 @@
 
 	$.dform.converters =
 	{
-		"dform" : function(data)
-		{
-			return data;
-		},
-
 		"json" : function(data, path)
 		{
 			var converters = $.dform.options.converters.json.types;

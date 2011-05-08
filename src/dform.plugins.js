@@ -5,9 +5,6 @@
  * Licensed under the MIT license
  */
 
-/**
- * 
- */
 (function($) {
 	$.fn.placeholder = function(options)
 	{
@@ -28,12 +25,15 @@
 					$(this).val($(this).data(key));
 			});
 			// Submit handler that clears the field before submit
-			$(this).parents("form").submit(function()
+			var form = $(this).parents("form");
+			form.submit(function()
 			{
 				if($(scoper).val() == $(scoper).data(key))
 					$(scoper).val("");
 			});
-			// TODO onreset
+		    $('input[type="reset"]', form).click(function(){
+		    	$(scoper).val($(scoper).data(key));
+		     });
 		}
 		return this;
 	};
