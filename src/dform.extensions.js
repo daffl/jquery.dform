@@ -541,6 +541,8 @@
 						}
 					};
 				}
+				if (typeof (options.validate) == 'object')
+					$.extend(defaults, options.validate);
 				this.validate(defaults);
 			}
 		},
@@ -555,7 +557,8 @@
 		 */
 		"validate" : function(options, type)
 		{
-			this.rules("add", options);
+			if (type != "form")
+				this.rules("add", options);
 		}
 	});
 
