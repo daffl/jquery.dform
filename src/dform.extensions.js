@@ -550,10 +550,49 @@
 		 * subscriber: validate
 		 * 
 		 * Adds support for the jQuery validation rulesets.
+		 * For types: <text>, <password>, <textarea>, <radio>, <checkbox> sets up rules through rules("add", rules) for validation plugin
+		 * For type <form> sets up as options object for validate method of validation plugin
+		 * For rules of types <checkboxes> and <radiobuttons> you should use this subscriber for type <form> (to see example below)
 		 * 
-		 * Parameters:
-		 * options - Options as specified in the rules parameter
-		 * type - The type of the *this* element
+		 * Example:
+		 * validations for radiobuttons group and for text field:
+		 * 
+		 * (start code)
+		 * {
+		 *	"type" : "form",
+		 * 	"validate" :
+		 *	{
+		 *		"rules" :
+		 *		{
+		 *			"radio_group": "required"
+		 *		}
+		 *	},
+		 *	"elements" :
+		 *	[
+		 *		{
+		 *			"type" : "radiobuttons",
+		 *			"caption" : "You should choose from here"
+		 *			"name" : "radio_group",
+		 *			"options" :
+		 *			{
+		 *				"Y" : "Yes",
+		 *				"N" : "No"
+		 *			}
+		 *
+		 *		},
+		 *		{
+		 *			"type" : "text",
+		 *			"name" : "url",
+		 *			"validate" :
+		 *			{
+		 *				"required" : true,
+		 *				"url" : true
+		 *			}
+		 *		}
+		 *	
+		 *	]
+		 * }
+		 * (end)
 		 */
 		"validate" : function(options, type)
 		{
