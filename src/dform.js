@@ -6,7 +6,8 @@
  */
 
 /**
- * file: Plugin
+ * @page index
+ * @tags home
  * 
  * This is the documentation for the core helpers and jQuery
  * functions of the plugin.
