@@ -794,7 +794,7 @@
 		 */
 		url : function(options, type)
 		{
-			scoper.buildForm(options);
+			this.buildForm(options);
 		},
 		/**
 		 * subscriber: [post]
