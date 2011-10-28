@@ -65,44 +65,6 @@
 (function($)
 {
 	/**
-	 * section: dForm plugins
-	 *
-	 * The Plugin comes with a couple of small built in extension plugins.
-	 */
-	/**
-	* subscriber: placeholder
-	* 
-	* Adds a default default value to text elements.
-	* 
-	* The default value will dissappear
-	* when the element gets focussed and reappears if the element looses
-	* focus and nothing has been entered.
-	* 
-	* Parameters:
-	* 	options - The default value to set. Usually a helper text
-	* 	with instructions for the user (e.g. enter mail here...)
-	* 	type - The type of the *this* element
-	* 
-	* For types:
-	* 	<text>, <textarea>
-	* 
-	* Example:
-	* (start code)
-	* {
-	* 		"name" : "email",
-	* 		"type" : "text",
-	*		"placeholder" : "e.g. mail@example.org"
-	* }	
-	* (end)
-	*/
-	$.dform.subscribeIf($.isFunction($.fn.placeholder), "placeholder",
-		function(options, type)
-		{
-			if(type == "text" || type == "textarea")
-				$(this).placeholder(options);
-		});
-		
-	/**
 	 * section: jQuery UI
 	 *
 	 * Subscribers using the <jQuery UI Framework 

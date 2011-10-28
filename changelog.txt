@@ -1,6 +1,7 @@
 Title: Changelog
 
 0.1.4:
+* Removed placeholder plugin. Use HTML 5 placeholders or the jQuery [https://github.com/danielstocks/jQuery-Placeholder | placeholder plugin]
 * Updated documentation engine to DocumentJS and build system to StealJS
 * Merged pull request #19 and #20, support to set up a validate options for validate() in "form" type
 * Added simple getting started example
