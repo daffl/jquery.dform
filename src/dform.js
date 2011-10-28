@@ -36,8 +36,10 @@
 			});
 		}
 	}
-
+	
 	/**
+	 * @page plugin Plugin
+	 * @parent index
 	 * section: JQuery Plugin functions
 	 *
 	 * Functions that will be used as jQuery plugins.
