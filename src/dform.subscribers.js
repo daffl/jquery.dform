@@ -787,6 +787,16 @@
 			$.dform.options.prefix && this.addClass($.dform.options.prefix + type);
 		},
 		/**
+		 * Retrieves JSON data from a URL and creates a sub form.
+		 * 
+		 * @param options
+		 * @param type
+		 */
+		url : function(options, type)
+		{
+			scoper.buildForm(options);
+		},
+		/**
 		 * subscriber: [post]
 		 * 
 		 * Post processing function, that will run whenever all other subscribers are finished.
