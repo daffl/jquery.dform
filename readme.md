@@ -1,13 +1,10 @@
-@page index Home
-
-Title: Home
+<!-- @page index Home -->
 
 The jQuery.dForm plugin allows you to create your HTML forms programmatically from JavaScript objects 
 (and therefore JSON, too).
 
 Usage:
 
-(start code)
 	var formdata =
 	{
 		"action" : "index.html",
@@ -16,7 +13,7 @@ Usage:
 		[
 			{
 				"name" : "textfield",
-				"label" : "Label for textfield",
+				"caption" : "Label for textfield",
 				"type" : "text",
 				"value" : "Hello world"
 			},
@@ -30,15 +27,15 @@ Usage:
 	
 	// Or to load the form definition via AJAX
 	$("#myform").buildForm("http://example.com/myform.json");
-(end)
+
 
 How to get it:
-<Download jQuery.dForm 0.1.3 at http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.3.tar.gz>
+[http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.3.tar.gz | Download jQuery.dForm 0.1.4]
 
 How to get involved:
-* Visit the <jQuery.dForm Google Group at http://groups.google.com/group/jquery-dform>
-* Fork the project on <GitHub at http://github.com/daffl/jquery.dform/>
-* Follow <@daffl at http://twitter.com/daffl> on Twitter
+* Visit the [http://groups.google.com/group/jquery-dform | jQuery.dForm Google Group]
+* Fork the project on [http://github.com/daffl/jquery.dform/ | GitHub]
+* Follow [http://twitter.com/daffl | @daffl] on Twitter
 
 What it is for:
 
@@ -56,7 +53,3 @@ supported out of the box)
 * scaffold forms from business objects of your server side framework
 * have an easy way to include jQuery UI elements and JavaScript validation
 * write JavaScript instead of HTML markup since your page doesn't run without JS anyway
-
-Examples:
-
-See some live demos at the <Examples> page.
