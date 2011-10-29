@@ -30,9 +30,10 @@ Usage:
 
 
 How to get it:
-[http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.3.tar.gz | Download jQuery.dForm 0.1.4]
+[Download jQuery.dForm 0.1.4](http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.3.tar.gz)
 
 How to get involved:
+
 * Visit the [http://groups.google.com/group/jquery-dform | jQuery.dForm Google Group]
 * Fork the project on [http://github.com/daffl/jquery.dform/ | GitHub]
 * Follow [http://twitter.com/daffl | @daffl] on Twitter
