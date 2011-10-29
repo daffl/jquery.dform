@@ -29,16 +29,19 @@ Usage:
 	$("#myform").buildForm("http://example.com/myform.json");
 
 
-How to get it:
+## How to get it:
+
 [Download jQuery.dForm 0.1.4](http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.3.tar.gz)
 
-How to get involved:
 
-* Visit the [http://groups.google.com/group/jquery-dform | jQuery.dForm Google Group]
-* Fork the project on [http://github.com/daffl/jquery.dform/ | GitHub]
-* Follow [http://twitter.com/daffl | @daffl] on Twitter
+## How to get involved:
 
-What it is for:
+* Visit the [jQuery.dForm Google Group](http://groups.google.com/group/jquery-dform)
+* Fork the project on [GitHub](http://github.com/daffl/jquery.dform/)
+* Follow [@daffl](http://twitter.com/daffl) on Twitter
+
+
+## What it is for:
 
 There are many server side web frameworks that support HTML form generation,
 but you often end up mixing client (e.g. JavaScript validation) and server side processing concerns together.
@@ -47,7 +50,8 @@ This plugin moves the generation of forms entirely on the client side so that th
 JavaScript object (usually as JSON) that contains all the information needed to create this form.
 It is easily extensible for custom form elements and properties.
 
-You should try this plugin if you want to
+
+## You should try this plugin if you want to
 
 * manage all your form related jQuery plugins in a unified way (jQuery UI and the Validation plugin
 supported out of the box)
