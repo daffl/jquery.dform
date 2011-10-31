@@ -40,29 +40,21 @@
 	/**
 	 * @page plugin Plugin
 	 * @parent index
-	 * section: JQuery Plugin functions
 	 *
 	 * Functions that will be used as jQuery plugins.
 	 */
 	$.fn.extend(
 	{
 		/**
-		 * function: runSubscription
-		 * 
 		 * Run all subscriptions with the given name and options
 		 * on an element.
 		 * 
-		 * Parameters:
-		 * 	name - The name of the subscriber functions
-		 * 	options - Options for the function
-		 * 	type - The type of the current element (as in
-		 * 	the registered types)
-		 * 
-		 * Returns:
-		 * 	The jQuery element this function has been called on
+		 * @param {String} name The name of the subscriber function
+		 * @param {Object} options ptions for the function
+		 * @param {String} type The type of the current element as in the registered types
+		 * @return {Object} The jQuery object
 		 */
-		runSubscription : function(name, options, type)
-		{
+		runSubscription : function(name, options, type) {
 			var element = this;
 			if ($.dform.hasSubscription(name))
 			{
@@ -74,15 +66,10 @@
 			return this;
 		},
 		/**
-		 * function: runAll
-		 * 
 		 * Run all subscription functions with given options.
 		 * 
-		 * Parameters:
-		 * 	options - The options to use
-		 * 
-		 * Returns:
-		 * 	The jQuery element this function has been called on
+		 * @param {Object} options The options to use
+		 * @return {Object} The jQuery element this function has been called on
 		 */
 		runAll : function(options)
 		{
@@ -99,17 +86,12 @@
 			return this;
 		},
 		/**
-		 * function: formElement
-		 * 
 		 * Creates a form element on an element with given options
 		 * 
-		 * Parameters:
-		 * 	options - The options to use
-		 *  converter - The name of the converter in $.dform.converters
-		 *  that will be used to convert the options
-		 * 
-		 * Returns:
-		 * 	The jQuery element this function has been called on
+		 * @param {Object} options The options to use
+		 * @param {String} converter The name of the converter in $.dform.converters
+		 * that will be used to convert the options
+		 * @return {Object} The jQuery element this function has been called on
 		 */
 		formElement : function(options, converter)
 		{
@@ -124,24 +106,17 @@
 			return this;
 		},
 		/**
-		 * function: buildForm
-		 * 
 		 * Build an entire form if the current element is a form and no
 		 * type has been given for the root element or append
 		 * a new form if the root element does not have a type given.
 		 * Otherwise the formElement function will be called on the
 		 * current element.
 		 * 
-		 * Parameters:
-		 * 	options - The options to use or a url that returns
-		 *  the forms JSON. 
-		 *  params (optional) - Parameters that should be passed to a URL or
-		 *  a <converter> name
-		 *  callback (optional) - An on success callback 
-		 *  when the form is loaded
-		 * 
-		 * Returns:
-		 * 	The jQuery element this function has been called on
+		 * @param {Object} options The options to use or a url that returns the forms JSON. 
+		 * @param {Object} [params] Parameters that should be passed to a URL or
+		 * a converter name
+		 * @param {Function} [callback] An on success callback when the form is loaded
+		 * @return {Object} The jQuery element this function has been called on
 		 */
 		buildForm : function(options, params, callback)
 		{
@@ -169,19 +144,14 @@
 			return this;
 		},
 		/**
-		 * function: dfromAttr
-		 * 
 		 * Adds HTML attributes to the current element from the given options.
 		 * Any subscriber will be ommited so that the attributes will contain any
 		 * key value pair where the key is not the name of a subscriber function
 		 * and is not in the string array excludes.
 		 * 
-		 * Parameters:
-		 * 	object - The attribute object
-		 * 	excludes - A list of keys that should also be excluded
-		 * 
-		 * Returns:
-		 * 	The jQuery object of the this reference
+		 * @param {Object} object The attribute object
+		 * @param {Array} excludes A list of keys that should also be excluded
+		 * @return {Object} The jQuery object of the this reference
 		 */
 		dformAttr : function(object, excludes)
 		{
@@ -194,21 +164,17 @@
 	});
 	
 	/**
-	 * section: Global helper functions
+	 * @page globals Global helper functions
+	 * @parent plugin
 	 *
 	 * Helper functions that can be used globally and are added to the jQuery object.
 	 */
 	$.extend($, {
 		/**
-		 * function: keyset
-		 * 
 		 * Returns an array of keys (properties) contained in the given object.
 		 * 
-		 * Parameters:
-		 * 	object - The object to use
-		 * 
-		 * Returns:
-		 * 	An array containing all properties in the object
+		 * @param {Object} object The object to use
+		 * @return {Array} An array containing all properties in the object
 		 */
 		keyset : function(object)
 		{
@@ -219,18 +185,13 @@
 			return keys;
 		},
 		/**
-		 * function: withKeys
-		 * 
 		 * Returns an object that contains all values from the given
 		 * object that have a key which is also in the array keys.
 		 * 
-		 * Parameters:
-		 * 	object - The object to traverse
-		 * 	keys - The keys the new object should contain
-		 * 
-		 * Returns:
-		 * 	A new object containing only the properties
-		 * 	with names given in keys
+		 * @param {Object} object The object to traverse
+		 * @param {Array} keys The keys the new object should contain
+		 * @return {Object} A new object containing only the properties
+		 * with names given in keys
 		 */
 		withKeys : function(object, keys)
 		{
@@ -243,18 +204,13 @@
 			return result;
 		},
 		/**
-		 * function: withoutKeys
-		 * 
 		 * Returns an object that contains all value from the given
 		 * object that do not have a key which is also in the array keys.
 		 * 
-		 * Parameters:
-		 * 	object - The object to traverse
-		 * 	keys - A list of keys that should not be contained in the new object
-		 * 
-		 * Returns:
-		 * 	A new object with all properties of the given object, except
-		 * 	for the ones given in the list of keys
+		 * @param {Object} object The object to traverse
+		 * @param {Array} keys A list of keys that should not be contained in the new object
+		 * @return {Object} A new object with all properties of the given object, except
+		 * for the ones given in the list of keys
 		 */
 		withoutKeys : function(object, keys)
 		{
@@ -268,20 +224,16 @@
 		},
 		
 		/**
-		 * function: getValueAt
-		 * 
 		 * Returns the value in an object based on the given dot separated
-		 * path or false if not found. 
-		 * E.g. $.getValueAt({ "test" : { "inner" : { "value" : "X" }}}, "test.inner.value")
-		 * will return "X".
+		 * path or false if not found.
+		 *  
+		 * 	$.getValueAt({ "test" : { "inner" : { "value" : "X" }}}, "test.inner.value")
+		 * 	// will return "X"
 		 * 
-		 * Parameters:
-		 * 	object - The object to traverse
-		 * 	path - The path to use. It can be either a dot separated string or
-		 * 		an array of indexes.
-		 * 
-		 * Returns:
-		 * 	The objects value or false
+		 * @param {Object} object The object to traverse
+		 * @param {String|Array} path The path to use. It can be either a dot separated string or
+		 * an array of indexes.
+		 * @return {Object|Boolean} The objects value or false
 		 */
 		getValueAt : function(object, path)
 		{
@@ -301,7 +253,8 @@
 	$.dform =
 	{
 		/**
-		 * section: Options
+		 * @page options
+		 * @parent plugin
 		 * 
 		 * Default options the plugin is initialized with
 		 */
@@ -335,11 +288,13 @@
 				return $("<" + options.type + ">").dformAttr(options);
 			}
 		},
+		
 		/**
 		 * section: Static helper functions
 		 *
 		 * Static helpers for the plugin, that can be found in the *$.dform* namespace.
 		 */
+		
 		/**
 		 * function: removeType
 		 * 

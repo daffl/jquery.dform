@@ -1,0 +1,1 @@
+C({"name": "ajaxFormat", "type": "attribute", "parents": ["options"], "comment": "<p>var: ajaxFormat</p>\n\n<p>The format used if forms are loaded via AJAX.\nDefaults to JSON</p>", "src": "src/dform.js", "line": 270, "children": []})

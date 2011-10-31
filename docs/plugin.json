@@ -1,0 +1,1 @@
+C({"name": "plugin", "type": "page", "comment": "<p>Functions that will be used as jQuery plugins.</p>", "title": "Plugin", "parents": ["index"], "src": "src/dform.js", "line": 39, "children": ["runSubscription", "runAll", "formElement", "buildForm", "dformAttr", "globals", "globals", "options"]})

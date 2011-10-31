@@ -1,4 +1,6 @@
-<!-- @page index Home -->
+@page index jQuery dForm
+
+# jQuery dForm
 
 The jQuery.dForm plugin allows you to create your HTML forms programmatically from JavaScript objects 
 (and therefore JSON, too).
@@ -31,7 +33,9 @@ Usage:
 
 ## How to get it:
 
-[Download jQuery.dForm 0.1.4](http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.3.tar.gz)
+[Download](http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.4.tar.gz) the latest package (0.1.4(
+
+Clone the current master on [GitHub](http://github.com/daffl/jquery.dform/)
 
 
 ## How to get involved:
