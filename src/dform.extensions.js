@@ -248,25 +248,25 @@
 	 * 	options - All options for the container div. The <caption> will be
 	 * 	turned into the accordion or tab title.
 	 * 	type - The type of the *this* element
-	 */	
+	 */
 	$.dform.subscribeIf($.isFunction($.fn.accordion), "entries",
 		function(options, type) {
-			var scoper = this;
 			if(type == "accordion")
 			{
+				var scoper = this;
 				$.each(options, function(index, options) {
-					$.extend(options, { "type" : "container" });
-					$(scoper).formElement(options);
-					// Wrap label text into link for formatting
-					$(scoper).children("div:last").prev().wrapInner($("<a>").attr("href", "#"));
+					var el = $.extend({ "type" : "div" }, options);
+					$(scoper).formElement(el);
+					var label = $(scoper).children("div:last").prev();
+					label.replaceWith('<h3><a href="#">' + label.html() + '</a></h3>');
 				});
 			}
 		});
 	$.dform.subscribeIf($.isFunction($.fn.tabs), "entries",
 		function(options, type) {
-			var scoper = this;
 			if(type == "tabs")
 			{
+				var scoper = this;
 				this.append("<ul>");
 				var ul = $(scoper).children("ul:first");
 				$.each(options, function(index, options) {
@@ -451,16 +451,10 @@
 			// We can assume it is save since the types wouldn't even be registered
 			// without the jQuery functions available
 			if(type == "accordion") {
-				var ops = _getOptions(type, options);
-				// Change the header to a label since this is the default element
-				// for captions
-				$.extend(ops, { "header" : "label" });
-				this.accordion(ops);
+				this.accordion(_getOptions(type, options));
 			}
-			else if(type == "tabs")
-			{
-				var ops = _getOptions(type, options);
-				this.tabs(ops);
+			else if(type == "tabs") {
+				this.tabs(_getOptions(type, options));
 			}
 		});
 	

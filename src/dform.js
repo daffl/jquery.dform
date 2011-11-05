@@ -296,128 +296,97 @@
 		 */
 		
 		/**
-		 * function: removeType
-		 * 
 		 * Delete an element type.
 		 * 
-		 * Parameters:
-		 * 	name - The name of the type to delete 
+		 * @param {String} name The name of the type to delete 
 		 */
 		removeType : function(name)
 		{
 			delete _types[name];
 		},
 		/**
-		 * function: typeNames
-		 * 
 		 * Returns the names of all types registered
+		 * @return {Array} Names of all registered types
 		 */
 		typeNames : function()
 		{
 			return $.keyset(_types);
 		},
 		/**
-		 * function: addType
-		 * 
 		 * Register a element type function.
 		 * 
-		 * Parameters:
-		 * 	data - Can either be the name of the type
-		 * 	function or an object that contains name : type function
-		 * 	pairs
-		 * 	fn - The function that creates a new type element
+		 * @param {String|Array} data Can either be the name of the type
+		 * function or an object that contains name : type function pairs
+		 * @param {Function} fn The function that creates a new type element
 		 */
 		addType : function(data, fn)
 		{
 			_addToObject(_types, data, fn);
 		},
 		/**
-		 * function: addTypeIf
+		 * Register a element type function if a condition is true.
+		 * See also: [addType]
 		 * 
-		 * Register a element type function.
-		 * 
-		 * Parameters:
-		 * 	condition - The condition under which to subscribe
-		 * 	data - Can either be the name of the type builder
-		 * 	function or an object that contains name : type function
-		 * 	pairs
-		 * 	fn - The function to subscribe or nothing if an object is passed for data
-		 * 
-		 * See also:
-		 * 	<addType>
+		 * @param {Boolean} condition The condition under which to subscribe
+		 * @param {String|Object} data Can be either the name of the type builder
+		 * function or an object that contains name : type function pairs
+		 * @param {Function} fn The function to subscribe or nothing if an object is passed for data
 		 */
 		addTypeIf : function(condition, data, fn)
 		{
 			condition && $.dform.addType(data, fn);
 		},
 		/**
-		 * function: subscriberNames
-		 * 
 		 * Returns the names of all subscriber functions registered
+		 * 
+		 * @return {Array} The names of all registered subscribers
 		 */
 		subscriberNames : function()
 		{
 			return $.keyset(_subscriptions);
 		},
 		/**
-		 * function: subscribe
-		 * 
 		 * Register a subscriber function.
 		 * 
-		 * Parameters:
-		 * 	data - Can either be the name of the subscriber
-		 * 	function or an object that contains name : subscriber function
-		 * 	pairs
-		 * 	fn - The function to subscribe or nothing if an object is passed for data
+		 * @param {String|Object} data Can either be the name of the subscriber
+		 * function or an object that contains name : subscriber function pairs
+		 * @param {Function} fn The function to subscribe or nothing if an object is passed for data
 		 */
 		subscribe : function(data, fn)
 		{
 			_addToObject(_subscriptions, data, fn);
 		},
 		/**
-		 * function: subscribeIf
-		 * 
 		 * Register a subscriber if a given condition is true.
 		 * Use it if you want to subscribe only, if e.g. a required plugin
 		 * is installed (pass $.isFunction($.fn.pluginName)).
 		 * 
-		 * Parameters:
-		 * 	condition - The condition under which to subscribe
-		 * 	data - Can either be the name of the subscriber
-		 * 	function or an object that contains name : subscriber function
-		 * 	pairs
-		 * 	fn - The function to subscribe or nothing if an object is passed for data
+		 * See also: [subscribe]
 		 * 
-		 * See also:
-		 * 	<subscribe>
+		 * @param {Boolean} condition The condition under which to subscribe
+		 * @param {String|Object} data Can either be the name of the subscriber
+		 * function or an object that contains name : subscriber function pairs
+		 * @param {Function} fn The function to subscribe or nothing if an object is passed for data
 		 */
 		subscribeIf : function(condition, data, fn)
 		{
 			condition && $.dform.subscribe(data, fn);
 		},
 		/**
-		 * function: removeSubscription
-		 * 
 		 * Delete all subscriptions for a given name.
 		 * 
-		 * Parameters:
-		 * 	name - The name of the subscriber to delete 
+		 * @param {String} name The name of the subscriber to delete 
 		 */
 		removeSubscription : function(name)
 		{
 			delete _subscriptions[name];
 		},
 		/**
-		 * function: hasSubscription
-		 * 
 		 * Returns if a subscriber function with the given name
 		 * has been registered.
 		 * 
-		 * Parameters:
-		 * 	name - The subscriber name
-		 * 
-		 * Returns:
-		 * 	True if the given name has at least one subscriber registered,
+		 * @param {String} name The subscriber name
+		 * @return {Boolean} True if the given name has at least one subscriber registered,
 		 * 	false otherwise
 		 */
 		hasSubscription : function(name)
@@ -425,16 +394,11 @@
 			return _subscriptions[name] ? true : false;
 		},
 		/**
-		 * function: createElement
-		 * 
 		 * Create a new element.
 		 * 
-		 * Parameters:
-		 * 	options - The options to use
-		 * 
-		 * Returns:
-		 * 	The element as created by the builder function specified
-		 * 	or returned by the <defaultType> function.
+		 * @param {Object} options - The options to use
+		 * @return {Object} The element as created by the builder function specified
+		 * 	or returned by the defaultType function.
 		 */
 		createElement : function(options)
 		{
