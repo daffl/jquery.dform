@@ -4,3 +4,4 @@
 /.project
 /build/compiler**
 tmp/**
+docs/*.json
