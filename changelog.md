@@ -3,9 +3,12 @@
 
 ## 0.1.4
 
+* Added QUnit tests
+* Fixed issue #22 with jQuery UI accordion causing problems with captions
 * Removed placeholder plugin. Use HTML 5 placeholders or the jQuery [placeholder plugin](https://github.com/danielstocks/jQuery-Placeholder)
 * Updated documentation engine to DocumentJS and build system to StealJS
-* Merged pull request #19 and #20, support to set up a validate options for validate() in "form" type
+* Merged pull request [#19](https://github.com/daffl/jquery.dform/pull/19) and [#20](https://github.com/daffl/jquery.dform/pull/20), support to set up a validate options for validate() in "form" type
+* Merged pull request [#26](https://github.com/daffl/jquery.dform/pull/26) to support HTML 5 input types
 * Added simple getting started example
 
 ## 0.1.3
