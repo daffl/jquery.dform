@@ -524,7 +524,91 @@
 		 * }
 		 * (end)
 		 */
-		file : _element('<input type="file" />')
+		file : _element('<input type="file" />'),
+	 	/**
+	 	 * type: number
+	 	 * 
+	 	 * Defines a field for entering a number (HTML5)
+	 	 * 
+	 	 * Parameters:
+	 	 *  options - The options this element should be created with
+	 	 * 
+	 	 * Returns:
+	 	 *  An input element with type number
+	 	 * 
+	 	 * Example:
+	 	 * (start code)
+	 	 * {
+	 	 *      "type" : "number",
+	 	 *      "name" : "quant",
+	 	 *      "caption" : "quantity",
+	 	 * }
+	 	 * (end)
+	 	 */
+	 	number : _element('<input type="number" />'),
+	 	/**
+	 	 * type: url
+	 	 * 
+	 	 * Defines a field for entering a URL (HTML5)
+	 	 * 
+	 	 * Parameters:
+	 	 *  options - The options this element should be created with
+	 	 * 
+	 	 * Returns:
+	 	 *  An input element with type url
+	 	 * 
+	 	 * Example:
+	 	 * (start code)
+	 	 * {
+	 	 *      "type" : "url",
+	 	 *      "name" : "mywebsite",
+	 	 *      "caption" : "Website URL",
+	 	 * }
+	 	 * (end)
+	 	 */
+	 	url : _element('<input type="url" />'),
+	 	/**
+	 	 * type: tel
+	 	 * 
+	 	 * Defines a field for entering a telephone number (HTML5)
+	 	 * 
+	 	 * Parameters:
+	 	 *  options - The options this element should be created with
+	 	 * 
+	 	 * Returns:
+	 	 *  An input element with type tel
+	 	 * 
+	 	 * Example:
+	 	 * (start code)
+	 	 * {
+	 	 *      "type" : "tel",
+	 	 *      "name" : "phone",
+	 	 *      "caption" : "Contact Phone Number",
+	 	 * }
+	 	 * (end)
+	 	 */
+	 	tel : _element('<input type="tel" />'),
+	 	/**
+	 	 * type: email
+	 	 * 
+	 	 * Defines a field for entering an e-mail address (HTML5)
+	 	 * 
+	 	 * Parameters:
+	 	 *  options - The options this element should be created with
+	 	 * 
+	 	 * Returns:
+	 	 *  An input element with type email
+	 	 * 
+	 	 * Example:
+	 	 * (start code)
+	 	 * {
+	 	 *      "type" : "email",
+	 	 *      "name" : "contactemail",
+	 	 *      "caption" : "Contact e-mail",
+	 	 * }
+	 	 * (end)
+	 	 */
+	 	email : _element('<input type="email" />')
 	});
 
 	$.dform.subscribe(
