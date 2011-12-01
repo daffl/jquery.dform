@@ -637,6 +637,30 @@
 			this.val(options);
 		},
 		/**
+		 * subscriber: css
+		 * 
+		 * Set CSS styles for the current element
+		 * 
+		 * Parameters:
+		 * 	options - object The Styles to set
+		 * 	type - string The type of the *this* element
+		 * 
+		 * 
+		 * Example:
+		 * (start code)
+		 * {
+		 * 		"type" : "div",
+		 * 		"css" : {
+		 * 			"background-color" : "red"
+		 * 		}
+		 * }	
+		 * (end)
+		 */
+		css : function(options, type)
+		{
+			this.css(options);
+		},
+		/**
 		 * subscriber: options
 		 * 
 		 * Adds options to select type elements or radio and checkbox list elements.
