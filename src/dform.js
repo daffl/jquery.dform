@@ -410,7 +410,7 @@
 			if (_types[type])
 			{
 				// We don't need the type key in the options
-				var ops = $.withoutKeys(options, "type");
+				var ops = $.withoutKeys(options, ["type"]);
 				// Run all type element builder functions called typename
 				$.each(_types[type], function(i, sfn) {
 					element = sfn.call(element, ops);
