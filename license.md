@@ -3,7 +3,7 @@
 
 # License
 
-Copyright (C) 2010 [David Luecke](daff@neyeon.de), [http://neyeon.com/p/dform/]
+Copyright (C) 2012 [David Luecke](daff@neyeon.de), [http://daffl.github.com/jquery.dform]
 
 The MIT license:
 

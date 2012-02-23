@@ -257,8 +257,10 @@
 				$.each(options, function(index, options) {
 					var el = $.extend({ "type" : "div" }, options);
 					$(scoper).formElement(el);
-					var label = $(scoper).children("div:last").prev();
-					label.replaceWith('<h3><a href="#">' + label.html() + '</a></h3>');
+					if(options.caption) {
+						var label = $(scoper).children("div:last").prev();
+						label.replaceWith('<h3><a href="#">' + label.html() + '</a></h3>');
+					}
 				});
 			}
 		});
@@ -448,13 +450,8 @@
 						"fieldset" ]) != -1)
 					this.addClass("ui-widget-content ui-corner-all");
 			}
-			// We can assume it is save since the types wouldn't even be registered
-			// without the jQuery functions available
-			if(type == "accordion") {
-				this.accordion(_getOptions(type, options));
-			}
-			else if(type == "tabs") {
-				this.tabs(_getOptions(type, options));
+			if(type == "accordion" || type == "tabs") {
+				this[type](_getOptions(type, options));
 			}
 		});
 	

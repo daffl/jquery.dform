@@ -3,7 +3,8 @@
 
 ## 0.1.4
 
-* Added QUnit tests
+* Merged pull request [#30](https://github.com/daffl/jquery.dform/pull/30): Wrap 'type' as an array so it doesn't break jQuery 1.7.1's $.inArray() when running in IE8
+* Added first QUnit tests
 * Fixed issue #22 with jQuery UI accordion causing problems with captions
 * Removed placeholder plugin. Use HTML 5 placeholders or the jQuery [placeholder plugin](https://github.com/danielstocks/jQuery-Placeholder)
 * Updated documentation engine to DocumentJS and build system to StealJS

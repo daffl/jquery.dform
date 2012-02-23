@@ -1,1 +1,0 @@
-C({"name": "typeNames", "params": {}, "ret": {"type": "undefined", "description": ""}, "type": "function", "parents": ["options"], "comment": "<p>function: typeNames</p>\n\n<p>Returns the names of all types registered</p>", "src": "src/dform.js", "line": 309, "children": []})

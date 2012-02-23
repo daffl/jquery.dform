@@ -1,1 +1,0 @@
-C({"name": "globals", "type": "page", "parents": ["plugin", "plugin"], "comment": "<p>Helper functions that can be used globally and are added to the jQuery object.</p>", "title": "Global helper functions", "src": "src/dform.js", "line": 165, "children": ["keyset", "withKeys", "withoutKeys", "getValueAt", "options"]})

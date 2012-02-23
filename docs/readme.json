@@ -1,1 +1,0 @@
-C({"name": "readme", "type": "page", "comment": "<!-- @page index Home -->\n\n<h1>jQuery dForm</h1>\n\n<p>The jQuery.dForm plugin allows you to create your HTML forms programmatically from JavaScript objects \n(and therefore JSON, too).</p>", "src": "readme.md", "children": []})
