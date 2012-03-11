@@ -7,26 +7,28 @@
 
 (function($)
 {
-	var _subscriptions = {};
-	var _types = {};
-	
-	function _addToObject(obj, data, fn)
-	{
-		if (typeof (data) == "string")
+	var _subscriptions = {},
+		_buffer = {},
+		_types = {},
+		each = $.each,
+		isArray = $.isArray,
+		_addToObject = function(obj, data, fn)
 		{
-			if (!$.isArray(obj[data])) {
-				obj[data] = [];
-			}
-			obj[data].push(fn);
-		} else if (typeof (data) == "object")
-		{
-			$.each(data, function(name, fn)
+			if (typeof (data) == "string")
 			{
-				_addToObject(obj, name, fn);
-			});
-		}
-	}
-	
+				if (!isArray(obj[data])) {
+					obj[data] = [];
+				}
+				obj[data].push(fn);
+			} else if (typeof (data) == "object")
+			{
+				each(data, function(name, fn)
+				{
+					_addToObject(obj, name, fn);
+				});
+			}
+		};
+
 	/**
 	 * @page plugin Plugin
 	 * @parent index
@@ -49,7 +51,7 @@
 			{
 				this.each(function() {
 					var element = this;
-					$.each(_subscriptions[name], function(i, sfn) {
+					each(_subscriptions[name], function(i, sfn) {
 						// run subscriber function with options
 						sfn.call($(element), options, type);
 					});
@@ -68,7 +70,7 @@
 			var type = options.type, scoper = this;
 			// Run preprocessing subscribers
 			this.runSubscription("[pre]", options, type);
-			$.each(options, function(name, sopts) {
+			each(options, function(name, sopts) {
 				$(scoper).runSubscription(name, sopts, type);
 			});
 			// Run post processing subscribers
@@ -169,7 +171,7 @@
 		keyset : function(object)
 		{
 			var keys = [];
-			$.each(object, function(key, value) {
+			each(object, function(key, value) {
 				keys.push(key);
 			});
 			return keys;
@@ -186,7 +188,7 @@
 		withKeys : function(object, keys)
 		{
 			var result = {};
-			$.each(keys, function(index, value) {
+			each(keys, function(index, value) {
 				if(object[value]) {
 					result[value] = object[value];
 				}
@@ -205,7 +207,7 @@
 		withoutKeys : function(object, keys)
 		{
 			var result = {};
-			$.each(object, function(index, value) {
+			each(object, function(index, value) {
 				if($.inArray(index, keys) == -1) {
 					result[index] = value;
 				}
@@ -227,7 +229,7 @@
 		 */
 		getValueAt : function(object, path)
 		{
-		    var elements = $.isArray(path) ? path : path.split('.');
+		    var elements = isArray(path) ? path : path.split('.');
 		    var result = object;
 		    for (var i = 0; i < elements.length; i++) 
 			{
@@ -401,7 +403,7 @@
 				// We don't need the type key in the options
 				var ops = $.withoutKeys(options, ["type"]);
 				// Run all type element builder functions called typename
-				$.each(_types[type], function(i, sfn) {
+				each(_types[type], function(i, sfn) {
 					element = sfn.call(element, ops);
 				});
 			}

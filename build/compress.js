@@ -3,10 +3,11 @@ steal.overwrite = true;
 
 steal('steal/build/pluginify').then(function(s)
 {
-	var version = '0.1.4';
+	var version = '0.2.0';
+	print('Building version ' + version);
 	s.build.pluginify('build',
 	{
-		out : 'jquery.dform-' + version + '.min.js',
+		out : 'dist/jquery.dform-' + version + '.min.js',
 		'nojquery' : 1,
 		'compress' : 1
 	});

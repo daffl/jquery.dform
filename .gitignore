@@ -4,4 +4,5 @@
 /.project
 /build/compiler**
 tmp/**
-docs/*.json
+docs**
+.idea
