@@ -1,9 +1,6 @@
-@page license License
-@parent index
-
 # License
 
-Copyright (C) 2012 [David Luecke](daff@neyeon.de), [http://daffl.github.com/jquery.dform]
+Copyright (C) 2012 [David Luecke](daff@neyeon.com), [http://daffl.github.com/jquery.dform]
 
 The MIT license:
 

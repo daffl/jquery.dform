@@ -646,6 +646,32 @@
 		var translated = _getTranslate(options);
 		if(translated) $(this).html(translated);
 	});
+
+	/**
+	 * Returns the value in an object based on the given dot separated
+	 * path or false if not found.
+	 *
+	 *	 $.getValueAt({ "test" : { "inner" : { "value" : "X" }}}, "test.inner.value")
+	 *	 // will return "X"
+	 *
+	 * @param {Object} object The object to traverse
+	 * @param {String|Array} path The path to use. It can be either a dot separated string or
+	 * an array of indexes.
+	 * @return {Object|Boolean} The objects value or false
+	 */
+	$.getValueAt = function (object, path)
+	{
+		var elements = isArray(path) ? path : path.split('.');
+		var result = object;
+		for (var i = 0; i < elements.length; i++) {
+			var current = elements[i];
+			if (!result[current])
+				return false;
+			result = result[current];
+		}
+		return result;
+	}
+
 	/**
 	 * subscriber: i18n-options
 	 * 
