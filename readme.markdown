@@ -64,6 +64,9 @@ this in the next section). A plugin call like this:
 	});
 
 Will append an empty `<span id="the-span"></span>` tag to the element with the id my-div.
+
+### Core types
+
 Besides standard HTML tags the following core types are supported:
 
 **container** `{ "type" : "container" }`
@@ -110,6 +113,10 @@ Creates an HTML 5 phone number input field
 
 **email** `{ "type" : "email" }`
 Creates an HTML 5 email input field
+
+### Add your own
+
+You can add your own types :)
 
 ## Subscribers
 
@@ -289,6 +296,10 @@ Generates:
 **url**
 TODO
 
+### Add your own
+
+You can add your own subscribers
+
 ### Special subscribers
 
 Currently there are two types of special subscribers
@@ -299,8 +310,6 @@ Functions registered with this name will be called before any processing occurs 
 **\[post\]** *{Object}*
 Functions registered with this name will be called after all processing is finished and also get the original
 options passed.
-
-## Extend the plugin
 
 ## Plugin methods
 
@@ -313,62 +322,68 @@ ajax
 
 ## jQuery UI
 
-## Form plugin
+### Types
 
-## Validation plugin
+### Subscribers
 
-## jQuery Globalize
+## Other plugins
+
+### jQuery form plugin
+
+### Form validation plugin
+
+### jQuery Globalize
 
 ## Changelog
 
-### 0.2.0
+**0.2.0**
 
-* Full QUnit test suite
-* Improved documentation
-* Changed API
-* Added deferred loading of subscribers
+Full QUnit test suite
+Improved documentation
+Changed API
+Added deferred loading of subscribers
 
-### 0.1.4
+**0.1.4**
 
-* Merged pull request [#30](https://github.com/daffl/jquery.dform/pull/30): Wrap 'type' as an array so it doesn't break jQuery 1.7.1's $.inArray() when running in IE8
-* Added first QUnit tests
-* Fixed issue #22 with jQuery UI accordion causing problems with captions
-* Removed placeholder plugin. Use HTML 5 placeholders or the jQuery [placeholder plugin](https://github.com/danielstocks/jQuery-Placeholder)
-* Updated documentation engine to DocumentJS and build system to StealJS
-* Merged pull request [#19](https://github.com/daffl/jquery.dform/pull/19) and [#20](https://github.com/daffl/jquery.dform/pull/20), support to set up a validate options for validate() in "form" type
-* Merged pull request [#26](https://github.com/daffl/jquery.dform/pull/26) to support HTML 5 input types
-* Added simple getting started example
+Merged pull request [#30](https://github.com/daffl/jquery.dform/pull/30): Wrap 'type' as an array so it doesn't break jQuery 1.7.1's $.inArray() when running in IE8
+Added first QUnit tests
+Fixed issue #22 with jQuery UI accordion causing problems with captions
+Removed placeholder plugin. Use HTML 5 placeholders or the jQuery [placeholder plugin](https://github.com/danielstocks/jQuery-Placeholder)
+Updated documentation engine to DocumentJS and build system to StealJS
+Merged pull request [#19](https://github.com/daffl/jquery.dform/pull/19) and [#20](https://github.com/daffl/jquery.dform/pull/20), support to set up a validate options for validate() in "form" type
+Merged pull request [#26](https://github.com/daffl/jquery.dform/pull/26) to support HTML 5 input types
+Added simple getting started example
 
-### 0.1.3
+**0.1.3**
 
-* Created some public [JSFiddles for trying the plugin](http://jsfiddle.net/user/Daff/fiddles)
-* Created [jQuery.dForm Google Group](http://groups.google.com/group/jquery-dform)
-* Added <form> type, unified <buildForm> usage
-* Fixed [issue #14](https://github.com/daffl/jquery.dform/issues/closed#issue/14), setting type attribute properly in IE
-* Added <getValueAt>
-* Added <i18n> support using the [jQuery globalize](https://github.com/jquery/jquery-global) plugin
-* Fixed minor bugs in dform plugins
+Created some public [JSFiddles for trying the plugin](http://jsfiddle.net/user/Daff/fiddles)
+Created [jQuery.dForm Google Group](http://groups.google.com/group/jquery-dform)
+Added <form> type, unified <buildForm> usage
+Fixed [issue #14](https://github.com/daffl/jquery.dform/issues/closed#issue/14), setting type attribute properly in IE
+Added <getValueAt>
+Added <i18n> support using the [jQuery globalize](https://github.com/jquery/jquery-global) plugin
+Fixed minor bugs in dform plugins
 
-### 0.1.2
+**0.1.2**
 
-* Added <dformAttr> to add HTML attributes to elements
-* Moved <placeholder> into a separate plugin
-* Added <reset> button type
-* Added dynamic form definition loading by passing a URL to the <buildForm> plugin function
-* Added <ajax> subscriber using the <jQuery form plugin at http://jquery.malsup.com/form>
-* Added the <defaultType> method to create any HTML element without having to register a type
-* Improved build process
+Added <dformAttr> to add HTML attributes to elements
+Moved <placeholder> into a separate plugin
+Added <reset> button type
+Added dynamic form definition loading by passing a URL to the <buildForm> plugin function
+Added <ajax> subscriber using the <jQuery form plugin at http://jquery.malsup.com/form>
+Added the <defaultType> method to create any HTML element without having to register a type
+Improved build process
 
-### 0.1.1
+**0.1.1**
 
-* Separated type and subscriber functions
-* Added types <file>, <container>, <hidden>, <accordion>, <checkboxes> and <radiobuttons>
-* Added auto class generation based on element type
-* Finished jQuery UI <accordion> and unified with <tabs> usage
-* Switched documentation to <Natualdocs at http://naturaldocs.org>
-* Added build.xml for generating documentation and minifying JavaScript
+Separated type and subscriber functions
+Added types <file>, <container>, <hidden>, <accordion>, <checkboxes> and <radiobuttons>
+Added auto class generation based on element type
+Finished jQuery UI <accordion> and unified with <tabs> usage
+Switched documentation to <Natualdocs at http://naturaldocs.org>
+Added build.xml for generating documentation and minifying JavaScript
 
-### 0.1
+**0.1**
 
 * Initial release
 
