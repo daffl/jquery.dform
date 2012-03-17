@@ -5,7 +5,7 @@ __Some things you can do:__
 
 * use JavaScript and JSON instead of HTML markup since your page doesn't run without JS anyway
 * naturally generate JavaScript enhanced markup with your own extensions and custom types
-* have an easy way to include jQuery UI elements and JavaScript validation (both supported out of the box)
+* have an easy way to include jQuery UI elements and other popular jQuery plugins (some supported out of the box)
 * scaffold forms from business objects of your server side framework
 
 ## Get started:
@@ -55,7 +55,7 @@ __Learn more:__
 
 Type Generators are functions that return a new jQuery DOM object for a specific type. If there is no Type Generator
 with a given name, a basic HTML element with that tag name will be created. Every other key in the JavaScript or JSON object
-you pass will be used as an HTML attribute. An exception is, if there is a Subscriber registered for that ke (more about
+you pass will be used as an HTML attribute. An exception is, if there is a Subscriber registered for that key (more about
 this in the next section). A plugin call like this:
 
 	$('#my-div').dform({
@@ -63,55 +63,55 @@ this in the next section). A plugin call like this:
 		id : "the-span"
 	});
 
-Will append an empty `<span id="the-span"></span>` tag to the element with the id my-div.
+Will append an empty `<span id="the-span"></span>` tag to the selected element.
 
 ### Core types
 
 Besides standard HTML tags the following core types are supported:
 
-**container** `{ "type" : "container" }`
-Creates a \<div\> container (you can also use `{ "type" : "div" }`)
+**container** `{ "type" : "container" }`<br />
+Creates a `<div>` container (you can also use `{ "type" : "div" }`)
 
-**text** `{ "type" : "text" }`
+**text** `{ "type" : "text" }`<br />
 Creates a text input field
 
-**password** `{ "type" : "password" }`
+**password** `{ "type" : "password" }`<br />
 Creates a password input field
 
-**submit** `{ "type" : "submit" }`
+**submit** `{ "type" : "submit" }`<br />
 Creates a submit button input element
 
-**reset** `{ "type" : "reset" }`
+**reset** `{ "type" : "reset" }`<br />
 Creates a reset button input element
 
-**hidden** `{ "type" : "hidden" }`
+**hidden** `{ "type" : "hidden" }`<br />
 Creates a hidden input element
 
-**file** `{ "type" : "file" }`
+**file** `{ "type" : "file" }`<br />
 Create a file upload field
 
-**radio** `{ "type" : "radio" }`
+**radio** `{ "type" : "radio" }`<br />
 Creates a radio button
 
-**checkbox** `{ "type" : "checkbox" }`
+**checkbox** `{ "type" : "checkbox" }`<br />
 Creates a checkbox
 
-**radiobuttons** `{ "type" : "radiobuttons" }`
+**radiobuttons** `{ "type" : "radiobuttons" }`<br />
 Creates a group of radiobuttons (uses options subscriber explained below)
 
-**checkboxes** `{ "type" : "checkboxes" }`
+**checkboxes** `{ "type" : "checkboxes" }`<br />
 Creates a group of checkboxes
 
-**number** `{ "type" : "number" }`
+**number** `{ "type" : "number" }`<br />
 Creates an HTML 5 number input field
 
-**url** `{ "type" : "url" }`
+**url** `{ "type" : "url" }`<br />
 Creates an HTML 5 url input field
 
-**tel** `{ "type" : "tel" }`
+**tel** `{ "type" : "tel" }`<br />
 Creates an HTML 5 phone number input field
 
-**email** `{ "type" : "email" }`
+**email** `{ "type" : "email" }`<br />
 Creates an HTML 5 email input field
 
 ### Add your own
@@ -126,7 +126,7 @@ have been registered for when traversing the dForm object.
 
 ### Core subscribers
 
-**type** *{String}*
+**type** *{String}*<br />
 Besides looking up the correct Type Generator it also adds a dform specific class to the element using
 *$.dform.options.prefix* (*ui-dform-* by default) and the type name.
 
@@ -138,7 +138,7 @@ Generates:
 
 	<input type="text" class="ui-dform-text" />
 
-**class** *{String}*
+**class** *{String}*<br />
 Adds a class to the current element (instead of setting the attribute)
 
 	{
@@ -150,7 +150,7 @@ Generates:
 
 	<div class="ui-dform-div the-div container"></div>
 
-**html/elements** *{String|Array|Object}*
+**html/elements** *{String|Array|Object}*<br />
 Based on the options it either sets the HTML string content of the current element or appends one or an array
 of dForm objects (the elements subscriber does the same but is kept for backwards compatibility).
 
@@ -191,7 +191,7 @@ Generates:
 		</div>
 	</div>
 
-**value** *{String|Function}*
+**value** *{String|Function}*<br />
 Sets the value of the element using .val()
 
 	{
@@ -203,7 +203,7 @@ Generates:
 
 	<input type="text" value="Text content" />
 
-**css** {Object}
+**css** {Object}<br />
 Sets CSS properties on an element:
 
 	{
@@ -218,7 +218,7 @@ Generates:
 
 	<div class="ui-dform-div" style="background-color: #FF0000; display: none;"></div>
 
-**options** *{Object}*
+**options** *{Object}*<br />
 Generates a list of options from a value to text (or dForm Object) mapping for elements of type *select*, *radiobuttons*
 or *checkboxes*.
 
@@ -261,7 +261,7 @@ Generates:
 
 	// TODO
 
-**caption** *{String|Object}*
+**caption** *{String|Object}*<br />
 Adds a caption to the element. The type used for it depends on the element type:
 * A *legend* on *fieldset* elements
 * A *label* next to *radio* or *checkbox* elements
@@ -293,7 +293,7 @@ Generates:
 		<legend type="ui-dform-legend">Address</label>
 	</fieldset>
 
-**url**
+**url**<br />
 TODO
 
 ### Add your own
@@ -304,10 +304,10 @@ You can add your own subscribers
 
 Currently there are two types of special subscribers
 
-**\[pre\]** *{Object}*
+**\[pre\]** *{Object}*<br />
 Functions registered with this name will be called before any processing occurs and get the original options passed.
 
-**\[post\]** *{Object}*
+**\[post\]** *{Object}*<br />
 Functions registered with this name will be called after all processing is finished and also get the original
 options passed.
 
@@ -315,10 +315,10 @@ options passed.
 
 Default
 
-run
-append
-attr({Object})
-ajax
+run<br />
+append<br />
+attr({Object})<br />
+ajax<br />
 
 ## jQuery UI
 
@@ -338,54 +338,54 @@ ajax
 
 **0.2.0**
 
-Full QUnit test suite
-Improved documentation
-Changed API
-Added deferred loading of subscribers
+- Full QUnit test suite
+- Improved documentation
+- Changed API
+- Added deferred loading of subscribers
 
 **0.1.4**
 
-Merged pull request [#30](https://github.com/daffl/jquery.dform/pull/30): Wrap 'type' as an array so it doesn't break jQuery 1.7.1's $.inArray() when running in IE8
-Added first QUnit tests
-Fixed issue #22 with jQuery UI accordion causing problems with captions
-Removed placeholder plugin. Use HTML 5 placeholders or the jQuery [placeholder plugin](https://github.com/danielstocks/jQuery-Placeholder)
-Updated documentation engine to DocumentJS and build system to StealJS
-Merged pull request [#19](https://github.com/daffl/jquery.dform/pull/19) and [#20](https://github.com/daffl/jquery.dform/pull/20), support to set up a validate options for validate() in "form" type
-Merged pull request [#26](https://github.com/daffl/jquery.dform/pull/26) to support HTML 5 input types
-Added simple getting started example
+- Merged pull request [#30](https://github.com/daffl/jquery.dform/pull/30): Wrap 'type' as an array so it doesn't break jQuery 1.7.1's $.inArray() when running in IE8
+- Added first QUnit tests
+- Fixed issue #22 with jQuery UI accordion causing problems with captions
+- Removed placeholder plugin. Use HTML 5 placeholders or the jQuery [placeholder plugin](https://github.com/danielstocks/jQuery-Placeholder)
+- Updated documentation engine to DocumentJS and build system to StealJS
+- Merged pull request [#19](https://github.com/daffl/jquery.dform/pull/19) and [#20](https://github.com/daffl/jquery.dform/pull/20), support to set up a validate options for validate() in "form" type
+- Merged pull request [#26](https://github.com/daffl/jquery.dform/pull/26) to support HTML 5 input types
+- Added simple getting started example
 
 **0.1.3**
 
-Created some public [JSFiddles for trying the plugin](http://jsfiddle.net/user/Daff/fiddles)
-Created [jQuery.dForm Google Group](http://groups.google.com/group/jquery-dform)
-Added <form> type, unified <buildForm> usage
-Fixed [issue #14](https://github.com/daffl/jquery.dform/issues/closed#issue/14), setting type attribute properly in IE
-Added <getValueAt>
-Added <i18n> support using the [jQuery globalize](https://github.com/jquery/jquery-global) plugin
-Fixed minor bugs in dform plugins
+- Created some public [JSFiddles for trying the plugin](http://jsfiddle.net/user/Daff/fiddles)
+- Created [jQuery.dForm Google Group](http://groups.google.com/group/jquery-dform)
+- Added *form* type, unified *buildForm* usage
+- Fixed [issue #14](https://github.com/daffl/jquery.dform/issues/closed#issue/14), setting type attribute properly in IE
+- Added *getValueAt*
+- Added *i18n* support using the [jQuery globalize](https://github.com/jquery/jquery-global) plugin
+- Fixed minor bugs in dform plugins
 
 **0.1.2**
 
-Added <dformAttr> to add HTML attributes to elements
-Moved <placeholder> into a separate plugin
-Added <reset> button type
-Added dynamic form definition loading by passing a URL to the <buildForm> plugin function
-Added <ajax> subscriber using the <jQuery form plugin at http://jquery.malsup.com/form>
-Added the <defaultType> method to create any HTML element without having to register a type
-Improved build process
+- Added *dformAttr* to add HTML attributes to elements
+- Moved *placeholder* into a separate plugin
+- Added *reset* button type
+- Added dynamic form definition loading by passing a URL to the *buildForm* plugin function
+- Added *ajax* subscriber using the *jQuery form plugin at http://jquery.malsup.com/form*
+- Added the *defaultType* method to create any HTML element without having to register a type
+- Improved build process
 
 **0.1.1**
 
-Separated type and subscriber functions
-Added types <file>, <container>, <hidden>, <accordion>, <checkboxes> and <radiobuttons>
-Added auto class generation based on element type
-Finished jQuery UI <accordion> and unified with <tabs> usage
-Switched documentation to <Natualdocs at http://naturaldocs.org>
-Added build.xml for generating documentation and minifying JavaScript
+- Separated type and subscriber functions
+- Added types *file*, *container*, *hidden*, *accordion*, *checkboxes* and *radiobuttons*
+- Added auto class generation based on element type
+- Finished jQuery UI *accordion* and unified with *tabs* usage
+- Switched documentation to *Natualdocs at http://naturaldocs.org*
+- Added build.xml for generating documentation and minifying JavaScript
 
 **0.1**
 
-* Initial release
+- Initial release
 
 ## License
 
