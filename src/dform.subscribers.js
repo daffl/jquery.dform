@@ -120,7 +120,6 @@
 					{
 						var option = { type : 'option', value : value };
 						if (typeof (content) === "string") {
-							option.value = value;
 							option.html = content;
 						}
 						if (typeof (content) === "object") {
