@@ -4,7 +4,7 @@ with a focus on HTML forms.
 __Some things you can do:__
 
 * use JavaScript and JSON instead of HTML markup since your page doesn't run without JS anyway
-* generate JavaScript enhanced markup with your own extensions and custom types
+* naturally generate JavaScript enhanced markup with your own extensions and custom types
 * have an easy way to include jQuery UI elements and JavaScript validation (both supported out of the box)
 * scaffold forms from business objects of your server side framework
 
@@ -66,21 +66,36 @@ this in the next section). A plugin call like this:
 Will append an empty \<span id="the-span"\> tag to the element with the id my-div.
 Besides standard HTML tags the following core types are supported:
 
-* __container__: Creates a \<div\> container (you can also use { type : 'div' })
-* __text__: Creates a text input field
-* __password__: Creates a password input field
-* __submit__: Creates a submit button input element
-* __reset__: Creates a reset button input element
-* __hidden__: Creates a hidden input element
-* __file__: Create a file upload field
-* __radio__: Creates a radio button
-* __checkbox__: Creates a checkbox
-* __radiobuttons__: Creates a group of radiobuttons (uses options subscriber explained below)
-* __checkboxes__: Creates a group of checkboxes
-* __number__: Creates an HTML 5 number input field
-* __url__: Creates an HTML 5 url input field
-* __tel__: Creates an HTML 5 phone number input field
-* __email__: Creates an HTML 5 email input field
+**container** `{ type : 'container' }`
+Creates a \<div\> container (you can also use { type : 'div' })
+
+**text** Creates a text input field
+
+**password**: Creates a password input field
+
+**submit**: Creates a submit button input element
+
+**reset**: Creates a reset button input element
+
+**hidden**: Creates a hidden input element\
+
+**file**: Create a file upload field
+
+**radio**: Creates a radio button
+
+**checkbox**: Creates a checkbox
+
+**radiobuttons**: Creates a group of radiobuttons (uses options subscriber explained below)
+
+**checkboxes**: Creates a group of checkboxes
+
+**number**: Creates an HTML 5 number input field
+
+**url**: Creates an HTML 5 url input field
+
+**tel**: Creates an HTML 5 phone number input field
+
+**email**: Creates an HTML 5 email input field
 
 ## Subscribers
 
@@ -129,7 +144,16 @@ Which will do the following:
 * Run the __value__ subscriber which sets the value of this form element
 * Run the __caption__ subscriber which adds a label before the textfield
 
-# Plugin support
+## Extend the plugin
+
+## Plugin methods
+
+Default
+
+run
+append
+attr
+ajax
 
 ## jQuery UI
 
