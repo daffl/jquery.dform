@@ -6,20 +6,32 @@
  */
 (function ($)
 {
-	var _element = function (tag, excludes)
+	var each = $.each,
+		_element = function (tag, excludes)
 		{
-			// Currying :)
 			return function (ops)
 			{
 				return $(tag).dform('attr', ops, excludes);
 			};
 		},
-		each = $.each;
+		_html = function (options, type)
+		{
+			var self = this;
+			if($.isPlainObject(options)) {
+				self.dform('append', options);
+			} else if($.isArray(options)) {
+				each(options, function (index, nested)
+				{
+					self.dform('append', nested);
+				});
+			} else {
+				self.html(options);
+			}
+		};
 
 	$.dform.addType(
 		{
 			container : _element("<div>"),
-			form : _element('<form>'),
 			text : _element('<input type="text" />'),
 			password : _element('<input type="password" />'),
 			submit : _element('<input type="submit" />'),
@@ -56,10 +68,7 @@
 			 * @param options The html content to set as a string
 			 * @param type The type of the *this* element
 			 */
-			html : function (options, type)
-			{
-				this.html(options);
-			},
+			html : _html,
 
 			/**
 			 * Recursively appends subelements to the current form element.
@@ -70,18 +79,7 @@
 			 *	 is the options for a subelement
 			 * @param type The type of the *this* element
 			 */
-			elements : function (options, type)
-			{
-				var scoper = $(this);
-				each(options, function (index, nested)
-				{
-					var values = nested;
-					if (typeof (index) == "string") {
-						values["name"] = name;
-					}
-					scoper.dform('append', values);
-				});
-			},
+			elements : _html,
 
 			/**
 			 * Sets the value of the current element.
@@ -114,8 +112,8 @@
 			 */
 			options : function (options, type)
 			{
-				var scoper = $(this);
-				if (type == "select" || type == "optgroup") // Options for select elements
+				var self = this;
+				if (type === "select" || type === "optgroup") // Options for select elements
 				{
 					// TODO optgroup
 					each(options, function (value, content)
@@ -125,24 +123,24 @@
 							option.value = value;
 							option.html = content;
 						}
-						if (typeof (content) == "object") {
+						if (typeof (content) === "object") {
 							option = $.extend(option, content);
 						}
-						$(scoper).dform('append', option);
+						self.dform('append', option);
 					});
 				}
-				else if (type == "checkboxes" || type == "radiobuttons") {
+				else if (type === "checkboxes" || type === "radiobuttons") {
 					// Options for checkbox and radiobutton lists
-					var scoper = this;
 					each(options, function (value, content)
 					{
-						var boxoptions = ((type == "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
-						if (typeof(content) == "string")
+						var boxoptions = ((type === "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
+						if (typeof(content) === "string") {
 							boxoptions["caption"] = content;
-						else
+						} else {
 							$.extend(boxoptions, content);
+						}
 						boxoptions["value"] = value;
-						$(scoper).dform('append', boxoptions);
+						self.dform('append', boxoptions);
 					});
 				}
 			},
@@ -162,7 +160,7 @@
 			caption : function (options, type)
 			{
 				var ops = {};
-				if (typeof (options) == "string") {
+				if (typeof (options) === "string") {
 					ops["html"] = options;
 				} else {
 					$.extend(ops, options);
@@ -171,22 +169,20 @@
 				if (type == "fieldset") {
 					// Labels for fieldsets are legend
 					ops.type = "legend";
-					var legend = $.dform.createElement(ops);
-					this.prepend(legend);
+					this.prepend($.dform.createElement(ops));
 					$(legend).dform('run', ops);
-				}
-				else {
+				} else {
 					ops.type = "label";
 					if (this.attr("id")) {
 						ops["for"] = this.attr("id");
 					}
-					var label = $.dform.createElement(ops);
-					if (type == "checkbox" || type == "radio") {
+					var label = $($.dform.createElement(ops));
+					if (type === "checkbox" || type === "radio") {
 						this.parent().append($(label));
 					} else {
-						$(label).insertBefore($(this));
+						label.insertBefore(this);
 					}
-					$(label).dform('run', ops);
+					label.dform('run', ops);
 				}
 			},
 
@@ -206,7 +202,7 @@
 			 */
 			type : function (options, type)
 			{
-				if($.dform.options.prefix) {
+				if ($.dform.options.prefix) {
 					this.addClass($.dform.options.prefix + type);
 				}
 			},
@@ -229,8 +225,8 @@
 			 */
 			"[post]" : function (options, type)
 			{
-				if (type == "checkboxes" || type == "radiobuttons") {
-					var boxtype = ((type == "checkboxes") ? "checkbox" : "radio");
+				if (type === "checkboxes" || type === "radiobuttons") {
+					var boxtype = ((type === "checkboxes") ? "checkbox" : "radio");
 					this.children("[type=" + boxtype + "]").each(function ()
 					{
 						$(this).attr("name", options.name);

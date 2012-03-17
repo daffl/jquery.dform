@@ -82,7 +82,7 @@
 	 * 	type - The jQuery UI type
 	 * 	options - The options to evaluate
 	 */
-	function _getOptions(type, options)
+	var getOptions = function(type, options)
 	{
 		var keys = $.keyset($.ui[type]["prototype"]["options"]);
 		return $.withKeys(options, keys);
@@ -109,7 +109,7 @@
 	$.dform.addTypeIf($.isFunction($.fn.progressbar), "progressbar", 
 		function(options)
 		{
-			return $("<div>").dformAttr(options).progressbar(_getOptions("progressbar", options));
+			return $("<div>").dform('attr', options).progressbar(_getOptions("progressbar", options));
 		});
 	
 	/**
@@ -134,7 +134,7 @@
 	$.dform.addTypeIf($.isFunction($.fn.slider), "slider", 
 		function(options)
 		{
-			return $("<div>").dformAttr(options).slider(_getOptions("slider", options));
+			return $("<div>").dform('attr', options).slider(_getOptions("slider", options));
 		});
 
 	/**
@@ -180,7 +180,7 @@
 	$.dform.addTypeIf($.isFunction($.fn.accordion), "accordion",
 		function(options)
 		{
-			return $("<div>").dformAttr(options);
+			return $("<div>").dform('attr', options);
 		});
 
 	/**
@@ -232,7 +232,7 @@
 	$.dform.addTypeIf($.isFunction($.fn.tabs),
 		"tabs", function(options)
 		{
-			return $("<div>").dformAttr(options);
+			return $("<div>").dform('attr', options);
 		});
 	
 	/**
@@ -274,7 +274,7 @@
 				$.each(options, function(index, options) {
 					var id = options.id ? options.id : index;
 					$.extend(options, { "type" : "container", "id" : id });
-					$(scoper).formElement(options);
+					$(scoper).dform('append', options);
 					var label = $(scoper).children("div:last").prev();
 					$(label).wrapInner($("<a>").attr("href", "#" + id));
 					$(ul).append($("<li>").wrapInner(label));
@@ -573,7 +573,7 @@
 	$.dform.subscribeIf($.isFunction($.fn.ajaxForm), "ajax",
 		function(options, type)
 		{
-			if(type == "form")
+			if(type === "form")
 			{
 				this.ajaxForm(options);
 			}
@@ -688,7 +688,7 @@
 			$(this).html('');
 			var optlist = _getTranslate(options);
 			if(optlist) {
-				$(this).runSubscription("options", optlist, type);
+				$(this).dform('run', 'options', optlist, type);
 			}
 		}
 	});

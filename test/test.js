@@ -148,10 +148,10 @@ $(document).ready(function ()
 		equal(text.css('background-color'), 'red', 'Css set');
 	});
 
-	test("Subscriber: elements", function() {
+	test("Subscriber: elements and html", function() {
 		var form = $('<form>').dform({
 			type : 'form',
-			elements : [
+			html : [
 				{
 					type : 'div',
 					class : 'div-1'
@@ -159,11 +159,22 @@ $(document).ready(function ()
 				{
 					type : 'div',
 					class : 'div-2'
-				},
+				}
 			]
+		}), form2 = $('<form>').dform({
+			type : 'form',
+			html : {
+				type : 'div',
+				class : 'div-1'
+			}
+		}), form3 = $('<form>').dform({
+			type : 'form',
+			html : 'test html'
 		});
 		ok(form.find('.div-1').length, 'Div 1 added');
 		ok(form.find('.div-2').length, 'Div 2 added');
+		ok(form2.find('.div-1').length, 'Div 1 added');
+		ok(form3.html(), 'test html', 'Html content set');
 	});
 
 	test("Subscriber: caption", function() {

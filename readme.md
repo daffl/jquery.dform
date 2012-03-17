@@ -1,85 +1,133 @@
-The jQuery.dForm plugin allows you to create your HTML forms programmatically as JavaScript objects or
-as [JSON](http://json.org). Let the browser do the work and generate JavaScript enhanced forms without hassle. 
+The jQuery.dForm plugin generates HTML markup from JavaScript objects and [JSON](http://json.org)
+with a focus on HTML forms.
 
-### You should try this plugin if you want to
+__Some things you can do:__
 
-* write JavaScript instead of HTML markup since your page doesn't run without JS anyway
-* manage all your form related jQuery plugins in a unified way
-* have an easy way to include jQuery UI elements and JavaScript validation
+* use JavaScript and JSON instead of HTML markup since your page doesn't run without JS anyway
+* generate JavaScript enhanced markup with your own extensions and custom types
+* have an easy way to include jQuery UI elements and JavaScript validation (both supported out of the box)
 * scaffold forms from business objects of your server side framework
 
 ## Get started:
 
-All examples are hosted on [JSFiddle](http://jsfiddle.net). Feel free to play around, fork and comment:
+[Download](http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.4.tar.gz)
+the latest version 0.2.0 (6 Kb minified)
 
-<iframe style="width: 90%; height: 450px" src="http://jsfiddle.net/Daff/yREkc/embedded/js,html,result" 
-	allowfullscreen="allowfullscreen" frameborder="0">
-</iframe>
+Then try this JavaScript snipped:
 
-## How to get it:
+	$("#myform").dform({
+	    "action" : "index.html",
+	    "method" : "get",
+	    "html" :
+	    [
+	        {
+	            "type" : "p",
+	            "html" : "You must login"
+	        },
+	        {
+	            "name" : "username",
+	            "id" : "txt-username",
+	            "caption" : "Username",
+	            "type" : "text",
+	            "placeholder" : "E.g. user@example.com"
+	        },
+	        {
+	            "name" : "password",
+	            "caption" : "Password",
+	            "type" : "password"
+	        },
+	        {
+	            "type" : "submit",
+	            "value" : "Login"
+	        }
+	    ]
+	});
 
-[Download](http://github.com/downloads/daffl/jquery.dform/jquery.dform-0.1.4.tar.gz) the latest package (0.1.4(
+__Learn more:__
 
-Clone the current master on [GitHub](http://github.com/daffl/jquery.dform/)
-
-
-## How to get involved:
-
+* Check out the JSFiddle examples or the get started page for more examples
 * Visit the [jQuery.dForm Google Group](http://groups.google.com/group/jquery-dform)
-* Fork the project on [GitHub](http://github.com/daffl/jZquery.dform/)
+* Fork the project on [GitHub](http://github.com/daffl/jquery.dform/)
 * Follow [@daffl](http://twitter.com/daffl) on Twitter
+* Read on in this documentation
+
+## Types
+
+Type Generators are functions that return a new jQuery DOM object for a specific type. If there is no Type Generator
+with a given name, a basic HTML element with that tag name will be created. Every other key in the JavaScript or JSON object
+you pass will be used as an HTML attribute. An exception is, if there is a Subscriber registered for that ke (more about
+this in the next section). A plugin call like this:
+
+	$('#my-div').dform({
+		type : "span",
+		id : "the-span"
+	});
+
+Will append an empty \<span id="the-span"\> tag to the element with the id my-div.
+Besides standard HTML tags the following core types are supported:
+
+* __container__: Creates a \<div\> container (you can also use { type : 'div' })
+* __text__: Creates a text input field
+* __password__: Creates a password input field
+* __submit__: Creates a submit button input element
+* __reset__: Creates a reset button input element
+* __hidden__: Creates a hidden input element
+* __file__: Create a file upload field
+* __radio__: Creates a radio button
+* __checkbox__: Creates a checkbox
+* __radiobuttons__: Creates a group of radiobuttons (uses options subscriber explained below)
+* __checkboxes__: Creates a group of checkboxes
+* __number__: Creates an HTML 5 number input field
+* __url__: Creates an HTML 5 url input field
+* __tel__: Creates an HTML 5 phone number input field
+* __email__: Creates an HTML 5 email input field
+
+## Subscribers
+
+Not everything can be solved using a custom type. Adding a class for example doesn't need to be implemented
+every time and this is where Subscribers come in. Subscribers are functions that will be called for the key they
+have been registered for when traversing the object that has been passed to the plugin.
+
+### Core subscribers
+
+* class:
+* html:
+* elements:
+* value:
+* css:
+* options:
+* caption:
+* url:
+* type:
+
+### Special subscribers
+
+Currently there are two types of special subscribers
+
+* __\[pre\]__ Functions registered with this name will be called before any processing occurs.
+* __\[post\]__ Functions registered with this name will be called after all processing is finished.
 
 
+### Processing example:
 
+Here is a quick example walkthrough:
 
-# Types
+	$("#myform").dform({
+		"name" : "textfield",
+	    "type" : "text",
+		"id" : "testid",
+		"value" : "Testvalue",
+		"caption" : "Label for textfield"
+	});
 
-# Subscribers
+Which will do the following:
 
- * Subscribers are the core concept of the jQuery.dForm.
- *
- * They are functions, that will be called when traversing the options
- * passed to the plugin.
- * You can use the already existing subscribers as well as register your own.
- *
- * The plugin has three different types of subscribers
- *
- * Types - For creating a new element of the given type.
- * Subscribers - Which will be called when the name they are registered with
- * appears in the options given to the plugin and after the type element has been added to the DOM.
- * Special subscribers - Will be called on special events.
- *
- * Currently there are two types of special subscribers
- * * [pre] - Functions registered with this name will be called before any processing occurs.
- * * [post] - Functions registered with this name will be called after all processing is finished.
- *
- * Example:
- * (start code)
- * $("#myform").buildForm({
- *		 "name" : "textfield",
- *		 "type" : "text",
- *	  "id" : "testid",
- *	  "value" : "Testvalue",
- *	  "caption" : "Label for textfield"
- * });
- * (end)
- *
- * The above JavaScript snippet will do the following
- *
- * - Look for a type subscriber called <text>, which creates an input field with the type text or, if
- * there is no matching type call the <defaultType> function which creates a HTML tag of the given type.
- * - Add all attributes as HTML attributes to the input element that don't have a
- * subscriber registered (which are name and id)
- * - Add the new element to the DOM (append to #myform).
- * - Run the <type> subscriber which adds the auto generated class name ui-dform-text to the input field
- * - Run the <value> subscriber which sets the value of this form element
- * - Run the <caption> subscriber which adds a label before the textfield
- *
- * Read in the <Extensions> chapter, how you can extend the dForm Plugin with your own
- * types and subscribers.
- *
- * This page will list the basic <Types> and <Subscribers> that are
- * supported by the plugin as well as examples for using them.
+* Look for a Type Generator with the name __text__, which creates an input field with the type text
+* Add the HTML attributes to the input element that don't have a subscriber registered (which are __name__ and __id__)
+* Add the new element to the DOM (append to #myform)
+* Run the __type__ subscriber which adds the auto generated class name _ui-dform-text_ to the input field
+* Run the __value__ subscriber which sets the value of this form element
+* Run the __caption__ subscriber which adds a label before the textfield
 
 # Plugin support
 
@@ -90,7 +138,6 @@ Clone the current master on [GitHub](http://github.com/daffl/jquery.dform/)
 ## Validation plugin
 
 ## jQuery Globalize
-
 
 # Changelog
 
