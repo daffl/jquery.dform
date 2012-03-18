@@ -1,66 +1,8 @@
 /*
  * jQuery dform plugin
- * Copyright (C) 2011 David Luecke <daff@neyeon.de>
+ * Copyright (C) 2012 David Luecke <daff@neyeon.com>, [http://daffl.github.com/jquery.dform]
  * 
  * Licensed under the MIT license
- */
-
-/**
- * file: Extension
- * 
- * This page covers how to extend the dform plugin of your own types
- * and subscribers as well as providing a documentation for form related
- * jQuery plugins that are already supported out of the box.
- * 
- * Adding your own:
- * 
- * The main difference between types and element subscribers is,
- * that element subscribers get the element passed which is already added into the DOM.
- * So you will have to decide if you own subscriber will create a new element or extend an existing one.
- * In the following hands on example we will create a custom hello world button and a subscriber that will
- * alert some text when the element was clicked.
- * 
- * (start code)
- *	$.dform.addType("hellobutton", function(options) {
- *		// Return a new button element that has all options that
- * 		// don't have a registered subscriber as attributes 
- *		return $("<button>").dformAttr(options).html("Say hello");
- *	 });
- *	
- *	$.dform.subscribe("alert", function(options, type) {
- *		if(type == "hellobutton")
- *		{
- *			this.click(function() {
- *				alert(options);
- *			});
- *		}
- *	 });
- *	
- *	// Use it like this
- *	$("#mydiv").buildForm(
- *	{
- *		"type" : "hellobutton",
- *		"alert" : "Hello world!"
- *	});
- * (end)
- * 
- * Supported plugins:
- * 
- * There are many great form related jQuery Plugins out there. The extension package
- * provides out of the box support for some of these plugins.
- * 
- * Currently supported plugins:
- * - Built in <dForm plugins> 
- * - <jQuery UI>
- * - The <Validation Plugin>
- * - The <jQuery Form> plugin through the <ajax> subscriber
- * 
- * *NOTE* : The corresponding subscribers will only be added if the plugin or the part of the plugin
- * (e.g. with jQuery UI custom builds that don't include all the widgets) 
- * is actually available, so make sure, these plugins are loaded *before* the dform plugin. 
- * 
- * Author:
- * David Luecke (daff@neyeon.de)
  */
 (function($)
 {
@@ -659,17 +601,19 @@
 	 * an array of indexes.
 	 * @return {Object|Boolean} The objects value or false
 	 */
-	$.getValueAt = function (object, path)
-	{
-		var elements = isArray(path) ? path : path.split('.');
-		var result = object;
-		for (var i = 0; i < elements.length; i++) {
-			var current = elements[i];
-			if (!result[current])
-				return false;
-			result = result[current];
+	if($.global) {
+		$.getValueAt = function (object, path)
+		{
+			var elements = isArray(path) ? path : path.split('.');
+			var result = object;
+			for (var i = 0; i < elements.length; i++) {
+				var current = elements[i];
+				if (!result[current])
+					return false;
+				result = result[current];
+			}
+			return result;
 		}
-		return result;
 	}
 
 	/**
@@ -692,18 +636,4 @@
 			}
 		}
 	});
-					
-	/*
-	 * section: WYSIWYG
-	 *
-	 * Support for several WYSIWYG editors
-	 * 
-	 *  TODO:
-	 *  	To implement
-	 */	
-	$.dform.subscribeIf($.isFunction($.fn.wysiwyg), "wysiwyg",
-		function(options, type)
-		{
-			// TODO WYSIWYG
-		});
 })(jQuery);

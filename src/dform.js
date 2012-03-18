@@ -1,10 +1,9 @@
 /*
  * jQuery dform plugin
- * Copyright (C) 2012 David Luecke <daff@neyeon.com>, [http://daffl.github.com]
+ * Copyright (C) 2012 David Luecke <daff@neyeon.com>, [http://daffl.github.com/jquery.dform]
  * 
  * Licensed under the MIT license
  */
-
 (function ($)
 {
 	var _subscriptions = {},

@@ -1,6 +1,6 @@
 /*
- * jQuery dform plugin - Core types and subscribers
- * Copyright (C) 2012 David Luecke <daff@neyeon.com>, [http://daffl.github.com]
+ * jQuery dform plugin
+ * Copyright (C) 2012 David Luecke <daff@neyeon.com>, [http://daffl.github.com/jquery.dform]
  *
  * Licensed under the MIT license
  */
@@ -115,7 +115,6 @@
 				var self = this;
 				if (type === "select" || type === "optgroup") // Options for select elements
 				{
-					// TODO optgroup
 					each(options, function (value, content)
 					{
 						var option = { type : 'option', value : value };
@@ -168,8 +167,7 @@
 				if (type == "fieldset") {
 					// Labels for fieldsets are legend
 					ops.type = "legend";
-					this.prepend($.dform.createElement(ops));
-					$(legend).dform('run', ops);
+					this.dform('append', ops);
 				} else {
 					ops.type = "label";
 					if (this.attr("id")) {

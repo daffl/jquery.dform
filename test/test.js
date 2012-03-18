@@ -1,5 +1,7 @@
 $(document).ready(function ()
 {
+	module('Globals');
+
 	test("$.keyset", function ()
 	{
 		var keys = $.keyset({ x : 1, y : true, test : 'testing' });
@@ -28,7 +30,9 @@ $(document).ready(function ()
 		deepEqual(result, { x : 1, test : 'testing' });
 	});
 
-	test("Plugin: Call method", function ()
+	module('Plugin')
+
+	test("Call method", function ()
 	{
 		expect(3);
 		$.dform.methods.test = function (name, age)
@@ -40,7 +44,7 @@ $(document).ready(function ()
 		$('<div>').dform('test', 'Tester', 42);
 	});
 
-	test("Plugin: Run type subscriber", function ()
+	test("Run type subscriber", function ()
 	{
 		var def = {
 			type : 'div'
@@ -49,7 +53,7 @@ $(document).ready(function ()
 		equal(created.attr('class'), $.dform.options.prefix + 'div', 'Class added');
 	});
 
-	test("Plugin: Add attributes", function ()
+	test("Add attributes", function ()
 	{
 		var def = {
 			'type' : 'div',
@@ -61,7 +65,9 @@ $(document).ready(function ()
 		equal(created.data('test'), 'Test data attribute', 'Added test data attribute');
 	});
 
-	test("Type: Default type", function ()
+	module("Types");
+
+	test("Default type", function ()
 	{
 		var def = {
 			type : 'div',
@@ -72,7 +78,7 @@ $(document).ready(function ()
 		equal(el.attr('id'), 'my-id', 'Id properly set');
 	});
 
-	test("Type: Add type and create element", function ()
+	test("Add type and create element", function ()
 	{
 		$.dform.addType('test-span', function (options)
 		{
@@ -89,7 +95,20 @@ $(document).ready(function ()
 		equal(el.attr('class'), 'testspan', 'Class has been set during element creation');
 	});
 
-	test("Type: Core types", function ()
+	test("Type chaining", function() {
+		expect(3);
+		$.dform.addType('text', function(options) {
+			ok($(this).is('input'), 'Type chain ran and got correct element');
+			return $(this).addClass('test-type');
+		});
+		var text = $('<form>').dform({
+			type : 'text'
+		}).find('[type="text"]');
+		equal(text.length, 1, 'Created text element');
+		ok(text.hasClass('test-type'), 'Type chained and returned properly');
+	});
+
+	test("Core types", function ()
 	{
 		var form = $('<form>');
 
@@ -109,7 +128,9 @@ $(document).ready(function ()
 		ok(form.dform({ type : 'email' }).find('[type="email"]').length);
 	});
 
-	test("Subscriber: Add subscriber", function() {
+	module("Subscribers");
+
+	test("Add subscriber", function() {
 		expect(3);
 		$.dform.subscribe('testit', function(options, type) {
 			equal(type, 'div', 'Proper type got passed');
@@ -125,7 +146,7 @@ $(document).ready(function ()
 		});
 	});
 
-	test("Subscriber: Core subscribers", function ()
+	test("Core subscribers", function ()
 	{
 		var form = $('<form>'),
 			div = form.dform({
@@ -148,7 +169,7 @@ $(document).ready(function ()
 		equal(text.css('background-color'), 'red', 'Css set');
 	});
 
-	test("Subscriber: elements and html", function() {
+	test("elements and html", function() {
 		var form = $('<form>').dform({
 			type : 'form',
 			html : [
@@ -177,7 +198,7 @@ $(document).ready(function ()
 		ok(form3.html(), 'test html', 'Html content set');
 	});
 
-	test("Subscriber: caption", function() {
+	test("caption", function() {
 		var simple = $('<div>').dform({
 				type : 'text',
 				caption : 'The test'
@@ -196,7 +217,7 @@ $(document).ready(function ()
 		ok(asElement.hasClass('the-label'), 'Added class');
 	});
 
-	test("Subscriber: options", function() {
+	test("options", function() {
 		var options = {
 			test1 : 'Test 1',
 			test2 : 'Test 2'
