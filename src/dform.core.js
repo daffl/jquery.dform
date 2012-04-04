@@ -4,24 +4,19 @@
  *
  * Licensed under the MIT license
  */
-(function ($)
-{
+(function ($) {
 	var each = $.each,
-		_element = function (tag, excludes)
-		{
-			return function (ops)
-			{
+		_element = function (tag, excludes) {
+			return function (ops) {
 				return $(tag).dform('attr', ops, excludes);
 			};
 		},
-		_html = function (options, type)
-		{
+		_html = function (options, type) {
 			var self = this;
-			if($.isPlainObject(options)) {
+			if ($.isPlainObject(options)) {
 				self.dform('append', options);
-			} else if($.isArray(options)) {
-				each(options, function (index, nested)
-				{
+			} else if ($.isArray(options)) {
+				each(options, function (index, nested) {
 					self.dform('append', nested);
 				});
 			} else {
@@ -57,8 +52,7 @@
 			 * @param options A list of whitespace separated classnames
 			 * @param type The type of the *this* element
 			 */
-			"class" : function (options, type)
-			{
+			"class" : function (options, type) {
 				this.addClass(options);
 			},
 
@@ -87,8 +81,7 @@
 			 * @param options The value to set
 			 * @param type The type of the *this* element
 			 */
-			value : function (options, type)
-			{
+			value : function (options) {
 				this.val(options);
 			},
 
@@ -98,8 +91,7 @@
 			 * @param options The Styles to set
 			 * @param type The type of the *this* element
 			 */
-			css : function (options, type)
-			{
+			css : function (options) {
 				this.css(options);
 			},
 
@@ -110,13 +102,11 @@
 			 *	 option value and the value the options text or the settings for the element.
 			 * @param type The type of the *this* element
 			 */
-			options : function (options, type)
-			{
+			options : function (options, type) {
 				var self = this;
 				if (type === "select" || type === "optgroup") // Options for select elements
 				{
-					each(options, function (value, content)
-					{
+					each(options, function (value, content) {
 						var option = { type : 'option', value : value };
 						if (typeof (content) === "string") {
 							option.html = content;
@@ -129,8 +119,7 @@
 				}
 				else if (type === "checkboxes" || type === "radiobuttons") {
 					// Options for checkbox and radiobutton lists
-					each(options, function (value, content)
-					{
+					each(options, function (value, content) {
 						var boxoptions = ((type === "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
 						if (typeof(content) === "string") {
 							boxoptions["caption"] = content;
@@ -155,8 +144,7 @@
 			 * @param options A string for the caption or the options for the
 			 * @param type The type of the *this* element
 			 */
-			caption : function (options, type)
-			{
+			caption : function (options, type) {
 				var ops = {};
 				if (typeof (options) === "string") {
 					ops["html"] = options;
@@ -197,8 +185,7 @@
 			 * @param options The name of the type
 			 * @param type The type of the *this* element
 			 */
-			type : function (options, type)
-			{
+			type : function (options, type) {
 				if ($.dform.options.prefix) {
 					this.addClass($.dform.options.prefix + type);
 				}
@@ -209,8 +196,7 @@
 			 * @param options
 			 * @param type
 			 */
-			url : function (options, type)
-			{
+			url : function (options, type) {
 				// TODO this.buildForm(options);
 			},
 
@@ -220,12 +206,10 @@
 			 * @param options All options that have been used for
 			 * @param type The type of the *this* element
 			 */
-			"[post]" : function (options, type)
-			{
+			"[post]" : function (options, type) {
 				if (type === "checkboxes" || type === "radiobuttons") {
 					var boxtype = ((type === "checkboxes") ? "checkbox" : "radio");
-					this.children("[type=" + boxtype + "]").each(function ()
-					{
+					this.children("[type=" + boxtype + "]").each(function () {
 						$(this).attr("name", options.name);
 					});
 				}

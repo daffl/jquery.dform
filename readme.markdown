@@ -52,7 +52,7 @@ __Learn more:__
 
 * Play around with this example as a JSFiddle
 * Check out the get started page for more examples
-* Visit the [jQuery.dForm Google Group](http://groups.google.com/group/jquery-dform)
+* Visit the [jQuery.dForm Group](http://groups.google.com/group/jquery-dform)
 * Watch and fork the project on [GitHub](http://github.com/daffl/jquery.dform/)
 * Follow [@daffl](http://twitter.com/daffl) on Twitter
 * Read on in this documentation
@@ -60,7 +60,7 @@ __Learn more:__
 ## Types
 
 Type generators are functions that return a new jQuery DOM object for a specific type. If there is no type generator
-for that type, a basic HTML tag the type name will be created. Every other key in the JavaScript or JSON object
+for that type, a basic HTML tag with that name will be created. Every other key in the JavaScript or JSON object
 you pass (the dForm object) will be used as an HTML attribute, except if there is a [subscriber](#subscribers)
 registered for that key. A plugin call like this:
 
@@ -122,7 +122,7 @@ Creates an HTML 5 email input field
 
 ### Add your own
 
-You can add your own types by calling  *$.dform.addType* and pass the type name and a function
+You can add your own types by calling  `$.dform.addType` and pass the type name and a function
 that takes the dForm object as a parameter and returns a new jQuery DOM element:
 
 	$.dform.addType("hellobutton", function(options) {
@@ -131,7 +131,7 @@ that takes the dForm object as a parameter and returns a new jQuery DOM element:
 		return $("<button>").dform('attr', options).html("Say hello");
 	});
 
-The type generator uses the *attr* [plugin method](#plugin-methods)) to add the proper HTML attributes to the button.
+The type generator uses the *attr* [plugin method](#plugin-methods) to add the proper HTML attributes to the button.
 Now the new type can be used:
 
 	$('#myform').dform({
@@ -143,7 +143,7 @@ And generates:
 
 	<button id="my-button" class="ui-dform-hellobutton">Say hello</button>
 
-Type generators can be chained. That means, that if you add an already existing type, *this* in the generator function
+Type generators can be chained. That means, that if you add a type that already exists `this` in the generator function
 will refer to the element returned by its previous generator:
 
 	$.dform.addType("text", function(options) {
@@ -160,15 +160,15 @@ Now generates
 
 ## Subscribers
 
-Not everything can be solved using a custom type. Adding a class for example doesn't need to be implemented
-every time and this is where Subscribers come in. Subscribers are functions that will be called for the key they
+Not everything can be solved using a custom type. Adding a class, for example, doesn't need to be implemented
+for every type and this is where Subscribers come in. Subscribers are functions that will be called for the key they
 have been registered for when traversing the dForm object.
 
 ### Core subscribers
 
 **type** *{String}*<br />
 Besides looking up the correct Type Generator it also adds a dform specific class to the element using
-*$.dform.options.prefix* (*ui-dform-* by default) and the type name.
+`$.dform.options.prefix` (*ui-dform-* by default) and the type name.
 
 	{
 		"type" : "text"
@@ -177,6 +177,8 @@ Besides looking up the correct Type Generator it also adds a dform specific clas
 Generates:
 
 	<input type="text" class="ui-dform-text" />
+
+---
 
 **class** *{String}*<br />
 Adds a class to the current element (instead of setting the attribute) using [.addClass()](http://api.jquery.com/addClass).
@@ -189,6 +191,8 @@ Adds a class to the current element (instead of setting the attribute) using [.a
 Generates:
 
 	<div class="ui-dform-div the-div container"></div>
+
+---
 
 **html/elements** *{String|Array|Object}*<br />
 Based on the options it either sets the HTML string content of the current element or appends one or an array
@@ -244,7 +248,7 @@ Generates:
 	<input type="text" value="Text content" />
 
 **css** {Object}<br />
-Sets CSS properties on an element with [.css()](http://api.jquery.com/css/):
+Sets CSS properties on an element using [.css()](http://api.jquery.com/css/):
 
 	{
 		"type" : "div",
@@ -385,27 +389,32 @@ options passed.
 
 ## Plugin methods
 
-**.dform(options)** *{Object}*<br />
+The *.dform* plugin function follows the jQuery plugin convention of taking an options object or a
+method name as the first parameter to call different methods:
+
+`$().dform(options, converter)` *{Object}* *\[{String}\]<br />
 Append the dForm object to each selected element. If the element is of the same type (e.g. if you are appending
-a `type : 'form'` on a <form> or if no type has been given, run the subscribers and
+a `type : 'form'` on a <form> or if no type has been given) run the subscribers and
 add the attributes on the current element.
 
-**.dform('run', options)** *{Object}*<br />
-Run all subscribers from a given options object.
+`$().dform('run', options)` *{Object}*<br />
+Run all subscribers from a given dForm object.
 
-**.dform('run', name, options, type)** *{String}* *{Mixed}* *{String}*<br />
+`$().dform('run', name, options, type)` *{String}* *{Mixed}* *{String}*<br />
 Run a subscriber with a given name and options on the selected element(s) using a specific type.
 Usually used internally.
 
-**.dform('append', options, converter)** *{Object}* *{String}*<br />
+`$().dform('append', options, converter)` *{Object}* *\[{String}\]*<br />
 Append a dForm element to each selected element. Optionally using a converter with the
 given name.
 
-**.dform('attr', options)** *{Object}*<br />
-Sets each attribute from the options object that doesn't have a corresponding subscriber registered.
+`$().dform('attr', options)` *{Object}*<br />
+Set each attribute from the options object that doesn't have a corresponding subscriber registered.
 
-**.dform('ajax', params, success, error)** *{Objec|String}* *{Function}* *{Function}*<br />
+`$().dform('ajax', params, success, error)` *{Object|String}* *{Function}* *{Function}*<br />
 Load a form definition using Ajax.
+
+## Converters
 
 ## jQuery UI
 
