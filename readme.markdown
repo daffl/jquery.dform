@@ -144,7 +144,7 @@ And generates:
 	<button id="my-button" class="ui-dform-hellobutton">Say hello</button>
 
 Type generators can be chained. That means, that if you add an already existing type, *this* in the generator function
-will refer to the element returned by its previous generator (otherwise it will refer to the *window* object):
+will refer to the element returned by its previous generator:
 
 	$.dform.addType("text", function(options) {
 		return $(this).addClass('my-textfield-class');
@@ -296,7 +296,14 @@ or *radio* elements:
 
 Generates:
 
-	// TODO
+	<div class="ui-dform-checkboxes">
+		<input type="checkbox" class="ui-dform-checkbox" value="newsletter">
+		<label class="ui-dform-label">Receive the newsletter</label>
+		<input type="checkbox" class="ui-dform-checkbox" value="terms">
+		<label class="ui-dform-label">I read the terms of service</label>
+		<input type="checkbox" class="ui-dform-checkbox" value="update">
+		<label class="ui-dform-label">Keep me up to date on new events</label>
+	</div>
 
 > *Note:* The Google Chrome JavaScript engine V8 orders object keys that can be cast to numbers by their value and
 > not by the order of their definition.
@@ -335,9 +342,6 @@ Generates:
 		<legend type="ui-dform-legend">Address</label>
 	</fieldset>
 
-**url**<br />
-TODO
-
 ### Add your own
 
 It is easy to add your own subscribers. Similar to a type generator you just pass the key name you want to subscribe
@@ -346,7 +350,8 @@ subscriber function will refer to the current element. That way it e.g. would be
 *hellobutton* created in the [types section](#subscribers/add-your-own):
 
 	$.dform.subscribe("alert", function(options, type) {
-		if(type === "hellobutton") { // Just run if the type is a hellobutton
+		// Just run if the type is a hellobutton
+		if(type === "hellobutton") {
 			this.click(function() {
 				alert(options);
 			});
@@ -369,7 +374,7 @@ You can therefore add multiple subscribers with the same name adding behaviour o
 
 ### Special subscribers
 
-Currently there are two types of special subscribers
+Currently there are two types of special subscribers"
 
 **\[pre\]** *{Object}*<br />
 Functions registered with this name will be called before any processing occurs and get the original options passed.
@@ -380,12 +385,27 @@ options passed.
 
 ## Plugin methods
 
-Default
+**.dform(options)** *{Object}*<br />
+Append the dForm object to each selected element. If the element is of the same type (e.g. if you are appending
+a `type : 'form'` on a <form> or if no type has been given, run the subscribers and
+add the attributes on the current element.
 
-run<br />
-append<br />
-attr({Object})<br />
-ajax<br />
+**.dform('run', options)** *{Object}*<br />
+Run all subscribers from a given options object.
+
+**.dform('run', name, options, type)** *{String}* *{Mixed}* *{String}*<br />
+Run a subscriber with a given name and options on the selected element(s) using a specific type.
+Usually used internally.
+
+**.dform('append', options, converter)** *{Object}* *{String}*<br />
+Append a dForm element to each selected element. Optionally using a converter with the
+given name.
+
+**.dform('attr', options)** *{Object}*<br />
+Sets each attribute from the options object that doesn't have a corresponding subscriber registered.
+
+**.dform('ajax', params, success, error)** *{Objec|String}* *{Function}* *{Function}*<br />
+Load a form definition using Ajax.
 
 ## jQuery UI
 
@@ -395,13 +415,20 @@ and *fieldset* elements.
 
 ### Types
 
-Most jQuery UI widgets have an appropriate type generator implemented. Each take the same options as described
-in [the jQuery UI documentation](http://jqueryui.com/demos/).
+Most jQuery UI widgets have an appropriate type generator implemented. Besides normal HTML attributes,
+each take the same options as described in [the jQuery UI documentation](http://jqueryui.com/demos/).
 
 **progressbar** `{ "type" : "progressbar" }`<br />
+A progressbar
+
 **slider** `{ "type" : "slider" }`<br />
+Creates a slider element. The options
+
 **accordion** `{ "type" : "accordion" }`<br />
+A container for an accordion
+
 **tabs** `{ "type" : "tabs" }`<br />
+A container for tabs
 
 ### Subscribers
 
@@ -414,16 +441,32 @@ resizable:
 
 ### Form validation
 
+jQuery.dForm adds a **validate** subscriber if the [jQuery Form Validation](http://bassistance.de/jquery-plugins/jquery-plugin-validation/)
+plugin is available. The options passed are added as [validation rulesets](http://docs.jquery.com/Plugins/Validation/rules#.22add.22rules)
+to the element:
+
+	{
+		"type" : "text",
+		"validate" : {
+			"required" : true,
+			"minlength" : 2,
+			"messages" : {
+				"required" : "Required input",
+			}
+		}
+	}
+
 ### jQuery Globalize
+
+If [jQuery.Globalize]
 
 ## Changelog
 
 **0.2.0**
 
-- Full QUnit test suite
-- Improved documentation
-- Changed API
-- Added deferred loading of subscribers
+* Improved documentation using DocumentUp
+* QUnit test suite runs test for the complete core
+* Changed API
 
 **0.1.4**
 

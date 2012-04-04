@@ -341,11 +341,18 @@
 				 */
 				ajax : function(params, success, error)
 				{
-					var options = $.extend({
-						success : success,
-						error : error
-					}, params);
-					// TODO
+					var options = {
+						error : error,
+						url : params
+					}, self = this;
+					if(typeof params !== 'string') {
+						$.extend(options, params);
+					}
+					options.success = function(data) {
+						self.dform(data);
+						success(data);
+					}
+					$.ajax(options);
 				},
 				/**
 				 *

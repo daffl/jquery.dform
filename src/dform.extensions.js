@@ -7,119 +7,48 @@
 (function($)
 {
 	/**
-	 * section: jQuery UI
-	 *
-	 * Subscribers using the <jQuery UI Framework 
-	 * at http://jqueryui.com>. Types and subscribers will only be
-	 * added, if the corresponding jQuery UI plugin functions are available.
-	 */
-
-	/**
-	 * function: _getOptions
-	 * 
 	 * Returns a object containing the options for a jQuery UI widget.
 	 * The options will be taken from jQuery.ui.[typename].prototype.options
-	 * 
-	 * Parameters:
-	 * 	type - The jQuery UI type
-	 * 	options - The options to evaluate
+	 *
+	 * @param type The jQuery UI type
+	 * @param options The options to evaluate
 	 */
-	var getOptions = function(type, options)
+	var _getOptions = function(type, options)
 	{
-		var keys = $.keyset($.ui[type]["prototype"]["options"]);
-		return $.withKeys(options, keys);
+		return $.withKeys(options, $.keyset($.ui[type]["prototype"]["options"]));
 	}
 		
-	/**
-	 * type: progressbar
-	 * 
-	 * Returns a jQuery UI progressbar.
-	 * 
-	 * Parameters:
-	 * 	options - As specified in the <jQuery UI progressbar documentation at
-	 * 	http://jqueryui.com/demos/progressbar/>
-	 * 
-	 * Example:
-	 * (start code)
-	 * {
-	 * 		"type" : "progressbar",
-	 * 		"value" : 30,
-	 * 		"caption" : "Progressbar"
-	 * }
-	 * (end)
-	 */
-	$.dform.addTypeIf($.isFunction($.fn.progressbar), "progressbar", 
+	$.dform.addTypeIf($.isFunction($.fn.progressbar), "progressbar",
+		/**
+		 * Returns a jQuery UI progressbar.
+		 *
+		 * @param options  As specified in the jQuery UI progressbar documentation at
+		 * 	http://jqueryui.com/demos/progressbar/
+		 */
 		function(options)
 		{
 			return $("<div>").dform('attr', options).progressbar(_getOptions("progressbar", options));
 		});
-	
-	/**
-	 * type: slider
-	 * 
-	 * Returns a slider element.
-	 * 
-	 * Parameters:
-	 * 	options - As specified in the <jQuery UI slider documentation at
-	 * 	http://jqueryui.com/demos/slider/>
-	 * 
-	 * Example:
-	 * (start code)
-	 * {
-	 * 		"type" : "slider",
-	 * 		"values" : [ 30, 80 ],
-	 * 		"range" : true,
-	 * 		"caption" : "Slider"
-	 * }
-	 * (end)
-	 */
-	$.dform.addTypeIf($.isFunction($.fn.slider), "slider", 
+
+	$.dform.addTypeIf($.isFunction($.fn.slider), "slider",
+		/**
+		 * Returns a slider element.
+		 *
+		 * @param options As specified in the jQuery UI slider documentation at
+		 * 	http://jqueryui.com/demos/slider/
+		 */
 		function(options)
 		{
 			return $("<div>").dform('attr', options).slider(_getOptions("slider", options));
 		});
 
-	/**
-	 * type: accordion
-	 * 
-	 * Creates an element container for a jQuery UI accordion.
-	 * 
-	 * Parameters:
-	 * 	options - As specified in the <jQuery UI accordion documentation at 
-	 * 	http://jqueryui.com/demos/accordion/> 
-	 * 
-	 * Example:
-	 * (start code)
-	 * {
-	 * 		"type" : "accordion",
-	 * 		"caption" : "Accordion",
-	 * 		"entries" :
-	 * 		[
-	 * 			{
-	 * 				"caption" : "Entry 1",
-	 * 				"elements" :
-	 * 				[
-	 * 					{
-	 * 						"type" : "span",
-	 * 						"html" : "Some HTML in accordion entry 1"
-	 * 					}
-	 * 				]
-	 * 			},
-	 * 			{
-	 * 				"caption" : "Entry 2",
-	 * 				"elements" :
-	 * 				[
-	 * 					{
-	 * 						"type" : "span",
-	 * 						"html" : "Some HTML in accordion entry 2"
-	 * 					}
-	 * 				]
-	 * 			}
-	 * 		]
-	 * }
-	 * (end)
-	 */
 	$.dform.addTypeIf($.isFunction($.fn.accordion), "accordion",
+		/**
+		 * Creates an element container for a jQuery UI accordion.
+		 *
+		 * @param options As specified in the jQuery UI accordion documentation at
+		 * 	http://jqueryui.com/demos/accordion/
+		 */
 		function(options)
 		{
 			return $("<div>").dform('attr', options);
@@ -171,8 +100,7 @@
 	 * }
 	 * (end) 
 	 */
-	$.dform.addTypeIf($.isFunction($.fn.tabs),
-		"tabs", function(options)
+	$.dform.addTypeIf($.isFunction($.fn.tabs), "tabs", function(options)
 		{
 			return $("<div>").dform('attr', options);
 		});
@@ -436,8 +364,9 @@
 						}
 					};
 				}
-				if (typeof (options.validate) == 'object')
+				if (typeof (options.validate) == 'object') {
 					$.extend(defaults, options.validate);
+				}
 				this.validate(defaults);
 			}
 		},
@@ -491,8 +420,9 @@
 		 */
 		"validate" : function(options, type)
 		{
-			if (type != "form")
+			if (type != "form") {
 				this.rules("add", options);
+			}
 		}
 	});
 
