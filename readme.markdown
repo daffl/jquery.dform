@@ -132,14 +132,14 @@ that takes the dForm object as a parameter and returns a new jQuery DOM element:
 	});
 
 The type generator uses the *attr* [plugin method](#plugin-methods) to add the proper HTML attributes to the button.
-Now the new type can be used:
+Now the new type can be used like this:
 
 	$('#myform').dform({
 		"type" : "hellobutton",
 		"id" : "my-button"
 	});
 
-And generates:
+Which generates:
 
 	<button id="my-button" class="ui-dform-hellobutton">Say hello</button>
 
@@ -235,6 +235,8 @@ Generates:
 		</div>
 	</div>
 
+---
+
 **value** *{String|Function}*<br />
 Sets the value of the element using [.val()](http://api.jquery.com/val/)
 
@@ -246,6 +248,8 @@ Sets the value of the element using [.val()](http://api.jquery.com/val/)
 Generates:
 
 	<input type="text" value="Text content" />
+
+---
 
 **css** {Object}<br />
 Sets CSS properties on an element using [.css()](http://api.jquery.com/css/):
@@ -261,6 +265,8 @@ Sets CSS properties on an element using [.css()](http://api.jquery.com/css/):
 Generates:
 
 	<div class="ui-dform-div" style="background-color: #FF0000; display: none;"></div>
+
+---
 
 **options** *{Object}*<br />
 Generates a list of options from a value to text (or dForm Object) mapping for elements of type *select*, *radiobuttons*
@@ -312,6 +318,8 @@ Generates:
 > *Note:* The Google Chrome JavaScript engine V8 orders object keys that can be cast to numbers by their value and
 > not by the order of their definition.
 
+---
+
 **caption** *{String|Object}*<br />
 Adds a caption to the element. The type used depends on the element type:
 
@@ -349,8 +357,8 @@ Generates:
 ### Add your own
 
 It is easy to add your own subscribers. Similar to a type generator you just pass the key name you want to subscribe
-to and a function that takes the options and the type name as a parameter to *$.dform.subscribe*. *this* in the
-subscriber function will refer to the current element. That way it e.g. would be possible to add an alert to the
+to and a function that takes the options and the type name as a parameter to `$.dform.subscribe`. `this` in the
+subscriber function will refer to the current element. That way it would be possible for example to add an alert to the
 *hellobutton* created in the [types section](#subscribers/add-your-own):
 
 	$.dform.subscribe("alert", function(options, type) {
@@ -378,7 +386,7 @@ You can therefore add multiple subscribers with the same name adding behaviour o
 
 ### Special subscribers
 
-Currently there are two types of special subscribers"
+Currently there are two types of special subscribers:
 
 **\[pre\]** *{Object}*<br />
 Functions registered with this name will be called before any processing occurs and get the original options passed.
@@ -389,16 +397,16 @@ options passed.
 
 ## Plugin methods
 
-The *.dform* plugin function follows the jQuery plugin convention of taking an options object or a
+The __dform__ plugin function follows the jQuery plugin convention of taking an options object or a
 method name as the first parameter to call different methods:
 
-`$().dform(options, converter)` *{Object}* *\[{String}\]<br />
+`$().dform(options, converter)` *{Object}* *\[{String}\]*<br />
 Append the dForm object to each selected element. If the element is of the same type (e.g. if you are appending
-a `type : 'form'` on a <form> or if no type has been given) run the subscribers and
+a `type : 'form'` on a `<form>` or if no type has been given) run the subscribers and
 add the attributes on the current element.
 
 `$().dform('run', options)` *{Object}*<br />
-Run all subscribers from a given dForm object.
+Run all subscribers from a given dForm object on the selected element(s).
 
 `$().dform('run', name, options, type)` *{String}* *{Mixed}* *{String}*<br />
 Run a subscriber with a given name and options on the selected element(s) using a specific type.
@@ -418,7 +426,7 @@ Load a form definition using Ajax.
 
 ## jQuery UI
 
-jQuery.dForm adds automatic support for jQuery UI if it is available. If the form has the *ui-widget* class
+jQuery.dForm automatically adds support for jQuery UI if it is available. If the form has the *ui-widget* class
 the plugin will automatically turn buttons into jQuery UI buttons and add corners to *text*, *textarea*, *password*
 and *fieldset* elements.
 
@@ -443,6 +451,16 @@ A container for tabs
 
 Some other features have been implemented as subscriber, e.g. adding entries to an accordion or making an element
 resizable:
+
+**entries** *{Object}*<br />
+
+**dialog** *{Object}*<br />
+
+**resizable** *{Object}*<br />
+
+**datepicker** *{Object}*<br />
+
+**autocomplete** *{Object}*<br />
 
 ## Other plugins
 
@@ -471,13 +489,13 @@ If [jQuery.Globalize]
 
 ## Changelog
 
-**0.2.0**
+__0.2.0__
 
 * Improved documentation using DocumentUp
 * QUnit test suite runs test for the complete core
 * Changed API
 
-**0.1.4**
+__0.1.4__
 
 * Merged pull request [#30](https://github.com/daffl/jquery.dform/pull/30):
 Wrap 'type' as an array so it doesn't break jQuery 1.7.1's $.inArray() when running in IE8
@@ -492,7 +510,7 @@ support to set up a validate options for validate() in "form" type
 * Merged pull request [#26](https://github.com/daffl/jquery.dform/pull/26) to support HTML 5 input types
 * Added simple getting started example
 
-**0.1.3**
+__0.1.3__
 
 * Created some public [JSFiddles for trying the plugin](http://jsfiddle.net/user/Daff/fiddles)
 * Created [jQuery.dForm Google Group](http://groups.google.com/group/jquery-dform)
@@ -502,7 +520,7 @@ support to set up a validate options for validate() in "form" type
 * Added *i18n* support using the [jQuery globalize](https://github.com/jquery/jquery-global) plugin
 * Fixed minor bugs in dform plugins
 
-**0.1.2**
+__0.1.2__
 
 * Added *dformAttr* to add HTML attributes to elements
 * Moved *placeholder* into a separate plugin
@@ -512,7 +530,7 @@ support to set up a validate options for validate() in "form" type
 * Added the *defaultType* method to create any HTML element without having to register a type
 * Improved build process
 
-**0.1.1**
+__0.1.1__
 
 * Separated type and subscriber functions
 * Added types *file*, *container*, *hidden*, *accordion*, *checkboxes* and *radiobuttons*
@@ -521,7 +539,7 @@ support to set up a validate options for validate() in "form" type
 * Switched documentation to *Natualdocs at http://naturaldocs.org*
 * Added build.xml for generating documentation and minifying JavaScript
 
-**0.1**
+__0.1__
 
 * Initial release
 
