@@ -28,7 +28,7 @@
 		 * @param {Object} object The object to use
 		 * @return {Array} An array containing all properties in the object
 		 */
-		keyset = function (object) {
+			keyset = function (object) {
 			return $.map(object, function (val, key) {
 				return key;
 			});
@@ -42,7 +42,7 @@
 		 * @return {Object} A new object containing only the properties
 		 * with names given in keys
 		 */
-		withKeys = function (object, keys) {
+			withKeys = function (object, keys) {
 			var result = {};
 			each(keys, function (index, value) {
 				if (object[value]) {
@@ -60,7 +60,7 @@
 		 * @return {Object} A new object with all properties of the given object, except
 		 * for the ones given in the list of keys
 		 */
-		withoutKeys = function (object, keys) {
+			withoutKeys = function (object, keys) {
 			var result = {};
 			each(object, function (index, value) {
 				if (!~$.inArray(index, keys)) {
@@ -78,7 +78,7 @@
 		 * @param {String} type The type of the current element as in the registered types
 		 * @return {Object} The jQuery object
 		 */
-		runSubscription = function (name, options, type) {
+			runSubscription = function (name, options, type) {
 			if ($.dform.hasSubscription(name)) {
 				this.each(function () {
 					var element = $(this);
@@ -96,7 +96,7 @@
 		 * @param {Object} options The options to use
 		 * @return {Object} The jQuery element this function has been called on
 		 */
-		runAll = function (options) {
+			runAll = function (options) {
 			var type = options.type, self = this;
 			// Run preprocessing subscribers
 			this.dform('run', '[pre]', options, type);
@@ -198,6 +198,7 @@
 			 */
 			subscribe : function (data, fn, deps) {
 				addToObject(_subscriptions, data, fn);
+				_dependencies[data] = deps;
 			},
 			/**
 			 * Register a subscriber if a given condition is true.
@@ -259,6 +260,42 @@
 					element = $.dform.defaultType(options);
 				}
 				return $(element);
+			},
+			/**
+			 * Resolve the order of execution for the given subscribers
+			 * @param obj The object to resolve
+			 * @see https://gist.github.com/1732686
+			 */
+			resolve : function (obj) {
+				var sorted = [], // sorted list of IDs ( returned value )
+					visited = {}, // hash: id of already visited node => true
+					visit = function (name, ancestors) {
+						// if already exists, do nothing
+						if (visited[name]) {
+							return;
+						}
+
+						ancestors.push(name);
+						visited[name] = true;
+						$.each(_dependencies[name] || [], function (i, dep) {
+							if (ancestors.indexOf(dep) >= 0) {
+								// if already in ancestors, a closed chain exists.
+								throw 'Circular dependency "' + dep + '" is required by "'
+									+ name + '": ' + ancestors.join(' -> ');
+							}
+
+							visit(dep, ancestors); // recursive call
+						});
+
+						sorted.push(name);
+					};
+
+				// 2. topological sort
+				$.each(obj, function (name) {
+					visit(name, []);
+				});
+
+				return sorted;
 			},
 			methods : {
 				/**
@@ -353,9 +390,11 @@
 	 */
 	$.fn.dform = function (options, converter) {
 		var self = $(this);
-		if (converter && $.dform.converters && $.isFunction($.dform.converters[converter])) {
-			options = $.dform.converters[converter](options);
-		}
+		/*
+		 if (converter && $.dform.converters && $.isFunction($.dform.converters[converter])) {
+		 options = $.dform.converters[converter](options);
+		 }
+		 */
 		if ($.dform.methods[options]) {
 			$.dform.methods[options].apply(self, Array.prototype.slice.call(arguments, 1));
 		} else {

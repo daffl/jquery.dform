@@ -241,7 +241,7 @@ $(document).ready(function ()
 	});
 
 	test("resolve dependencies", function() {
-		expect(3);
+		// expect(3);
 		var test1Ran = false;
 		$.dform.subscribe('test1', function(options) {
 			test1Ran = true;
@@ -250,12 +250,23 @@ $(document).ready(function ()
 		$.dform.subscribe('test2', function(options) {
 			ok(test1Ran, 'test1 ran before');
 			ok(options, 'Second subscriber ranh');
-		}, [ 'test1' ]);
+		}, [ 'test1', 'html', 'test3' ]);
+		// Circular dependency
+		// $.dform.subscribe('test3', function() {}, [ 'test2' ]);
 
+		var obj = {
+			test2 : true,
+			html : 'test21',
+			test1 : true
+		};
+
+		deepEqual($.dform.resolve(obj), ['test1', 'html', 'test2'], 'Correct order');
+		/*
 		$('<div>').dform({
 			test2 : true,
 			test1 : true
-		})
+		});
+		*/
 	});
 
 });
