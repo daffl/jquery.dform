@@ -260,46 +260,6 @@
 				}
 				return $(element);
 			},
-			/**
-			 * Resolve the order of execution for the given subscribers
-			 * @param obj The object to resolve
-			 * @see https://gist.github.com/1732686
-			 */
-			resolve : function (obj) {
-				var sorted = [], // sorted list of IDs ( returned value )
-					visited = {}, // hash: id of already visited node => true
-					visit = function (name, ancestors) {
-						if (!$.isArray(ancestors)) {
-							ancestors = [];
-						}
-						ancestors.push(name);
-						visited[name] = true;
-
-						$.each(_dependencies[name], function (i, dep) {
-							if (ancestors.indexOf(dep) >= 0) {
-								// if already in ancestors, a closed chain exists.
-								throw 'Circular dependency "' + dep + '" is required by "'
-									+ name + '": ' + ancestors.join(' -> ');
-							}
-
-							// if already exists, do nothing
-							if (visited[name]) {
-								return;
-							}
-							visit(dep, ancestors.slice(0)); // recursive call
-						});
-
-						sorted.push(name);
-					};
-
-				// 2. topological sort
-				Object.keys(graph).forEach(visit);
-
-				return sorted;
-			},
-			/**
-			 * jQuery plugin methods called by $().dform('methodname', args);
-			 */
 			methods : {
 				/**
 				 * Run all subscriptions with the given name and options
@@ -320,14 +280,9 @@
 				 * Creates a form element on an element with given options
 				 *
 				 * @param {Object} options The options to use
-				 * @param {String} converter The name of the converter in $.dform.converters
-				 * that will be used to convert the options
 				 * @return {Object} The jQuery element this function has been called on
 				 */
-				append : function (options, converter) {
-					if (converter && $.dform.converters && $.isFunction($.dform.converters[converter])) {
-						options = $.dform.converters[converter](options);
-					}
+				append : function (options) {
 					// Create element (run builder function for type)
 					var element = $.dform.createElement(options);
 					this.append(element);
@@ -389,20 +344,23 @@
 		}
 	});
 
-	$.fn.extend({
-		/**
-		 * The jQuery plugin function
-		 *
-		 * @param options The form options
-		 */
-		dform : function (options) {
-			var self = $(this);
-			if ($.dform.methods[options]) {
-				$.dform.methods[options].apply(self, Array.prototype.slice.call(arguments, 1));
-			} else {
-				$.dform.methods.init.apply(self, arguments);
-			}
-			return this;
+	/**
+	 * The jQuery plugin function
+	 *
+	 * @param options The form options
+	 * @param {String} converter The name of the converter in $.dform.converters
+	 * that will be used to convert the options
+	 */
+	$.fn.dform = function (options, converter) {
+		var self = $(this);
+		if (converter && $.dform.converters && $.isFunction($.dform.converters[converter])) {
+			options = $.dform.converters[converter](options);
 		}
-	});
+		if ($.dform.methods[options]) {
+			$.dform.methods[options].apply(self, Array.prototype.slice.call(arguments, 1));
+		} else {
+			$.dform.methods.init.apply(self, arguments);
+		}
+		return this;
+	}
 })(jQuery);

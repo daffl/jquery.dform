@@ -178,8 +178,6 @@ Generates:
 
 	<input type="text" class="ui-dform-text" />
 
----
-
 **class** *{String}*<br />
 Adds a class to the current element (instead of setting the attribute) using [.addClass()](http://api.jquery.com/addClass).
 
@@ -191,8 +189,6 @@ Adds a class to the current element (instead of setting the attribute) using [.a
 Generates:
 
 	<div class="ui-dform-div the-div container"></div>
-
----
 
 **html/elements** *{String|Array|Object}*<br />
 Based on the options it either sets the HTML string content of the current element or appends one or an array
@@ -235,8 +231,6 @@ Generates:
 		</div>
 	</div>
 
----
-
 **value** *{String|Function}*<br />
 Sets the value of the element using [.val()](http://api.jquery.com/val/)
 
@@ -248,8 +242,6 @@ Sets the value of the element using [.val()](http://api.jquery.com/val/)
 Generates:
 
 	<input type="text" value="Text content" />
-
----
 
 **css** {Object}<br />
 Sets CSS properties on an element using [.css()](http://api.jquery.com/css/):
@@ -265,8 +257,6 @@ Sets CSS properties on an element using [.css()](http://api.jquery.com/css/):
 Generates:
 
 	<div class="ui-dform-div" style="background-color: #FF0000; display: none;"></div>
-
----
 
 **options** *{Object}*<br />
 Generates a list of options from a value to text (or dForm Object) mapping for elements of type *select*, *radiobuttons*
@@ -317,8 +307,6 @@ Generates:
 
 > *Note:* The Google Chrome JavaScript engine V8 orders object keys that can be cast to numbers by their value and
 > not by the order of their definition.
-
----
 
 **caption** *{String|Object}*<br />
 Adds a caption to the element. The type used depends on the element type:
@@ -400,29 +388,27 @@ options passed.
 The __dform__ plugin function follows the jQuery plugin convention of taking an options object or a
 method name as the first parameter to call different methods:
 
-`$().dform(options, converter)` *{Object}* *\[{String}\]*<br />
+**$(form).dform(options, converter)** *{Object}* *\[{String}\]*<br />
 Append the dForm object to each selected element. If the element is of the same type (e.g. if you are appending
 a `type : 'form'` on a `<form>` or if no type has been given) run the subscribers and
 add the attributes on the current element.
 
-`$().dform('run', options)` *{Object}*<br />
+**$(form).dform('run', options)** *{Object}*<br />
 Run all subscribers from a given dForm object on the selected element(s).
 
-`$().dform('run', name, options, type)` *{String}* *{Mixed}* *{String}*<br />
+**$(form).dform('run', name, options, type)** *{String}* *{Mixed}* *{String}*<br />
 Run a subscriber with a given name and options on the selected element(s) using a specific type.
 Usually used internally.
 
-`$().dform('append', options, converter)` *{Object}* *\[{String}\]*<br />
+**$(form).dform('append', options, converter)** *{Object}* *\[{String}\]*<br />
 Append a dForm element to each selected element. Optionally using a converter with the
 given name.
 
-`$().dform('attr', options)` *{Object}*<br />
+**$(form).dform('attr', options)** *{Object}*<br />
 Set each attribute from the options object that doesn't have a corresponding subscriber registered.
 
-`$().dform('ajax', params, success, error)` *{Object|String}* *{Function}* *{Function}*<br />
+**$(form).dform('ajax', params, success, error)** *{Object|String}* *{Function}* *{Function}*<br />
 Load a form definition using Ajax.
-
-## Converters
 
 ## jQuery UI
 
@@ -436,16 +422,28 @@ Most jQuery UI widgets have an appropriate type generator implemented. Besides n
 each take the same options as described in [the jQuery UI documentation](http://jqueryui.com/demos/).
 
 **progressbar** `{ "type" : "progressbar" }`<br />
-A progressbar
+Creates a progressbar. Use the options as described in the
+[jQuery UI progressbar documentation](http://jqueryui.com/demos/progressbar/).
+
+	{
+		"type" : "progressbar",
+		"value" : "20"
+	}
 
 **slider** `{ "type" : "slider" }`<br />
-Creates a slider element. The options
+Creates a [slider element](http://jqueryui.com/demos/slider/).
+
+	{
+		"type" : "slider",
+		"step" : 5,
+		"value" : 25
+	}
 
 **accordion** `{ "type" : "accordion" }`<br />
-A container for an accordion
+Creates a container for a jQuery UI accordion. Use the entries subscriber to add elements.
 
 **tabs** `{ "type" : "tabs" }`<br />
-A container for tabs
+Creates a container for a set of jQuery UI tabs. Use the entries subscriber to add elements.
 
 ### Subscribers
 
@@ -545,7 +543,7 @@ __0.1__
 
 ## License
 
-Copyright (C) 2012 [David Luecke](daff@neyeon.com), [http://daffl.github.com/jquery.dform]
+Copyright (C) 2012 [David Luecke](http://daffl.github.com), [http://daffl.github.com/jquery.dform]
 
 The MIT license:
 
