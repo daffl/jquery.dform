@@ -18,7 +18,7 @@
 		return $.withKeys(options, $.keyset($.ui[type]["prototype"]["options"]));
 	}
 		
-	$.dform.addTypeIf($.isFunction($.fn.progressbar), "progressbar",
+	$.dform.addType("progressbar",
 		/**
 		 * Returns a jQuery UI progressbar.
 		 *
@@ -28,9 +28,9 @@
 		function(options)
 		{
 			return $("<div>").dform('attr', options).progressbar(_getOptions("progressbar", options));
-		});
+		}, $.isFunction($.fn.progressbar));
 
-	$.dform.addTypeIf($.isFunction($.fn.slider), "slider",
+	$.dform.addType("slider",
 		/**
 		 * Returns a slider element.
 		 *
@@ -40,9 +40,9 @@
 		function(options)
 		{
 			return $("<div>").dform('attr', options).slider(_getOptions("slider", options));
-		});
+		}, $.isFunction($.fn.slider));
 
-	$.dform.addTypeIf($.isFunction($.fn.accordion), "accordion",
+	$.dform.addType("accordion",
 		/**
 		 * Creates an element container for a jQuery UI accordion.
 		 *
@@ -52,9 +52,9 @@
 		function(options)
 		{
 			return $("<div>").dform('attr', options);
-		});
+		}, $.isFunction($.fn.accordion));
 
-	$.dform.addTypeIf($.isFunction($.fn.tabs), "tabs",
+	$.dform.addType("tabs",
 		/**
 		 * Returns a container for jQuery UI tabs.
 		 *
@@ -63,9 +63,9 @@
 		function(options)
 		{
 			return $("<div>").dform('attr', options);
-		});
+		}, $.isFunction($.fn.tabs));
 	
-	$.dform.subscribeIf($.isFunction($.fn.accordion), "entries",
+	$.dform.subscribe("entries",
 		/**
 		 *  Create entries for the accordion type.
 		 *  Use the <elements> subscriber to create subelements in each entry.
@@ -87,8 +87,9 @@
 					}
 				});
 			}
-		});
-	$.dform.subscribeIf($.isFunction($.fn.tabs), "entries",
+		}, $.isFunction($.fn.accordion));
+	
+	$.dform.subscribe("entries",
 		/**
 		 *  Create entries for the accordion type.
 		 *  Use the <elements> subscriber to create subelements in each entry.
@@ -112,9 +113,9 @@
 					$(ul).append($("<li>").wrapInner(label));
 				});
 			}
-		});
+		}, $.isFunction($.fn.tabs));
 		
-	$.dform.subscribeIf($.isFunction($.fn.dialog), "dialog",
+	$.dform.subscribe("dialog",
 		/**
 		 * Turns an element into a jQuery UI dialog.
 		 *
@@ -123,9 +124,9 @@
 		function(options)
 		{
 			this.dialog(options);
-		});
+		}, $.isFunction($.fn.dialog));
 
-	$.dform.subscribeIf($.isFunction($.fn.resizable), "resizable",
+	$.dform.subscribe("resizable",
 		/**
 		 * Make the current element resizable.
 		 *
@@ -134,9 +135,9 @@
 		function(options)
 		{
 			this.resizable(options);
-		});
+		}, $.isFunction($.fn.resizable));
 
-	$.dform.subscribeIf($.isFunction($.fn.datepicker), "datepicker",
+	$.dform.subscribe("datepicker",
 		/**
 		 * Adds a jQuery UI datepicker to an element of type text.
 		 *
@@ -148,9 +149,9 @@
 			if (type == "text") {
 				this.datepicker(options);
 			}
-		});
+		}, $.isFunction($.fn.datepicker));
 
-	$.dform.subscribeIf($.isFunction($.fn.autocomplete), "autocomplete",
+	$.dform.subscribe("autocomplete",
 		/**
 		 * Adds the autocomplete feature to a text element.
 		 *
@@ -162,7 +163,7 @@
 			if (type == "text") {
 				this.autocomplete(options);
 			}
-		});
+		}, $.isFunction($.fn.autocomplete));
 
 	$.dform.subscribe("[post]",
 		/**
@@ -193,8 +194,7 @@
 			}
 		});
 	
-	$.dform.subscribeIf($.isFunction($.fn.validate), // Subscribe if validation plugin is available
-	{
+	$.dform.subscribe("[pre]",
 		/**
 		 * Add a preprocessing subscriber that calls .validate() on the form,
 		 * so that we can add rules to the input elements. Additionally
@@ -205,7 +205,7 @@
 		 * creating the current element.
 		 * @param type The type of the *this* element
 		 */
-		"[pre]" : function(options, type)
+		function(options, type)
 		{
 			if(type == "form")
 			{
@@ -228,7 +228,8 @@
 				}
 				this.validate(defaults);
 			}
-		},
+		}, $.isFunction($.fn.validate));
+
 		/**
 		 * Adds support for the jQuery validation rulesets.
 		 * For types: text, password, textarea, radio, checkbox sets up rules through rules("add", rules) for validation plugin
@@ -238,15 +239,14 @@
 		 * @param options
 		 * @param type
 		 */
-		"validate" : function(options, type)
+	$.dform.subscribe("validate", function(options, type)
 		{
 			if (type != "form") {
 				this.rules("add", options);
 			}
-		}
-	});
+		}, $.isFunction($.fn.validate));
 
-	$.dform.subscribeIf($.isFunction($.fn.ajaxForm), "ajax",
+	$.dform.subscribe("ajax",
 		/**
 		 * If the current element is a form, it will be turned into a dynamic form
 		 * that can be submitted asynchronously.
@@ -260,7 +260,7 @@
 			{
 				this.ajaxForm(options);
 			}
-		});
+		}, $.isFunction($.fn.ajaxForm));
 
 	function _getTranslate(options)
 	{
@@ -280,7 +280,7 @@
 		return false;
 	}
 
-	$.dform.subscribeIf(($.global && $.isFunction($.global.localize)), 'html',
+	$.dform.subscribe(('html',
 		/**
 		 * Extends the html subscriber that will replace any string with it's translated
 		 * equivalent using the jQuery Global plugin. The html content will be interpreted
@@ -298,7 +298,7 @@
 					$(this).html(translated);
 				}
 			}
-		});
+		}, $.global && $.isFunction($.global.localize)));
 
 	/**
 	 * Returns the value in an object based on the given dot separated
@@ -327,7 +327,7 @@
 		}
 	}
 
-	$.dform.subscribeIf($.global, 'options',
+	$.dform.subscribe('options',
 		/**
 		 * Extends the options subscriber for using internationalized option
 		 * lists.
@@ -344,5 +344,5 @@
 					$(this).dform('run', 'options', optlist, type);
 				}
 			}
-		});
+		}, $.global);
 })(jQuery);

@@ -7,28 +7,30 @@
 (function ($) {
 	var _subscriptions = {},
 		_types = {},
-		_dependencies = {},
 		each = $.each,
-		isArray = $.isArray,
-		addToObject = function (obj, data, fn) {
-			if (typeof (data) === "string") {
-				if (!isArray(obj[data])) {
-					obj[data] = [];
+		addToObject = function(obj) {
+			var result = function (data, fn, condition) {
+				if(typeof data === 'object') {
+					$.each(data, function(name, val) {
+						result(name, val, condition);
+					});
+				} else if(condition === undefined || condition === true) {
+					if(!obj[data]) {
+						obj[data] = [];
+					}
+					obj[data].push(fn);
 				}
-				obj[data].push(fn);
-			} else {
-				each(data, function (name, fn) {
-					addToObject(obj, name, fn);
-				});
 			}
+			return result;
 		},
+		isArray = $.isArray,
 		/**
 		 * Returns an array of keys (properties) contained in the given object.
 		 *
 		 * @param {Object} object The object to use
 		 * @return {Array} An array containing all properties in the object
 		 */
-			keyset = function (object) {
+		keyset = function (object) {
 			return $.map(object, function (val, key) {
 				return key;
 			});
@@ -42,7 +44,7 @@
 		 * @return {Object} A new object containing only the properties
 		 * with names given in keys
 		 */
-			withKeys = function (object, keys) {
+		withKeys = function (object, keys) {
 			var result = {};
 			each(keys, function (index, value) {
 				if (object[value]) {
@@ -60,7 +62,7 @@
 		 * @return {Object} A new object with all properties of the given object, except
 		 * for the ones given in the list of keys
 		 */
-			withoutKeys = function (object, keys) {
+		withoutKeys = function (object, keys) {
 			var result = {};
 			each(object, function (index, value) {
 				if (!~$.inArray(index, keys)) {
@@ -78,7 +80,7 @@
 		 * @param {String} type The type of the current element as in the registered types
 		 * @return {Object} The jQuery object
 		 */
-			runSubscription = function (name, options, type) {
+		runSubscription = function (name, options, type) {
 			if ($.dform.hasSubscription(name)) {
 				this.each(function () {
 					var element = $(this);
@@ -96,7 +98,7 @@
 		 * @param {Object} options The options to use
 		 * @return {Object} The jQuery element this function has been called on
 		 */
-			runAll = function (options) {
+		runAll = function (options) {
 			var type = options.type, self = this;
 			// Run preprocessing subscribers
 			this.dform('run', '[pre]', options, type);
@@ -143,20 +145,15 @@
 				return $("<" + options.type + ">").dform('attr', options);
 			},
 			/**
-			 * Delete an element type.
+			 * Return all types.
 			 *
-			 * @param {String} name The name of the type to delete
+			 * @params {String} name (optional) If passed return
+			 * all type generators for a given name.
+			 * @return {Object} Mapping from type name to
+			 * an array of generator functions.
 			 */
-			removeType : function (name) {
-				delete _types[name];
-			},
-			/**
-			 * Returns the names of all types registered.
-			 *
-			 * @return {Array} Names of all registered types
-			 */
-			typeNames : function () {
-				return keyset(_types);
+			types : function (name) {
+				return name ? _types[name ] : name;
 			},
 			/**
 			 * Register an element type function.
@@ -165,28 +162,17 @@
 			 * function or an object that contains name : type function pairs
 			 * @param {Function} fn The function that creates a new type element
 			 */
-			addType : function (data, fn) {
-				addToObject(_types, data, fn);
-			},
+			addType : addToObject(_types),
 			/**
-			 * Register a element type function if a condition is true.
-			 * See also: [addType]
+			 * Returns all subscribers or all subscribers for a given name.
 			 *
-			 * @param {Boolean} condition The condition under which to subscribe
-			 * @param {String|Object} data Can be either the name of the type builder
-			 * function or an object that contains name : type function pairs
-			 * @param {Function} fn The function to subscribe or nothing if an object is passed for data
+			 * @params {String} name (optional) If passed return all
+			 * subscribers for a given name
+			 * @return {Object} Mapping from subscriber names
+			 * to an array of subscriber functions.
 			 */
-			addTypeIf : function (condition, data, fn) {
-				condition && $.dform.addType(data, fn);
-			},
-			/**
-			 * Returns the names of all subscriber functions registered
-			 *
-			 * @return {Array} The names of all registered subscribers
-			 */
-			subscriberNames : function () {
-				return $.keyset(_subscriptions);
+			subscribers : function(name) {
+				return name ? _subscriptions[name] : _subscriptions;
 			},
 			/**
 			 * Register a subscriber function.
@@ -196,33 +182,7 @@
 			 * @param {Function} fn The function to subscribe or nothing if an object is passed for data
 			 * @param {Array} deps An optional list of dependencies
 			 */
-			subscribe : function (data, fn, deps) {
-				addToObject(_subscriptions, data, fn);
-				_dependencies[data] = deps;
-			},
-			/**
-			 * Register a subscriber if a given condition is true.
-			 * Use it if you want to subscribe only, if e.g. a required plugin
-			 * is installed (pass $.isFunction($.fn.pluginName)).
-			 *
-			 * See also: [subscribe]
-			 *
-			 * @param {Boolean} condition The condition under which to subscribe
-			 * @param {String|Object} data Can either be the name of the subscriber
-			 * function or an object that contains name : subscriber function pairs
-			 * @param {Function} fn The function to subscribe or nothing if an object is passed for data
-			 */
-			subscribeIf : function (condition, data, fn) {
-				condition && $.dform.subscribe(data, fn);
-			},
-			/**
-			 * Delete all subscriptions for a given name.
-			 *
-			 * @param {String} name The name of the subscriber to delete
-			 */
-			removeSubscription : function (name) {
-				delete _subscriptions[name];
-			},
+			subscribe : addToObject(_subscriptions),
 			/**
 			 * Returns if a subscriber function with the given name
 			 * has been registered.
@@ -261,42 +221,6 @@
 				}
 				return $(element);
 			},
-			/**
-			 * Resolve the order of execution for the given subscribers
-			 * @param obj The object to resolve
-			 * @see https://gist.github.com/1732686
-			 */
-			resolve : function (obj) {
-				var sorted = [], // sorted list of IDs ( returned value )
-					visited = {}, // hash: id of already visited node => true
-					visit = function (name, ancestors) {
-						// if already exists, do nothing
-						if (visited[name]) {
-							return;
-						}
-
-						ancestors.push(name);
-						visited[name] = true;
-						$.each(_dependencies[name] || [], function (i, dep) {
-							if (ancestors.indexOf(dep) >= 0) {
-								// if already in ancestors, a closed chain exists.
-								throw 'Circular dependency "' + dep + '" is required by "'
-									+ name + '": ' + ancestors.join(' -> ');
-							}
-
-							visit(dep, ancestors); // recursive call
-						});
-
-						sorted.push(name);
-					};
-
-				// 2. topological sort
-				$.each(obj, function (name) {
-					visit(name, []);
-				});
-
-				return sorted;
-			},
 			methods : {
 				/**
 				 * Run all subscriptions with the given name and options
@@ -319,7 +243,10 @@
 				 * @param {Object} options The options to use
 				 * @return {Object} The jQuery element this function has been called on
 				 */
-				append : function (options) {
+				append : function (options, converter) {
+					if (converter && $.dform.converters && $.isFunction($.dform.converters[converter])) {
+						options = $.dform.converters[converter](options);
+					}
 					// Create element (run builder function for type)
 					var element = $.dform.createElement(options);
 					this.append(element);
@@ -368,8 +295,11 @@
 				 *
 				 * @param options
 				 */
-				init : function (options) {
+				init : function (options, converter) {
 					var opts = options.type ? options : $.extend({ "type" : "form" }, options);
+					if (converter && $.dform.converters && $.isFunction($.dform.converters[converter])) {
+						opts = $.dform.converters[converter](opts);
+					}
 					if (this.is(opts.type)) {
 						this.dform('attr', opts);
 						this.dform('run', opts);
@@ -390,11 +320,6 @@
 	 */
 	$.fn.dform = function (options, converter) {
 		var self = $(this);
-		/*
-		 if (converter && $.dform.converters && $.isFunction($.dform.converters[converter])) {
-		 options = $.dform.converters[converter](options);
-		 }
-		 */
 		if ($.dform.methods[options]) {
 			$.dform.methods[options].apply(self, Array.prototype.slice.call(arguments, 1));
 		} else {
