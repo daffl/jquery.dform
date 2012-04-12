@@ -88,7 +88,7 @@
 				});
 			}
 		}, $.isFunction($.fn.accordion));
-	
+
 	$.dform.subscribe("entries",
 		/**
 		 *  Create entries for the accordion type.
