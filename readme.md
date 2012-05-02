@@ -11,7 +11,7 @@ __Some things you can do:__
 ## Get started
 
 [Download the latest version 0.2.0](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-0.2.0.min.js)
-(6 Kb minified)
+(~7 Kb minified)
 
 Include it in your jQuery powered page and try this:
 
@@ -160,23 +160,11 @@ Now generates
 
 ## Subscribers
 
-Not everything can be solved using a custom type. Adding a class, for example, doesn't need to be implemented
-for every type and this is where Subscribers come in. Subscribers are functions that will be called for the key they
-have been registered for when traversing the dForm object.
+While type generators are being used to generate a base element for the given type, subscribers attach to
+certain attributes in the options object. When traversing the object all subscribers registered for the
+current key will be executed on the current element.
 
 ### Core subscribers
-
-**type** *{String}*<br />
-Besides looking up the correct Type Generator it also adds a dform specific class to the element using
-`$.dform.options.prefix` (*ui-dform-* by default) and the type name.
-
-	{
-		"type" : "text"
-	}
-
-Generates:
-
-	<input type="text" class="ui-dform-text" />
 
 **class** *{String}*<br />
 Adds a class to the current element (instead of setting the attribute) using [.addClass()](http://api.jquery.com/addClass).
@@ -342,6 +330,20 @@ Generates:
 		<legend type="ui-dform-legend">Address</label>
 	</fieldset>
 
+**type** *{String}*<br />
+Besides looking up the correct Type Generator it also adds a dform specific class to the element using
+`$.dform.options.prefix` (*ui-dform-* by default) and the type name.
+
+	{
+		"type" : "text"
+	}
+
+Generates:
+
+	<input type="text" class="ui-dform-text" />
+
+Set `$.dform.options.prefix = false;` if you don't want any classes being added.
+
 ### Add your own
 
 It is easy to add your own subscribers. Similar to a type generator you just pass the key name you want to subscribe
@@ -383,15 +385,17 @@ Functions registered with this name will be called before any processing occurs 
 Functions registered with this name will be called after all processing is finished and also get the original
 options passed.
 
-## Plugin methods
+## Plugin
+
+### jQuery plugin methods
 
 The __dform__ plugin function follows the jQuery plugin convention of taking an options object or a
 method name as the first parameter to call different methods:
 
-**$(form).dform(options, converter)** *{Object}* *\[{String}\]*<br />
+**$(form).dform(options \[, converter\])** *{Object}* *{String}*<br />
 Append the dForm object to each selected element. If the element is of the same type (e.g. if you are appending
 a `type : 'form'` on a `<form>` or if no type has been given) run the subscribers and
-add the attributes on the current element.
+add the attributes on the current element. Optionally use a converter with a given name.
 
 **$(form).dform('run', options)** *{Object}*<br />
 Run all subscribers from a given dForm object on the selected element(s).
@@ -400,15 +404,63 @@ Run all subscribers from a given dForm object on the selected element(s).
 Run a subscriber with a given name and options on the selected element(s) using a specific type.
 Usually used internally.
 
-**$(form).dform('append', options, converter)** *{Object}* *\[{String}\]*<br />
+**$(form).dform('append', options \[, converter\])** *{Object}* *{String}*<br />
 Append a dForm element to each selected element. Optionally using a converter with the
 given name.
 
 **$(form).dform('attr', options)** *{Object}*<br />
 Set each attribute from the options object that doesn't have a corresponding subscriber registered.
 
-**$(form).dform('ajax', params, success, error)** *{Object|String}* *{Function}* *{Function}*<br />
+**$(form).dform('ajax', params \[, success\] \[, error\])** *{Object|String}* *{Function}* *{Function}*<br />
 Load a form definition using Ajax.
+
+### Static functions
+
+**$.keySet(object)** *{Object}*<br />
+Return an array of the objects keys.
+
+**$.withKeys(object, keys)** *{Object}* *{Array}*<br />
+Returns a new object that contains all values from the given
+object that have a key which is also in the array keys.
+
+**$.withoutKeys(object, keys)** *{Object}* *{Array}*<br />
+Returns a new object that contains all value from the given
+object that do not have a key which is also in the array keys.
+
+**$.dform.options**<br />
+Static options for generating a form. Currently only $.dform.options.prefix
+is being used.
+
+**$.dform.defaultType(options)** *{Object}*<br />
+A type generator that will be used when no other registered type has been found.
+The standard generator creates an HTML element according to the type given:
+
+	{
+		"type" : "a",
+		"href" : "http://daffl.github.com/jquery.dform",
+		"html" : "Visit the plugin homepage"
+	}
+
+Generates:
+
+	<a class="ui-dform-a" href="http://daffl.github.com/jquery.dform">Visit the plugin homepage</a>
+
+**$.dform.types(\[name\])** *{String}*<br />
+Returns all type generators for a given type name. If no name is given, a map of type names
+to an array of generator functions will be returned.
+
+**$.dform.addType(name, generator \[, condition\])** *{String}* *{Function}* *{Boolean}*<br />
+Add a new type with a given name and generator function which takes the options as the parameter
+and returns a new element. Optionally pass a condition which will add the type only if
+it returns true.
+
+**$.dform.subscribe(name, subscriber \[, condition\])**<br />
+**$.dform.subscribers**<br />
+
+**$.dform.hasSubscription(name)** *{String}*<br />
+Returns if there is any subscribers with the given name.
+
+**$.dform.createElement(options)**<br />
 
 ## jQuery UI
 
@@ -440,10 +492,10 @@ Creates a [slider element](http://jqueryui.com/demos/slider/).
 	}
 
 **accordion** `{ "type" : "accordion" }`<br />
-Creates a container for a jQuery UI accordion. Use the entries subscriber to add elements.
+Creates a container for a jQuery UI accordion. Use the *entries* subscriber to add elements.
 
 **tabs** `{ "type" : "tabs" }`<br />
-Creates a container for a set of jQuery UI tabs. Use the entries subscriber to add elements.
+Creates a container for a set of jQuery UI tabs. Use the *entries* subscriber to add elements.
 
 ### Subscribers
 
@@ -451,6 +503,7 @@ Some other features have been implemented as subscriber, e.g. adding entries to 
 resizable:
 
 **entries** *{Object}*<br />
+Add entries to an *accordion* or *tabs* element.
 
 **dialog** *{Object}*<br />
 
@@ -481,9 +534,13 @@ to the element:
 		}
 	}
 
+If the form has the *ui-widget* class the jQuery UI CSS error classes will be used to highlight
+invalid fields.
+
 ### jQuery Globalize
 
-If [jQuery.Globalize]
+[jQuery.Globalize] adds some nice internationalization to JavaScript. If available, the *html* and *options*
+subscriber are enabled to use internationalized strings and option lists.
 
 ## Changelog
 
@@ -491,7 +548,7 @@ __0.2.0__
 
 * Improved documentation using DocumentUp
 * QUnit test suite runs test for the complete core
-* Changed API
+* Major API improvements
 
 __0.1.4__
 

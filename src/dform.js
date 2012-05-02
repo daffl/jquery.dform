@@ -153,7 +153,7 @@
 			 * an array of generator functions.
 			 */
 			types : function (name) {
-				return name ? _types[name ] : name;
+				return name ? _types[name ] : _types;
 			},
 			/**
 			 * Register an element type function.
