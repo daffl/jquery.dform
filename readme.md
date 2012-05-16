@@ -270,6 +270,33 @@ Generates:
 		<option value="de" selected="selected">Germany</option>
 	</select>
 
+To use option groups just pass an object of type *optgroup*:
+
+	{
+		"type" : "select",
+		"options" : {
+		  "northamerica" : {
+		    "type" : "optgroup",
+		    "label" : "North America",
+		    "options" : {
+          "us" : "USA",
+          "ca" : "Canada"
+		    }
+		  },
+		  "europe" : {
+		    "type" : "optgroup",
+		    "label" : "Europe",
+		    "options" : {
+		      "de" : {
+            "selected" : "selected",
+            "html" : "Germany"
+          },
+          "fr" : "France"
+		    }
+		  }
+		}
+	}
+
 You can also use options on *checkboxes* and *radiobuttons* which will create a list of *checkbox*
 or *radio* elements:
 
@@ -303,7 +330,7 @@ Adds a caption to the element. The type used depends on the element type:
 * A *label* next to *radio* or *checkbox* elements
 * A *label* before any other element
 
-If the element has its id set the *for* attribute of the label will be set as well.
+If the element has its id set, the *for* attribute of the label will be set as well.
 
 	{
 		"type" : "text",
@@ -342,14 +369,14 @@ Generates:
 
 	<input type="text" class="ui-dform-text" />
 
-Set `$.dform.options.prefix = false;` if you don't want any classes being added.
+Set `$.dform.options.prefix = null;` if you don't want any classes being added.
 
 ### Add your own
 
 It is easy to add your own subscribers. Similar to a type generator you just pass the key name you want to subscribe
 to and a function that takes the options and the type name as a parameter to `$.dform.subscribe`. `this` in the
-subscriber function will refer to the current element. That way it would be possible for example to add an alert to the
-*hellobutton* created in the [types section](#subscribers/add-your-own):
+subscriber function will refer to the current element. That way it is possible to add an alert to the
+*hellobutton* example created in the [types section](#subscribers/add-your-own):
 
 	$.dform.subscribe("alert", function(options, type) {
 		// Just run if the type is a hellobutton
@@ -428,7 +455,7 @@ Returns a new object that contains all value from the given
 object that do not have a key which is also in the array keys.
 
 **$.dform.options**<br />
-Static options for generating a form. Currently only $.dform.options.prefix
+Static options for generating a form. Currently only `$.dform.options.prefix`
 is being used.
 
 **$.dform.defaultType(options)** *{Object}*<br />
@@ -464,9 +491,11 @@ Returns if there is any subscribers with the given name.
 
 ## jQuery UI
 
-jQuery.dForm automatically adds support for jQuery UI if it is available. If the form has the *ui-widget* class
-the plugin will automatically turn buttons into jQuery UI buttons and add corners to *text*, *textarea*, *password*
-and *fieldset* elements.
+jQuery.dForm automatically adds support for whichever jQuery UI plugin is available.
+If the form has the *ui-widget* class the plugin will automatically turn buttons into jQuery UI buttons and add
+corners to *text*, *textarea*, *password* and *fieldset* elements.
+
+> Note: jQuery UI has to be loaded __before__ the plugin.
 
 ### Types
 
@@ -540,11 +569,11 @@ invalid fields.
 ### jQuery Globalize
 
 [jQuery.Globalize] adds some nice internationalization to JavaScript. If available, the *html* and *options*
-subscriber are enabled to use internationalized strings and option lists.
+subscribers are enabled to use internationalized strings and option lists.
 
 ## Changelog
 
-__0.2.0__
+__1.0.0__
 
 * Improved documentation using DocumentUp
 * QUnit test suite runs test for the complete core

@@ -3,7 +3,7 @@ steal.overwrite = true;
 
 steal('steal/build/pluginify').then(function(s)
 {
-	var version = '0.2.0';
+	var version = '1.0.0';
 	print('Building version ' + version);
 	s.build.pluginify('build',
 	{

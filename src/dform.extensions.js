@@ -80,7 +80,7 @@
 				var scoper = this;
 				$.each(options, function(index, options) {
 					var el = $.extend({ "type" : "div" }, options);
-					$(scoper).formElement(el);
+					$(scoper).dform('append', el);
 					if(options.caption) {
 						var label = $(scoper).children("div:last").prev();
 						label.replaceWith('<h3><a href="#">' + label.html() + '</a></h3>');
