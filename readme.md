@@ -161,7 +161,7 @@ Now generates
 ## Subscribers
 
 While type generators are being used to generate a base element for the given type, subscribers attach to
-certain attributes in the options object. When traversing the object all subscribers registered for the
+certain attributes in the options object. When traversing the object, all subscribers registered for the
 current key will be executed on the current element.
 
 ### Core subscribers
@@ -478,16 +478,21 @@ to an array of generator functions will be returned.
 
 **$.dform.addType(name, generator \[, condition\])** *{String}* *{Function}* *{Boolean}*<br />
 Add a new type with a given name and generator function which takes the options as the parameter
-and returns a new element. Optionally pass a condition which will add the type only if
-it returns true.
+and returns a new element. Optionally pass a condition which will add the type only if it is true.
 
-**$.dform.subscribe(name, subscriber \[, condition\])**<br />
-**$.dform.subscribers**<br />
+**$.dform.subscribe(name, subscriber \[, condition\])** *{String}* *{Function}* *{Boolean}*<br />
+Add a new subscriber function for a given name that takes the value and type name as the parameter and will have
+`this` set to the current element. Optionally pass as condition which will add the subscriber only if it is true.
+
+**$.dform.subscribers(\[name\])**<br />
+Returns all subscribers for a given name. If no name is given, an object containing all subscribers will
+be returned.
 
 **$.dform.hasSubscription(name)** *{String}*<br />
-Returns if there is any subscribers with the given name.
+Returns if there is at least one subscriber registered with the given name.
 
-**$.dform.createElement(options)**<br />
+**$.dform.createElement(options)** *{Object}*<br />
+Returns a new element either using a registered type generator or the default type generator.
 
 ## jQuery UI
 
@@ -495,7 +500,7 @@ jQuery.dForm automatically adds support for whichever jQuery UI plugin is availa
 If the form has the *ui-widget* class the plugin will automatically turn buttons into jQuery UI buttons and add
 corners to *text*, *textarea*, *password* and *fieldset* elements.
 
-> Note: jQuery UI has to be loaded __before__ the plugin.
+> Note: jQuery UI has to be loaded __before__ the dForm plugin.
 
 ### Types
 
@@ -563,8 +568,7 @@ to the element:
 		}
 	}
 
-If the form has the *ui-widget* class the jQuery UI CSS error classes will be used to highlight
-invalid fields.
+If the form has the *ui-widget* class the jQuery UI CSS error classes will be used to highlight fields.
 
 ### jQuery Globalize
 

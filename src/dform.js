@@ -8,14 +8,14 @@
 	var _subscriptions = {},
 		_types = {},
 		each = $.each,
-		addToObject = function(obj) {
+		addToObject = function (obj) {
 			var result = function (data, fn, condition) {
-				if(typeof data === 'object') {
-					$.each(data, function(name, val) {
+				if (typeof data === 'object') {
+					$.each(data, function (name, val) {
 						result(name, val, condition);
 					});
-				} else if(condition === undefined || condition === true) {
-					if(!obj[data]) {
+				} else if (condition === undefined || condition === true) {
+					if (!obj[data]) {
 						obj[data] = [];
 					}
 					obj[data].push(fn);
@@ -30,7 +30,7 @@
 		 * @param {Object} object The object to use
 		 * @return {Array} An array containing all properties in the object
 		 */
-		keyset = function (object) {
+			keyset = function (object) {
 			return $.map(object, function (val, key) {
 				return key;
 			});
@@ -44,7 +44,7 @@
 		 * @return {Object} A new object containing only the properties
 		 * with names given in keys
 		 */
-		withKeys = function (object, keys) {
+			withKeys = function (object, keys) {
 			var result = {};
 			each(keys, function (index, value) {
 				if (object[value]) {
@@ -62,7 +62,7 @@
 		 * @return {Object} A new object with all properties of the given object, except
 		 * for the ones given in the list of keys
 		 */
-		withoutKeys = function (object, keys) {
+			withoutKeys = function (object, keys) {
 			var result = {};
 			each(object, function (index, value) {
 				if (!~$.inArray(index, keys)) {
@@ -80,7 +80,7 @@
 		 * @param {String} type The type of the current element as in the registered types
 		 * @return {Object} The jQuery object
 		 */
-		runSubscription = function (name, options, type) {
+			runSubscription = function (name, options, type) {
 			if ($.dform.hasSubscription(name)) {
 				this.each(function () {
 					var element = $(this);
@@ -98,7 +98,7 @@
 		 * @param {Object} options The options to use
 		 * @return {Object} The jQuery element this function has been called on
 		 */
-		runAll = function (options) {
+			runAll = function (options) {
 			var type = options.type, self = this;
 			// Run preprocessing subscribers
 			this.dform('run', '[pre]', options, type);
@@ -171,7 +171,7 @@
 			 * @return {Object} Mapping from subscriber names
 			 * to an array of subscriber functions.
 			 */
-			subscribers : function(name) {
+			subscribers : function (name) {
 				return name ? _subscriptions[name] : _subscriptions;
 			},
 			/**
@@ -189,7 +189,7 @@
 			 *
 			 * @param {String} name The subscriber name
 			 * @return {Boolean} True if the given name has at least one subscriber registered,
-			 *	 false otherwise
+			 *     false otherwise
 			 */
 			hasSubscription : function (name) {
 				return _subscriptions[name] ? true : false;
@@ -199,7 +199,7 @@
 			 *
 			 * @param {Object} options - The options to use
 			 * @return {Object} The element as created by the builder function specified
-			 *	 or returned by the defaultType function.
+			 *     or returned by the defaultType function.
 			 */
 			createElement : function (options) {
 				if (!options.type) {
@@ -207,7 +207,7 @@
 				}
 				var type = options.type,
 					element = null,
-					// We don't need the type key in the options
+				// We don't need the type key in the options
 					opts = $.withoutKeys(options, ["type"]);
 
 				if (_types[type]) {
@@ -286,7 +286,9 @@
 					}
 					options.success = function (data) {
 						self.dform(data);
-						success(data);
+						if(success) {
+							success(data, self);
+						}
 					}
 					$.ajax(options);
 				},
@@ -318,12 +320,19 @@
 	 * @param {String} converter The name of the converter in $.dform.converters
 	 * that will be used to convert the options
 	 */
-	$.fn.dform = function (options, converter) {
+	$.fn.dform = function (options, converter, error) {
 		var self = $(this);
 		if ($.dform.methods[options]) {
 			$.dform.methods[options].apply(self, Array.prototype.slice.call(arguments, 1));
 		} else {
-			$.dform.methods.init.apply(self, arguments);
+			if (typeof options === 'string') {
+				$.dform.methods.ajax.call(self, {
+					url : options,
+					dataType : 'json'
+				}, converter, error);
+			} else {
+				$.dform.methods.init.apply(self, arguments);
+			}
 		}
 		return this;
 	}

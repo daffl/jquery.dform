@@ -56,4 +56,13 @@ $(document).ready(function () {
 		equal(created.attr('id'), 'test-id', 'ID added');
 		equal(created.data('test'), 'Test data attribute', 'Added test data attribute');
 	});
+
+	test("Ajax", function() {
+		stop();
+		$('<div>').dform('test.json', function(data, form) {
+			equal(data.html, 'The test', 'Data passed to success callback');
+			equal(form.html(), 'The test', 'Form got created');
+			start();
+		});
+	})
 });
