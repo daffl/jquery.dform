@@ -10,7 +10,7 @@ __Some things you can do:__
 
 ## Get started
 
-[Download the latest version 1.0.0](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.0.0.min.js)
+[Download the latest version 1.0.0](https://github.com/downloads/daffl/jquery.dform/jquery.dform-1.0.0.min.js)
 (~7 Kb minified)
 
 Include it in your jQuery powered page and try this:
@@ -62,8 +62,7 @@ Or to load quickly load an external form definition:
 
 __Learn more:__
 
-* Play around with this example as a JSFiddle
-* Check out the get started page for more examples
+* Play around with this example [as a JSFiddle](http://jsfiddle.net/Zt4Rz/)
 * Visit the [jQuery.dForm Group](http://groups.google.com/group/jquery-dform)
 * Watch and fork the project on [GitHub](http://github.com/daffl/jquery.dform/)
 * Follow [@daffl](http://twitter.com/daffl) on Twitter
