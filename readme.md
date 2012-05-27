@@ -49,13 +49,14 @@ Include it in your jQuery powered page and try this:
 	</script>
 	<form id="myform"></form>
 
-Or to load quickly load an external form definition:
+Or to quickly load an external form definition:
 
 	<script type="text/javascript">
 		$(function() {
 		  // Load the form object from path/to/form.json
 			$("#myform").dform('path/to/form.json', function(data) {
-			  this //-> $('#myform')
+			  this //-> Generated $('#myform')
+			  data //-> data from path/to/form.json
 			});
 	</script>
 	<form id="myform"></form>
@@ -71,7 +72,7 @@ __Learn more:__
 ## Types
 
 Type generators are functions that return a new jQuery DOM object for a specific type. If there is no type generator
-for that type, a basic HTML tag with that name will be created. Every other key in the JavaScript or JSON object
+for that type, a basic HTML tag with that name will be created. Every other key in the JavaScript object
 you pass (the dForm object) will be used as an HTML attribute, except if there is a [subscriber](#subscribers)
 registered for that key. A plugin call like this:
 
@@ -114,10 +115,10 @@ Creates a radio button
 Creates a checkbox
 
 **radiobuttons** `{ "type" : "radiobuttons" }`<br />
-Creates a group of radiobuttons (uses options subscriber explained below)
+Creates a group of radiobuttons (uses *options* subscriber explained below)
 
 **checkboxes** `{ "type" : "checkboxes" }`<br />
-Creates a group of checkboxes (uses options subscriber explained below)
+Creates a group of checkboxes (uses *options* subscriber explained below)
 
 **number** `{ "type" : "number" }`<br />
 Creates an HTML 5 number input field
@@ -172,8 +173,8 @@ Now generates
 ## Subscribers
 
 While type generators are being used to generate a base element for the given type, subscribers attach to
-certain attributes in the options object. When traversing the object, all subscribers registered for the
-current key will be executed on the current element.
+certain attributes in the dForm object. When traversing the object, all subscribers registered for that
+key will be executed on the current element.
 
 ### Core subscribers
 
@@ -432,7 +433,7 @@ method name as the first parameter to call different methods:
 
 **$(form).dform(options \[, converter\])** *{Object}* *{String}*<br />
 Append the dForm object to each selected element. If the element is of the same type (e.g. if you are appending
-a `type : 'form'` on a `<form>` or if no type has been given) run the subscribers and
+a `type : 'form'` on a `<form>`) or if no type has been given run the subscribers and
 add the attributes on the current element. Optionally use a converter with a given name.
 
 **$(form).dform(url \[, success\])** *{String}* *{Function}*<br />
