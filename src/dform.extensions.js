@@ -6,17 +6,19 @@
  */
 (function($)
 {
-	/**
-	 * Returns a object containing the options for a jQuery UI widget.
-	 * The options will be taken from jQuery.ui.[typename].prototype.options
-	 *
-	 * @param type The jQuery UI type
-	 * @param options The options to evaluate
-	 */
 	var _getOptions = function(type, options)
-	{
-		return $.withKeys(options, $.keyset($.ui[type]["prototype"]["options"]));
-	}
+		{
+			return $.withKeys(options, $.keyset($.ui[type]["prototype"]["options"]));
+		},
+		_get = function(keys, obj) {
+			for(var item = obj, i = 0; i < keys.length; i++) {
+				item = item[keys[i]];
+				if(!item) {
+					return null;
+				}
+			}
+			return item;
+		}
 		
 	$.dform.addType("progressbar",
 		/**
@@ -262,25 +264,7 @@
 			}
 		}, $.isFunction($.fn.ajaxForm));
 
-	function _getTranslate(options)
-	{
-		if ($.isFunction(options.split)) 
-		{
-			var elements = options.split('.');
-			if (elements.length > 1) 
-			{
-				var area = elements.shift();
-				var translations = jQuery.global.localize(area);
-				if (translations) 
-				{
-					return $.getValueAt(translations, elements);
-				}
-			}
-		}
-		return false;
-	}
-
-	$.dform.subscribe(('html',
+	$.dform.subscribe('html',
 		/**
 		 * Extends the html subscriber that will replace any string with it's translated
 		 * equivalent using the jQuery Global plugin. The html content will be interpreted
@@ -293,39 +277,13 @@
 		function(options, type)
 		{
 			if(typeof options === 'string') {
-				var translated = _getTranslate(options);
-				if(translated) {
+				var keys = options.split('.'),
+					translated = Globalize.localize(keys.shift());
+				if(translated = _get(keys, translated)) {
 					$(this).html(translated);
 				}
 			}
-		}, $.global && $.isFunction($.global.localize)));
-
-	/**
-	 * Returns the value in an object based on the given dot separated
-	 * path or false if not found.
-	 *
-	 *	 $.getValueAt({ "test" : { "inner" : { "value" : "X" }}}, "test.inner.value")
-	 *	 // will return "X"
-	 *
-	 * @param {Object} object The object to traverse
-	 * @param {String|Array} path The path to use. It can be either a dot separated string or
-	 * an array of indexes.
-	 * @return {Object|Boolean} The objects value or false
-	 */
-	if($.global) {
-		$.getValueAt = function (object, path)
-		{
-			var elements = isArray(path) ? path : path.split('.');
-			var result = object;
-			for (var i = 0; i < elements.length; i++) {
-				var current = elements[i];
-				if (!result[current])
-					return false;
-				result = result[current];
-			}
-			return result;
-		}
-	}
+		}, typeof Globalize !== 'undefined' && $.isFunction(Globalize.localize));
 
 	$.dform.subscribe('options',
 		/**
@@ -337,12 +295,13 @@
 		 */
 		function(options, type)
 		{
-			if(type === 'select' && (typeof(options) === 'string')) {
+			if(type === 'select' && typeof(options) === 'string') {
 				$(this).html('');
-				var optlist = _getTranslate(options);
-				if(optlist) {
+				var keys = options.split('.'),
+					optlist = Globalize.localize(keys.shift());
+				if(optlist = _get(keys, optlist)) {
 					$(this).dform('run', 'options', optlist, type);
 				}
 			}
-		}, $.global);
+		}, typeof Globalize !== 'undefined' && $.isFunction(Globalize.localize));
 })(jQuery);

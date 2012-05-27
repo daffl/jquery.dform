@@ -287,7 +287,7 @@
 					options.success = function (data) {
 						self.dform(data);
 						if(success) {
-							success(data, self);
+							success.call(self, data);
 						}
 					}
 					$.ajax(options);

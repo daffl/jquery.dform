@@ -28,8 +28,7 @@ $(document).ready(function () {
 
 	module('Plugin')
 
-	test("Call method", function () {
-		expect(3);
+	test("Call method", 3, function () {
 		$.dform.methods.test = function (name, age) {
 			equal(name, 'Tester');
 			equal(age, 42);
@@ -57,11 +56,11 @@ $(document).ready(function () {
 		equal(created.data('test'), 'Test data attribute', 'Added test data attribute');
 	});
 
-	test("Ajax", function() {
+	test("Ajax", 2, function() {
 		stop();
-		$('<div>').dform('test.json', function(data, form) {
+		$('<div>').dform('test.json', function(data) {
 			equal(data.html, 'The test', 'Data passed to success callback');
-			equal(form.html(), 'The test', 'Form got created');
+			equal(this.html(), 'The test', 'Form got created');
 			start();
 		});
 	})

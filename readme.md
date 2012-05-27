@@ -3,20 +3,21 @@ with a focus on HTML forms.
 
 __Some things you can do:__
 
-* use JavaScript and JSON instead of HTML markup since your page doesn't run without JS anyway
 * naturally generate JavaScript enhanced markup with your own extensions and custom types
+* use JavaScript and JSON instead of HTML markup since your page doesn't run without JS anyway
 * have an easy way to include jQuery UI elements and other jQuery plugins (some supported out of the box)
 * scaffold forms from business objects of your server side framework
 
 ## Get started
 
-[Download the latest version 0.2.0](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-0.2.0.min.js)
+[Download the latest version 1.0.0](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.0.0.min.js)
 (~7 Kb minified)
 
 Include it in your jQuery powered page and try this:
 
 	<script type="text/javascript">
 		$(function() {
+		  // Generate a form
 			$("#myform").dform({
 			    "action" : "index.html",
 			    "method" : "get",
@@ -45,6 +46,17 @@ Include it in your jQuery powered page and try this:
 			    ]
 			});
 		});
+	</script>
+	<form id="myform"></form>
+
+Or to load quickly load an external form definition:
+
+	<script type="text/javascript">
+		$(function() {
+		  // Load the form object from path/to/form.json
+			$("#myform").dform('path/to/form.json', function(data) {
+			  this //-> $('#myform')
+			});
 	</script>
 	<form id="myform"></form>
 
@@ -424,6 +436,10 @@ Append the dForm object to each selected element. If the element is of the same 
 a `type : 'form'` on a `<form>` or if no type has been given) run the subscribers and
 add the attributes on the current element. Optionally use a converter with a given name.
 
+**$(form).dform(url \[, success\])** *{String}* *{Function}*<br />
+Load a JSON form definition using GET from a given URL and execute a success handler when it returns.
+The handler gets the data passed and has `this` refer to the form element.
+
 **$(form).dform('run', options)** *{Object}*<br />
 Run all subscribers from a given dForm object on the selected element(s).
 
@@ -439,7 +455,8 @@ given name.
 Set each attribute from the options object that doesn't have a corresponding subscriber registered.
 
 **$(form).dform('ajax', params \[, success\] \[, error\])** *{Object|String}* *{Function}* *{Function}*<br />
-Load a form definition using Ajax.
+Load a form definition using Ajax. The params take the same options as a
+[jQuery Ajax](http://api.jquery.com/jQuery.ajax/) call.
 
 ### Static functions
 
@@ -526,30 +543,93 @@ Creates a [slider element](http://jqueryui.com/demos/slider/).
 	}
 
 **accordion** `{ "type" : "accordion" }`<br />
-Creates a container for a jQuery UI accordion. Use the *entries* subscriber to add elements.
+Creates a container for a jQueryUI accordion. Use the *entries* subscriber to add elements.
+You can use any [jQueryUI accordion option](http://jqueryui.com/demos/accordion/) in the definition.
+The caption in each entries element will be used as the accordion heading:
+
+    {
+      "type" : "accordion",
+      "animated" : "bounceslide",
+      "entries" : [
+        {
+          "caption" : "First entry",
+          "html" : "Content 1"
+        },
+        {
+          "caption" : "Second entry",
+          "html" : "Content 2"
+        }
+      ]
+    }
 
 **tabs** `{ "type" : "tabs" }`<br />
 Creates a container for a set of jQuery UI tabs. Use the *entries* subscriber to add elements.
+You can use any [jQueryUI tabs option](http://jqueryui.com/demos/tabs/) in the definition.
+The caption in each entries element will be used as the tab heading. You can either pass an array
+of entries and set the *id* attribute individually or an object which will use the key name as the id:
+
+    {
+      "type" : "accordion",
+      "entries" : [
+        {
+          "caption" : "Tab 1",
+          "id" : "first",
+          "html" : "Content 1"
+        },
+        {
+          "caption" : "Tab 2",
+          "id" : "second",
+          "html" : "Content 2"
+        }
+      ]
+    }
+
+Which is equivalent to:
+
+    {
+      "type" : "accordion",
+      "entries" : {
+        "first": {
+          "caption" : "Tab 1",
+          "html" : "Content 1"
+        },
+        "second" : {
+          "caption" : "Tab 2",
+          "html" : "Content 2"
+        }
+      ]
+    }
 
 ### Subscribers
 
-Some other features have been implemented as subscriber, e.g. adding entries to an accordion or making an element
-resizable:
+Some other features have been implemented as subscribers:
 
 **entries** *{Object}*<br />
-Add entries to an *accordion* or *tabs* element.
+Add entries to an *accordion* or *tabs* element. See the accordion and tabs type documentation for examples.
 
 **dialog** *{Object}*<br />
+Turns the current element into a jQueryUI dialog. Pass the [jQueryUI dialog options](http://jqueryui.com/demos/dialog/)
+or an empty object for the defaults.
 
 **resizable** *{Object}*<br />
+Makes the current element resizable. Pass the [jQueryUI resizable options](http://jqueryui.com/demos/resizable/)
+or an empty object for the defaults.
 
 **datepicker** *{Object}*<br />
+Adds a datepicker to a text element. Pass the [jQueryUI datepicker options](http://jqueryui.com/demos/datepicker/)
+or an empty object for the defaults:
+
+    {
+      "type" : "text",
+      "datepicker" : {
+        "minDate" : "+1"
+      }
+    }
 
 **autocomplete** *{Object}*<br />
+Adds autocomplete functionality to a text element. Pass the [jQueryUI autocomplete options](http://jqueryui.com/demos/autocomplete/).
 
 ## Other plugins
-
-### Form plugin
 
 ### Form validation
 
@@ -572,15 +652,56 @@ If the form has the *ui-widget* class the jQuery UI CSS error classes will be us
 
 ### jQuery Globalize
 
-[jQuery.Globalize] adds some nice internationalization to JavaScript. If available, the *html* and *options*
-subscribers are enabled to use internationalized strings and option lists.
+[jQuery.Globalize](https://github.com/jquery/globalize) adds internationalization to JavaScript.
+If available, the *html* and *options* subscribers will be enabled to use internationalized strings and option lists.
+For example with Globalize configured like this:
+
+    Globalize.culture('de');
+		Globalize.addCultureInfo( "de", {
+      messages: {
+        "stuff" : {
+          "hello" : "Hallo Welt",
+          "options" : {
+            "de" : "Deutschland",
+            "ca" : "Kanada",
+            "fr" : "Frankreich"
+          }
+        }
+      }
+    });
+
+You can create an internationalized form like this:
+
+    {
+      "type" : "div",
+      "html" : "stuff.hello"
+    }
+
+Which generates:
+
+    <div class="ui-dform-div">Hallo Welt</div>
+
+And an options list like:
+
+    {
+      "type" : "select",
+      "html" : "stuff.options"
+    }
+
+Generates:
+
+    <select class="ui-dform-select">
+      <option value="de">Deutschland</option>
+      <option value="ca">Kanada</option>
+      <option value="fr">Frankreich</option>
+    </select>
 
 ## Changelog
 
 __1.0.0__
 
 * Improved documentation using DocumentUp
-* QUnit test suite runs test for the complete core
+* QUnit test suite
 * Major API improvements
 
 __0.1.4__

@@ -102,7 +102,8 @@
 		 */
 		"options" : function (options, type) {
 			var self = this;
-			if (type === "select" || type === "optgroup") // Options for select elements
+			// Options for select elements
+			if ((type === "select" || type === "optgroup") && typeof options !== 'string')
 			{
 				each(options, function (value, content) {
 					var option = { type : 'option', value : value };

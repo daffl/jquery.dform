@@ -4,6 +4,11 @@
 <head>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
+
+  <script type="text/javascript" src="libs/globalize.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+
 	<script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
 	<script type="text/javascript" src="../src/dform.js"></script>
 	<script type="text/javascript" src="../src/dform.core.js"></script>
@@ -14,6 +19,7 @@
 	<script type="text/javascript" src="test_types.js"></script>
 	<script type="text/javascript" src="test_subscribers.js"></script>
 	<script type="text/javascript" src="test_extensions.js"></script>
+  <script type="text/javascript" src="test_jqueryui.js"></script>
 
 	<title>jQuery dForm - QUnit tests</title>
 </head>
@@ -24,5 +30,6 @@
 	<h2 id="qunit-userAgent"></h2>
 	<ol id="qunit-tests"></ol>
 	<div id="qunit-fixture">test markup, will be hidden</div>
+  <div id="qunit-testarea"></div>
 </body>
 </html>
