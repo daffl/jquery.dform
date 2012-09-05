@@ -1,0 +1,13 @@
+{
+  "name": "jquery.dform",
+  "description": "A flexible JavaScript Object and JSON to HTML converter with a focus on forms ",
+  "version": "1.0.1",
+  "homepage": "http://daffl.github.com/jquery.dform",
+  "author": "David Luecke",
+  "scripts" : {
+    "test" : "grunt test"
+  },
+  "devDependencies" : {
+    "grunt" : "> 0.3.0"
+  }
+}

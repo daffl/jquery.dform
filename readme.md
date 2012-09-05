@@ -685,7 +685,7 @@ And an options list like:
 
     {
       "type" : "select",
-      "html" : "stuff.options"
+      "options" : "stuff.options"
     }
 
 Generates:

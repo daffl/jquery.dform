@@ -83,6 +83,6 @@ $(document).ready(function () {
 		ok(div2.find('.ui-tabs-nav li:eq(0) a').attr('href'), '#first', 'First id set from object');
 		ok(div2.find('.ui-tabs-nav li:eq(1) a').attr('href'), '#second', 'Second id set from object');
 
-		console.log(div);
+		// console.log(div);
 	});
 });
