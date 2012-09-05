@@ -6,3 +6,4 @@
 tmp/**
 docs**
 .idea
+node_modules
