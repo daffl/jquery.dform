@@ -4,8 +4,13 @@
   "version": "1.0.1",
   "homepage": "http://daffl.github.com/jquery.dform",
   "author": "David Luecke",
+  "license" : "MIT",
   "scripts" : {
     "test" : "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daffl/jquery.dform.git"
   },
   "devDependencies" : {
     "grunt" : "> 0.3.0"
