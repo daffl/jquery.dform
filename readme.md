@@ -569,7 +569,7 @@ The caption in each entries element will be used as the tab heading. You can eit
 of entries and set the *id* attribute individually or an object which will use the key name as the id:
 
     {
-      "type" : "accordion",
+      "type" : "tabs",
       "entries" : [
         {
           "caption" : "Tab 1",
@@ -587,7 +587,7 @@ of entries and set the *id* attribute individually or an object which will use t
 Which is equivalent to:
 
     {
-      "type" : "accordion",
+      "type" : "tabs",
       "entries" : {
         "first": {
           "caption" : "Tab 1",
@@ -597,7 +597,7 @@ Which is equivalent to:
           "caption" : "Tab 2",
           "html" : "Content 2"
         }
-      ]
+      }
     }
 
 ### Subscribers
@@ -777,4 +777,4 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[![Build Status](https://secure.travis-ci.org/daffl/uberproto.png)](http://travis-ci.org/daffl/uberproto)
+[![Build Status](https://secure.travis-ci.org/daffl/jquery.dform.png)](http://travis-ci.org/daffl/jquery.dform)
