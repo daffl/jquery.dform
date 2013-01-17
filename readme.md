@@ -10,7 +10,7 @@ __Some things you can do:__
 
 ## Get started
 
-[Download the latest version 1.0.0](https://github.com/downloads/daffl/jquery.dform/jquery.dform-1.0.0.min.js)
+[Download the latest version 1.0.0](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.0.1.min.js)
 (~7 Kb minified)
 
 Include it in your jQuery powered page and try this:
