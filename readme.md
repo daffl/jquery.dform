@@ -10,7 +10,8 @@ __Some things you can do:__
 
 ## Get started
 
-[Download the latest version 1.0.0](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.0.1.min.js)
+[Download the latest version 1.0.1](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.0.1.js)
+([min](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.0.1.min.js))
 (~7 Kb minified)
 
 Include it in your jQuery powered page and try this:
@@ -61,9 +62,14 @@ Or to quickly load an external form definition:
 	</script>
 	<form id="myform"></form>
 
+
+__Demo:__
+
+<iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/Daff/Zt4Rz/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
 __Learn more:__
 
-* Play around with this example [as a JSFiddle](http://jsfiddle.net/Zt4Rz/)
+* Visit the above example [on jsfiddle.com](http://jsfiddle.net/Daff/Zt4Rz/)
 * Visit the [jQuery.dForm Group](http://groups.google.com/group/jquery-dform)
 * Watch and fork the project on [GitHub](http://github.com/daffl/jquery.dform/)
 * Follow [@daffl](http://twitter.com/daffl) on Twitter
@@ -698,6 +704,13 @@ Generates:
 
 ## Changelog
 
+__1.0.1__
+
+* Updated and fixed documentation
+* Added [jQuery plugin](http://plugins.jquery.com) deploy information
+* Moved away from GitHub downloads
+* Verified jQuery 1.9.0 compatibility
+
 __1.0.0__
 
 * Improved documentation using DocumentUp
@@ -754,7 +767,7 @@ __0.1__
 
 ## License
 
-Copyright (C) 2012 [David Luecke](http://daffl.github.com), [http://daffl.github.com/jquery.dform]
+Copyright (C) 2013 [David Luecke](http://daffl.github.com), [http://daffl.github.com/jquery.dform]
 
 The MIT license:
 
