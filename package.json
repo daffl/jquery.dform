@@ -13,7 +13,8 @@
 		"url": "https://github.com/daffl/jquery.dform.git"
 	},
 	"devDependencies": {
-		"grunt": "> 0.3.0",
+		"grunt": "~ 0.4.0",
+		"grunt-cli": "~ 0.1.0",
 		"grunt-contrib-concat": "*",
 		"grunt-contrib-uglify": "*",
 		"grunt-contrib-qunit": "*"
