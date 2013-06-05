@@ -712,6 +712,13 @@ Generates:
 
 ## Changelog
 
+__1.1.0__
+
+* Added `url` subscriber ([#22](https://github.com/daffl/jquery.dform/issues/22))
+* Better Ajax support ([#35](https://github.com/daffl/jquery.dform/issues/35))
+* Added dist files to GitHub pages for better CDN support
+* Registered bower package: `bower install jquery.dform`
+
 __1.0.1__
 
 * Updated and fixed documentation
