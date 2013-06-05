@@ -442,9 +442,9 @@ Append the dForm object to each selected element. If the element is of the same 
 a `type : 'form'` on a `<form>`) or if no type has been given run the subscribers and
 add the attributes on the current element. Optionally use a converter with a given name.
 
-**$(form).dform(url \[, success\])** *{String}* *{Function}*<br />
-Load a JSON form definition using GET from a given URL and execute a success handler when it returns.
-The handler gets the data passed and has `this` refer to the form element.
+**$(form).dform(url \[, success\], \[, error\])** *{String}* *{Function}* *{Function}*<br />
+Load a JSON form definition using GET from a given URL and execute a success handler when it returns
+or an error handler if the request faiuls. The handler gets the data passed and has `this` refer to the form element.
 
 **$(form).dform('run', options)** *{Object}*<br />
 Run all subscribers from a given dForm object on the selected element(s).

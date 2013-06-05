@@ -30,7 +30,7 @@
 		 * @param {Object} object The object to use
 		 * @return {Array} An array containing all properties in the object
 		 */
-			keyset = function (object) {
+		keyset = function (object) {
 			return $.map(object, function (val, key) {
 				return key;
 			});
@@ -44,7 +44,7 @@
 		 * @return {Object} A new object containing only the properties
 		 * with names given in keys
 		 */
-			withKeys = function (object, keys) {
+		withKeys = function (object, keys) {
 			var result = {};
 			each(keys, function (index, value) {
 				if (object[value]) {
@@ -80,7 +80,7 @@
 		 * @param {String} type The type of the current element as in the registered types
 		 * @return {Object} The jQuery object
 		 */
-			runSubscription = function (name, options, type) {
+		runSubscription = function (name, options, type) {
 			if ($.dform.hasSubscription(name)) {
 				this.each(function () {
 					var element = $(this);
@@ -98,7 +98,7 @@
 		 * @param {Object} options The options to use
 		 * @return {Object} The jQuery element this function has been called on
 		 */
-			runAll = function (options) {
+		runAll = function (options) {
 			var type = options.type, self = this;
 			// Run preprocessing subscribers
 			this.dform('run', '[pre]', options, type);
@@ -278,17 +278,17 @@
 				 */
 				ajax : function (params, success, error) {
 					var options = {
+						success: function (data) {
+							self.dform(data);
+							if(success) {
+								success.call(self, data);
+							}
+						},
 						error : error,
 						url : params
 					}, self = this;
 					if (typeof params !== 'string') {
 						$.extend(options, params);
-					}
-					options.success = function (data) {
-						self.dform(data);
-						if(success) {
-							success.call(self, data);
-						}
 					}
 					$.ajax(options);
 				},

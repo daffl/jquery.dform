@@ -61,7 +61,10 @@ $(document).ready(function () {
 		$('<div>').dform('test.json', function(data) {
 			equal(data.html, 'The test', 'Data passed to success callback');
 			equal(this.html(), 'The test', 'Form got created');
-			start();
+			$('<div>').dform('missing.json', function() {}, function() {
+				ok(true, 'Error handler called');
+				start();
+			});
 		});
 	})
 });
