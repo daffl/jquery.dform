@@ -62,7 +62,7 @@
 		 * @return {Object} A new object with all properties of the given object, except
 		 * for the ones given in the list of keys
 		 */
-			withoutKeys = function (object, keys) {
+		withoutKeys = function (object, keys) {
 			var result = {};
 			each(object, function (index, value) {
 				if (!~$.inArray(index, keys)) {
@@ -278,17 +278,18 @@
 				 */
 				ajax : function (params, success, error) {
 					var options = {
-						success: function (data) {
-							self.dform(data);
-							if(success) {
-								success.call(self, data);
-							}
-						},
 						error : error,
 						url : params
 					}, self = this;
 					if (typeof params !== 'string') {
 						$.extend(options, params);
+					}
+					options.success = function (data) {
+						var callback = success || params.success;
+						self.dform(data);
+						if(callback) {
+							callback.call(self, data);
+						}
 					}
 					$.ajax(options);
 				},

@@ -195,10 +195,9 @@
 		 * @param options
 		 * @param type
 		 */
-		"url" : function (options, type) {
-			// TODO this.buildForm(options);
+		"url" : function (options) {
+			this.dform('ajax', options);
 		},
-
 		/**
 		 * Post processing function, that will run whenever all other subscribers are finished.
 		 *

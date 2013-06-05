@@ -375,6 +375,14 @@ Generates:
 		<legend type="ui-dform-legend">Address</label>
 	</fieldset>
 
+**url** *{String|Object}*<br />
+The `url` subscriber issues a `$(element).dform('ajax', options)` request to load content from remote files.
+
+	{
+		"type" : "div",
+		"url": "form.json"
+	}
+
 **type** *{String}*<br />
 Besides looking up the correct Type Generator it also adds a dform specific class to the element using
 `$.dform.options.prefix` (*ui-dform-* by default) and the type name.

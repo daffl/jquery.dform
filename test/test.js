@@ -56,7 +56,7 @@ $(document).ready(function () {
 		equal(created.data('test'), 'Test data attribute', 'Added test data attribute');
 	});
 
-	test("Ajax", 2, function() {
+	test("Ajax", 3, function() {
 		stop();
 		$('<div>').dform('test.json', function(data) {
 			equal(data.html, 'The test', 'Data passed to success callback');

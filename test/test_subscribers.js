@@ -70,9 +70,9 @@ $(document).ready(function () {
 
 	test("caption", function () {
 		var simple = $('<div>').dform({
-			type : 'text',
-			caption : 'The test'
-		}).find('label'),
+				type : 'text',
+				caption : 'The test'
+			}).find('label'),
 			asElement = $('<div>').dform({
 				type : 'text',
 				caption : {
@@ -89,9 +89,9 @@ $(document).ready(function () {
 
 	test("options", function () {
 		var options = {
-			test1 : 'Test 1',
-			test2 : 'Test 2'
-		},
+				test1 : 'Test 1',
+				test2 : 'Test 2'
+			},
 			select = $('<select>').dform({
 				type : 'select',
 				options : $.extend(true, { test3 : {
@@ -108,5 +108,19 @@ $(document).ready(function () {
 		equal(select.val(), 'test3', 'Value set properly');
 		ok(checkboxes.find('[type="checkbox"][value="test1"]').length);
 		equal(checkboxes.find('label:first').html(), 'Test 1', 'Set for and found label');
+	});
+
+	test("url", function() {
+		stop();
+		$('<div>').dform({
+			type: 'div',
+			url: {
+				url: 'test.json',
+				success: function() {
+					equal($(this).html(), 'The test', 'Subscriber ran, got text');
+					start();
+				}
+			}
+		});
 	});
 });
