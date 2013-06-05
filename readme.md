@@ -10,8 +10,8 @@ __Some things you can do:__
 
 ## Get started
 
-[Download the latest version 1.0.1](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.0.1.js)
-([min](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.0.1.min.js))
+[Download the latest version 1.1.0](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.1.0.js)
+([min](https://raw.github.com/daffl/jquery.dform/master/dist/jquery.dform-1.1.0.min.js))
 (~7 Kb minified)
 
 Include it in your jQuery powered page and try this:
