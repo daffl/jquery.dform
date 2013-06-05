@@ -6,7 +6,7 @@
   "author": "David Luecke",
   "license": "MIT",
   "scripts": {
-    "test": "grunt qunit"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
