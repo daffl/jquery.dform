@@ -265,8 +265,7 @@ Generates:
 	<div class="ui-dform-div" style="background-color: #FF0000; display: none;"></div>
 
 **options** *{Object}*<br />
-Generates a list of options from a value to text (or dForm Object) mapping for elements of type *select*, *radiobuttons*
-or *checkboxes*.
+Generates a list of options from a value to text (or dForm Object) mapping for elements of type *select*:
 
 	{
 		"type" : "select",
@@ -287,7 +286,21 @@ Generates:
 		<option value="ca">Canada</option>
 		<option value="de" selected="selected">Germany</option>
 	</select>
+	
+*radiobuttons* and *checkboxes* work similarly:
 
+	{
+		"type" : "select",
+		"options" : {
+			"us" : "USA",
+			"ca" : {
+				"checked" : "checked",
+				"caption" : "Canada"
+			},
+			"de" : "Germany"
+		}
+	}
+	
 To use option groups just pass an object of type *optgroup*:
 
 	{
