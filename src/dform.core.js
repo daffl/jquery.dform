@@ -125,7 +125,7 @@
 					} else {
 						$.extend(boxoptions, content);
 					}
-					boxoptions["value"] = typeof content["value"] !== 'undefined' ? content["value"]  : value;
+					boxoptions["value"] = typeof (content["value"]) !== 'undefined' ? content["value"]  : value;
 					self.dform('append', boxoptions);
 				});
 			}
