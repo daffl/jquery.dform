@@ -118,8 +118,12 @@
 			}
 			else if (type === "checkboxes" || type === "radiobuttons") {
 				// Options for checkbox and radiobutton lists
+				var n = 0;
 				each(options, function (value, content) {
 					var boxoptions = ((type === "radiobuttons") ? { "type" : "radio" } : { "type" : "checkbox" });
+					if (self.attr("id")) {
+						boxoptions["id"] = self.attr("id") + (n++);
+					}
 					if (typeof(content) === "string") {
 						boxoptions["caption"] = content;
 					} else {
@@ -157,7 +161,7 @@
 				this.dform('append', ops);
 			} else {
 				ops.type = "label";
-				if (this.attr("id")) {
+				if (type !== "checkboxes" && type !== "radiobuttons" && this.attr("id")) {
 					ops["for"] = this.attr("id");
 				}
 				var label = $($.dform.createElement(ops));
