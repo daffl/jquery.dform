@@ -38,6 +38,7 @@
 		url : _element('<input type="url" />'),
 		tel : _element('<input type="tel" />'),
 		email : _element('<input type="email" />'),
+		color : _element('<input type="color" />'),
 		checkboxes : _element("<div>", ["name"]),
 		radiobuttons : _element("<div>", ["name"])
 	});
