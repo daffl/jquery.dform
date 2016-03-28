@@ -59,6 +59,7 @@ Or to quickly load an external form definition:
 			  this //-> Generated $('#myform')
 			  data //-> data from path/to/form.json
 			});
+		});
 	</script>
 	<form id="myform"></form>
 
