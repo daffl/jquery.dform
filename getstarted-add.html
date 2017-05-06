@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Get started with jQuery dForm</title>
+		<!-- Load jQuery and the minified plugin -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.dform-0.1.3.min.js"></script>
+        <script type="text/javascript" src="src/dform.add.js"></script>
+        <script type='text/javascript'>
+            $(document).ready(function(){
+				// Create a form from some JSON
+           var formp =  {
+                    "action" : "index.html",
+                    "method" : "post",
+                        "elements" :
+                    [
+                        {
+                                            "type" : "group",
+                                            "caption" : "User information",
+
+                                            "name":"Params",
+                                            "elements" :
+                            [
+                                {
+                                    "name" : "email",
+                                    "caption" : "Email address",
+                                    "type" : "text",
+                                    "value":"1123123123.jpg",
+                                    "id" : "testds"
+                                },
+                                {
+                                    "name" : "good",
+                                    "caption" : "Email address",
+                                    "type" : "set",
+                                    "value":"1123123123.jpg",
+                                    "id" : "tessdft",
+                                    "elements":[
+                                                        {
+                                    "name" : "emailj",
+                                    "caption" : "Email address",
+                                    "type" : "text"
+                                },{
+                                    "name" : "emailk",
+                                    "caption" : "Email address2",
+                                    "type" : "text"
+                                }
+                                    
+                                    ]
+                                },
+                                {
+                                    "type" : "checkboxes",
+                                    "name" : "test",
+                                    "caption" : "Receive newsletter about",
+                                    "class" : "labellist",
+                                    "options" :
+                                    {
+                                        "updates" : "Product updates",
+                                        "errors" :
+                                        {
+                                        "value" : "security",
+                                        "caption" : "Security warnings",
+                                        "checked" : "checked"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+
+                        {
+                            "type" : "submit",
+                            "value" : "Signup"
+                        }
+                    ]
+                }
+                   var formvalue = {Params:{email:'this is a test!',
+                     good:[{emailj:'tttt',emailk:'kkkk'},{emailj:'kjljlkjlkj',emailk:'oooo'}]}};
+
+                     formp = $.initForm(formp,formvalue);
+                $("#myform").buildForm(formp);
+                
+            });
+        </script>
+    </head>
+    <body>
+        <form id="myform"></form>
+    </body>
+</html>
